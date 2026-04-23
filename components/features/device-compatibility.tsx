@@ -17,7 +17,7 @@ const devices = [
   {
     name: "Apple Watch",
     description:
-      "Full standalone recording on your wrist. Real-time jump detection, speed tracking, and competition mode built in.",
+      "Full standalone recording on your wrist. Real-time jump detection, speed tracking, and coaching mode built in.",
     icon: Watch,
   },
   {

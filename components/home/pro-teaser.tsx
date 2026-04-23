@@ -6,7 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { PhoneMockup } from "@/components/ui/phone-mockup";
 import { PRICING_TEASER } from "@/lib/constants";
-import { Wind, BarChart3, MapPin, Watch, Headphones, Trophy, Zap } from "lucide-react";
+import { Wind, BarChart3, MapPin, Watch, Headphones, Navigation, Zap } from "lucide-react";
 
 const plusHighlights = [
   { icon: Wind, label: "Wind forecasts & alerts" },
@@ -17,7 +17,7 @@ const plusHighlights = [
 const proHighlights = [
   { icon: Watch, label: "Watch tracking" },
   { icon: Headphones, label: "On-board coaching" },
-  { icon: Trophy, label: "Competitions" },
+  { icon: Navigation, label: "Downwinder navigation" },
 ] as const;
 
 export function ProTeaser() {

@@ -5,19 +5,23 @@ import { Section } from "@/components/ui/section";
 import { SectionHeader } from "@/components/ui/section-header";
 import { PhoneMockup } from "@/components/ui/phone-mockup";
 import { CORE_FEATURES } from "@/lib/constants";
-import { Zap, Compass, Users, Trophy, Check } from "lucide-react";
+import { Zap, Wind, Compass, Radio, Users, Trophy, Check } from "lucide-react";
 
 const iconMap = {
   Zap,
+  Wind,
   Compass,
+  Radio,
   Users,
   Trophy,
 } as const;
 
 const gradients = [
   "from-[var(--color-primary)] to-[#0d8fa8]",
+  "from-[#065f73] to-[#0d8fa8]",
   "from-[#0d8fa8] to-[#065f73]",
   "from-[#6366f1] to-[#4338ca]",
+  "from-[#8b5cf6] to-[#6d28d9]",
   "from-[#f59e0b] to-[#d97706]",
 ] as const;
 

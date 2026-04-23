@@ -5,11 +5,13 @@ import { Section } from "@/components/ui/section";
 import { SectionHeader } from "@/components/ui/section-header";
 import {
   Shield,
-  Radio,
-  Wind,
   Share2,
-  Bell,
+  Shirt,
+  Smartphone,
+  Camera,
   Globe,
+  Navigation,
+  Heart,
 } from "lucide-react";
 
 const additionalFeatures = [
@@ -17,37 +19,49 @@ const additionalFeatures = [
     icon: Shield,
     title: "Stay Safe",
     description:
-      "Taking Surfr with you ensures you are traceable and improves your safety on the water.",
+      "GPS tracking ensures you're traceable on the water. Friends & family can follow your live position from the beach.",
   },
   {
-    icon: Radio,
-    title: "Go Live",
+    icon: Shirt,
+    title: "Gear & Quiver",
     description:
-      "In live mode, friends and family can follow your session right from the beach or at home.",
+      "Manage your kite quiver, boards, and wetsuits. Track performance by kite size and board type with quiver insights.",
   },
   {
-    icon: Wind,
-    title: "Wind Forecasts",
+    icon: Camera,
+    title: "Surfie Export",
     description:
-      "Real-time wind data from Open Meteo with bilinear interpolation for precise forecasts at every spot.",
+      "Export jump overlays with transparent backgrounds to composite over your own footage. Share your best jumps anywhere.",
   },
   {
     icon: Share2,
     title: "Strava & Garmin",
     description:
-      "Export sessions to Strava or sync with Garmin. Your data goes wherever you want.",
+      "Auto-export sessions to Strava or sync with Garmin Connect. Your data goes wherever you want.",
   },
   {
-    icon: Bell,
-    title: "Wind Alerts",
+    icon: Navigation,
+    title: "Downwinder Mode",
     description:
-      "Get notified when conditions are right at your favorite spots. Never miss a session.",
+      "Navigate downwind routes on your watch with real-time direction guidance. Never lose your way on long rides.",
+  },
+  {
+    icon: Heart,
+    title: "Heart Rate",
+    description:
+      "Track heart rate and calories on Apple Watch and Wear OS. Monitor your intensity and recovery.",
+  },
+  {
+    icon: Smartphone,
+    title: "Phone or Watch",
+    description:
+      "Record on your phone in a waterproof pouch, or go watch-only with Apple Watch, Wear OS, or Garmin.",
   },
   {
     icon: Globe,
     title: "8 Languages",
     description:
-      "Available in English, Dutch, Spanish, French, German, Portuguese, Italian, and Russian.",
+      "Fully localized in English, Dutch, Spanish, French, German, Portuguese, Italian, and Russian.",
   },
 ] as const;
 
@@ -56,11 +70,11 @@ export function AdditionalFeatures() {
     <Section>
       <SectionHeader
         badge="And More"
-        title="Everything else you'd expect"
-        description="Safety, integrations, wind data, and multi-language support come standard."
+        title="Everything else you need on the water"
+        description="Safety, gear tracking, integrations, and multi-device support — all built in."
       />
 
-      <div className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
         {additionalFeatures.map((feature, i) => {
           const Icon = feature.icon;
           return (
@@ -69,7 +83,7 @@ export function AdditionalFeatures() {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: i * 0.08 }}
+              transition={{ duration: 0.4, delay: i * 0.06 }}
               className="rounded-2xl bg-[var(--color-light-bg)] p-6"
             >
               <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[var(--color-accent-tint)]">

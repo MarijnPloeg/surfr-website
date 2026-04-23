@@ -158,44 +158,68 @@ export const CORE_FEATURES = [
     description:
       "Surfr was the first app to accurately track jump heights with just a phone — and it's still the most accurate. Every session records jumps, speed, distance, airtime, and more.",
     bullets: [
-      "Proprietary jump detection algorithm",
-      "Real-time metrics on phone or watch",
-      "Detailed post-session analytics",
+      "Proprietary jump detection with real-time haptic feedback",
+      "Per-jump metrics: height, airtime, distance, G-force",
+      "Interactive jump arc charts with touch-to-scrub",
     ],
     icon: "Zap" as const,
+  },
+  {
+    title: "Wind & Forecasts",
+    headline: "Never miss a good wind day",
+    description:
+      "Live wind station data, hourly forecasts from multiple models, and smart alerts that notify you when conditions hit your sweet spot. All powered by Open Meteo with high-resolution regional models.",
+    bullets: [
+      "Hourly wind forecasts with multiple weather models",
+      "Custom wind alerts by spot, speed & direction",
+      "Kite size recommendations based on your quiver",
+    ],
+    icon: "Wind" as const,
   },
   {
     title: "Discover Spots",
     headline: "Find your next session",
     description:
-      "Explore thousands of kitesurfing spots worldwide with live wind data, forecasts, community reviews, and webcams. The new fullscreen Discover map makes it effortless.",
+      "Explore thousands of kitesurfing spots worldwide on a fullscreen map. Check live wind conditions, browse community reviews, see session history and photos — all before you pack your gear.",
     bullets: [
-      "5,000+ spots with wind forecasts",
-      "Community reviews & ratings",
-      "Live wind station data",
+      "5,000+ spots with live wind data & forecasts",
+      "Community reviews, ratings & photos",
+      "Spot statistics: jump profiles, wind history, popular kite sizes",
     ],
     icon: "Compass" as const,
+  },
+  {
+    title: "Live on the Water",
+    headline: "See who's riding right now",
+    description:
+      "The Live Map shows real-time positions of riders at your spot. Friends and family can follow your session from the beach or at home. Stay connected, stay safe.",
+    bullets: [
+      "Real-time rider positions on the map",
+      "Friends & family can follow your live session",
+      "Privacy controls: everyone, friends-only, or off",
+    ],
+    icon: "Radio" as const,
   },
   {
     title: "Social Feed",
     headline: "Connect with the community",
     description:
-      "Follow friends, like sessions, drop comments with GIFs, and discover new riders in your For You feed. Surfr is where the kite community lives.",
+      "Follow friends, like sessions, drop comments with GIFs, and discover new riders in your personalized For You feed. Surfr is where the kite community lives.",
     bullets: [
-      "Algorithmic For You feed",
-      "Instagram-style comments & reactions",
-      "Friends system & activity feed",
+      "For You feed with smart discovery algorithm",
+      "Instagram-style comments with GIFs & mentions",
+      "Friends system & activity notifications",
     ],
     icon: "Users" as const,
   },
   {
     title: "Leaderboards",
-    headline: "Compete with riders worldwide",
+    headline: "See where you rank",
     description:
-      "Rank by jump height, distance, airtime, or speed. Filter by spot, time period, or friends. Trusted by the Big Air Kite League and GKA for live competition scoring.",
+      "Global and spot-specific rankings by jump height, distance, airtime, or speed. Filter by time period, discipline, or friends. Track your progression over time.",
     bullets: [
       "Global & spot-specific rankings",
-      "Live competition leaderboards",
+      "Filter by height, distance, airtime, speed",
       "Weekly, monthly & all-time filters",
     ],
     icon: "Trophy" as const,
@@ -243,9 +267,9 @@ export const WHATS_NEW = [
 
 export const PRICING_TEASER = {
   badge: "Plans & Pricing",
-  headline: "From casual sessions to competition day",
+  headline: "From casual sessions to serious progression",
   description:
-    "Start free, then choose the plan that matches your riding. Plus unlocks detailed analytics and wind forecasts. PRO adds watch tracking, coaching, and competitions.",
+    "Start free, then choose the plan that matches your riding. Plus unlocks detailed analytics and wind forecasts. PRO adds watch tracking, coaching, and AI insights.",
   cta: "See pricing",
 } as const;
 
@@ -262,8 +286,8 @@ export const PRO_FEATURES = [
   "Apple Watch & Wear OS recording",
   "PRO Insights & AI analytics",
   "On-board coaching",
-  "Competition & Wind Games",
   "Downwinder navigation",
+  "Cinematic replay",
   "Voice chat (AI transcribed)",
 ] as const;
 
@@ -283,7 +307,6 @@ export const COMPARISON_TABLE: ComparisonRow[] = [
   { feature: "Jump detection (Phone & Garmin)", category: "Recording", free: true, plus: true, pro: true },
   { feature: "Apple Watch & Wear OS recording", category: "Recording", free: false, plus: false, pro: true },
   { feature: "On-board coaching", category: "Recording", free: false, plus: false, pro: true },
-  { feature: "Competition & Wind Games", category: "Recording", free: false, plus: false, pro: true },
   { feature: "Downwinder navigation", category: "Recording", free: false, plus: false, pro: true },
   { feature: "Voice chat (AI transcribed)", category: "Recording", free: false, plus: false, pro: true },
   // Session Details

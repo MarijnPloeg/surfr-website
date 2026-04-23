@@ -15,7 +15,7 @@ const faqs = [
   {
     question: "What's the difference between Plus and PRO?",
     answer:
-      "Plus unlocks detailed session analytics, 1-hourly wind forecasts, wind alerts, live map, and spot statistics — perfect for riders who want deeper insights. PRO includes everything in Plus and adds Apple Watch & Wear OS recording, on-board coaching, PRO Insights with AI analytics, competition mode, and downwinder navigation.",
+      "Plus unlocks detailed session analytics, 1-hourly wind forecasts, wind alerts, live map, and spot statistics — perfect for riders who want deeper insights. PRO includes everything in Plus and adds Apple Watch & Wear OS recording, on-board coaching, PRO Insights with AI analytics, cinematic replay, and downwinder navigation.",
   },
   {
     question: "What devices support watch-only tracking?",

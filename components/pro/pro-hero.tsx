@@ -50,7 +50,7 @@ export function ProHero() {
           className="mx-auto mt-6 max-w-2xl text-lg text-[var(--color-dark-muted)]"
         >
           Start free, unlock detailed analytics with Plus, or go all-in with PRO
-          for watch tracking, coaching, and competitions.
+          for watch tracking, coaching, and AI-powered insights.
         </motion.p>
 
         <motion.div
