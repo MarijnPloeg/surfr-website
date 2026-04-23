@@ -27,8 +27,12 @@ const securityHeaders = [
   },
 ];
 
+const isGithubPages = process.env.GITHUB_PAGES === "true";
+
 const nextConfig: NextConfig = {
   output: "export",
+  basePath: isGithubPages ? "/surfr-website" : "",
+  assetPrefix: isGithubPages ? "/surfr-website/" : "",
   poweredByHeader: false,
   reactStrictMode: true,
 
