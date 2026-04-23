@@ -1,0 +1,69 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #1EB7D8;
+  --color-primary-dark: #189BB8;
+  --color-dark: #0A1929;
+  --color-light-bg: #F8FAFB;
+  --color-body: #374151;
+  --color-secondary: #6B7280;
+  --color-muted: #9CA3AF;
+  --color-border: #E5E7EB;
+  --color-accent-tint: rgba(30, 183, 216, 0.05);
+  --color-primary-light: #4DD4F0;
+  --color-dark-surface: #0F2236;
+  --color-dark-border: #1A3A52;
+  --color-dark-muted: #94A3B8;
+  --color-success: #22C55E;
+  --color-plus: #8E99A4;
+
+  --font-outfit: "Outfit", system-ui, sans-serif;
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 10px 25px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 20px 40px rgba(0, 0, 0, 0.1);
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    font-family: var(--font-outfit);
+    color: var(--color-body);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    color: var(--color-dark);
+    font-weight: 700;
+  }
+
+  h1 {
+    font-size: clamp(2.5rem, 5vw, 3.5rem);
+    letter-spacing: -1.2px;
+    line-height: 1.1;
+  }
+
+  h2 {
+    font-size: clamp(1.875rem, 3vw, 2.25rem);
+    letter-spacing: -0.75px;
+    line-height: 1.2;
+  }
+
+  h3 {
+    font-size: clamp(1.125rem, 2vw, 1.25rem);
+    letter-spacing: -0.45px;
+    line-height: 1.3;
+    font-weight: 600;
+  }
+
+  p {
+    line-height: 1.6;
+  }
+}
