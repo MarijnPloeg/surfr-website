@@ -1,28 +1,118 @@
 @import "tailwindcss";
 
+/* ==========================================================================
+   Surfr Website — Design System Tokens
+   Source of truth: docs/design-tokens-source.css (verbatim from in-app)
+   This file: Tailwind 4 @theme adaptation.
+   Mode: LIGHT-ONLY for the website.
+   Type policy override: Outfit as default body (marketing decision —
+   the in-app system mandates the system stack; the website uses Outfit
+   for personality). Roboto reserved for the surfr. wordmark only.
+   ========================================================================== */
+
 @theme {
-  --color-primary: #1EB7D8;
-  --color-primary-dark: #189BB8;
-  --color-dark: #0A1929;
-  --color-light-bg: #F8FAFB;
-  --color-body: #374151;
-  --color-secondary: #6B7280;
-  --color-muted: #9CA3AF;
-  --color-border: #E5E7EB;
-  --color-accent-tint: rgba(30, 183, 216, 0.05);
-  --color-primary-light: #4DD4F0;
-  --color-dark-surface: #0F2236;
-  --color-dark-border: #1A3A52;
-  --color-dark-muted: #94A3B8;
-  --color-success: #22C55E;
-  --color-plus: #8E99A4;
+  /* --- BRAND --------------------------------------------------------- */
+  --color-cyan: #01BCD7;
+  --color-cyan-dark: #0097A7;
+  --color-cyan-ink: #0097A7;          /* AA on white — use for cyan TEXT */
+  --color-cyan-ink-hover: #007684;
+  --color-cyan-15: rgba(1, 188, 215, 0.15);
+  --color-cyan-30: rgba(1, 188, 215, 0.30);
+  --color-cyan-50: rgba(1, 188, 215, 0.50);
+  --color-cyan-80: rgba(1, 188, 215, 0.80);
 
-  --font-outfit: "Outfit", system-ui, sans-serif;
+  /* --- TIERS (CRITICAL — never invent additional tier colors) -------- */
+  --color-tier-plus: #8E99A4;
+  --color-tier-plus-ink: #FFFFFF;
+  --color-tier-pro: #01BCD7;          /* = brand cyan */
+  --color-tier-pro-ink: #FFFFFF;
 
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
-  --shadow-md: 0 10px 25px rgba(0, 0, 0, 0.08);
-  --shadow-lg: 0 20px 40px rgba(0, 0, 0, 0.1);
+  /* --- SURFACES (light) ---------------------------------------------- */
+  --color-page: #FFFFFF;              /* default page bg */
+  --color-page-tint: #F6F8FA;         /* alt page bg */
+  --color-card: #FFFFFF;              /* elevated card */
+  --color-card-alt: #F6F8FA;          /* card on white sections */
+  --color-onboarding-bg: #F0F4F7;
+  --color-divider: rgba(15, 23, 32, 0.08);
+  --color-card-border: rgba(15, 23, 32, 0.10);
+
+  /* --- INK SCALE (light: warm dark navy with a hint of cyan) --------
+     Slightly warmer than pure near-black — softens the page so it
+     doesn't read as harsh print. Still passes AA against white. */
+  --color-ink: #142233;
+  --color-ink-90: rgba(20, 34, 51, 0.90);
+  --color-ink-75: rgba(20, 34, 51, 0.75);
+  --color-ink-60: rgba(20, 34, 51, 0.60);
+  --color-ink-50: rgba(20, 34, 51, 0.50);
+  --color-ink-35: rgba(20, 34, 51, 0.35);
+  --color-ink-25: rgba(20, 34, 51, 0.25);
+  --color-ink-18: rgba(20, 34, 51, 0.18);
+  --color-ink-15: rgba(20, 34, 51, 0.15);
+  --color-ink-10: rgba(20, 34, 51, 0.10);
+  --color-ink-06: rgba(20, 34, 51, 0.06);
+  --color-ink-05: rgba(20, 34, 51, 0.05);
+
+  /* --- SEMANTIC ------------------------------------------------------ */
+  --color-error: #DC4949;
+  --color-live-red: #FF3B30;
+  --color-recording-orange: #FF9900;
+  --color-star: #FFD700;
+  --color-silver: #C0C0C0;
+  --color-bronze: #CD7F32;
+
+  /* --- WIND PALETTE (canonical 10-step) ----------------------------- */
+  --color-wind-00: #5070C0;           /* 0 kt   — calm blue */
+  --color-wind-05: #40B8C8;           /* 5 kt   — cyan */
+  --color-wind-10: #50C878;           /* 10 kt  — green */
+  --color-wind-15: #90D840;           /* 15 kt  — lime */
+  --color-wind-20: #D0D828;           /* 20 kt  — yellow-green */
+  --color-wind-25: #E8A830;           /* 25 kt  — orange-yellow */
+  --color-wind-30: #E06848;           /* 30 kt  — orange-red */
+  --color-wind-35: #E04898;           /* 35 kt  — hot pink */
+  --color-wind-40: #D048C0;           /* 40 kt  — magenta */
+  --color-wind-50: #8858C8;           /* 50 kt+ — storm purple */
+
+  /* --- TYPE: families ------------------------------------------------ */
+  --font-sans: var(--font-outfit), -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, Helvetica, Arial, sans-serif;
+  --font-logo: var(--font-roboto), -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-condensed: var(--font-roboto-condensed), -apple-system, BlinkMacSystemFont, "Segoe UI Condensed", "Arial Narrow", sans-serif;
+
+  /* --- TYPE: ramp ---------------------------------------------------- */
+  --text-xs: 12px;
+  --text-sm: 14px;
+  --text-md: 16px;
+  --text-xm: 18px;
+  --text-lg: 20px;
+  --text-xl: 24px;
+  --text-2xl: 32px;
+  --text-3xl: 44px;
+  --text-display: 56px;
+
+  /* --- SPACING (8-pt grid) ------------------------------------------- */
+  --spacing-half: 4px;
+  --spacing-single: 8px;
+  --spacing-double: 16px;
+  --spacing-triple: 24px;
+  --spacing-quadruple: 32px;
+
+  /* --- RADII --------------------------------------------------------- */
+  --radius-sm: 4px;
+  --radius-md: 8px;                    /* default */
+  --radius-lg: 10px;
+  --radius-xl: 16px;
+  --radius-full: 9999px;
+
+  /* --- SHADOWS (cyan glow is the signature — light-mode tuned) ------- */
+  --shadow-cyan-soft: 0 0 0 1px rgba(1, 188, 215, 0.20), 0 6px 20px rgba(1, 188, 215, 0.30);
+  --shadow-cyan-hard: 0 0 0 2px rgba(1, 188, 215, 0.35), 0 10px 28px rgba(1, 188, 215, 0.42);
+  --shadow-card: 0 1px 2px rgba(15, 23, 32, 0.04), 0 4px 16px rgba(15, 23, 32, 0.08);
+  --shadow-card-hover: 0 2px 4px rgba(15, 23, 32, 0.06), 0 12px 28px rgba(15, 23, 32, 0.10);
+  --shadow-sheet: 0 -6px 24px rgba(15, 23, 32, 0.12);
 }
+
+/* ==========================================================================
+   Base styles
+   ========================================================================== */
 
 @layer base {
   html {
@@ -30,40 +120,57 @@
   }
 
   body {
-    font-family: var(--font-outfit);
-    color: var(--color-body);
+    background: var(--color-page);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: var(--text-md);
+    line-height: 1.5;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
 
-  h1,
-  h2,
-  h3,
-  h4 {
-    color: var(--color-dark);
+  /* Selection — small but recognizable brand moment */
+  ::selection {
+    background: var(--color-cyan);
+    color: #000;
+  }
+
+  /* Heading defaults — display sizing comes from <DisplayHeading>,
+     <SectionHeading>, <FeatureHeading> primitives, not raw h1/h2/h3. */
+  h1, h2, h3, h4 {
+    color: var(--color-ink);
     font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+    text-wrap: balance;
   }
 
-  h1 {
-    font-size: clamp(2.5rem, 5vw, 3.5rem);
-    letter-spacing: -1.2px;
-    line-height: 1.1;
-  }
-
-  h2 {
-    font-size: clamp(1.875rem, 3vw, 2.25rem);
-    letter-spacing: -0.75px;
-    line-height: 1.2;
-  }
-
-  h3 {
-    font-size: clamp(1.125rem, 2vw, 1.25rem);
-    letter-spacing: -0.45px;
-    line-height: 1.3;
-    font-weight: 600;
+  /* Em-italic-cyan accent inside display/section/feature headings.
+     Pure italic + cyan-ink. No decoration behind the text. */
+  h1 em, h2 em, h3 em,
+  .h-display em, .h-section em, .h-feature em {
+    font-style: italic;
+    font-weight: 700;
+    color: var(--color-cyan-ink);
   }
 
   p {
-    line-height: 1.6;
+    line-height: 1.55;
+    text-wrap: pretty;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  /* Respect reduced motion preferences globally */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
   }
 }

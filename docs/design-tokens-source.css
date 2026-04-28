@@ -1,0 +1,442 @@
+/* ==========================================================================
+   Surfr Design System — Colors & Type
+   Extracted from components/theme/Theme.js and src/constants/
+   ==========================================================================
+
+   Type policy:
+     • Roboto is the LOGO FONT ONLY. Used exclusively for the surfr.
+       wordmark. The full Roboto family is shipped in /fonts (3 widths
+       × 9 weights × italics) so brand moments have it available, but
+       body copy NEVER uses it.
+     • All product UI, body copy, headings, stats, buttons, and email
+       templates use the native system stack. This keeps the product
+       fast, OS-consistent, and email-safe with zero font-loading. */
+
+/* --- Roboto (default width) --- */
+@font-face { font-family: 'Roboto'; font-style: normal; font-weight: 100; font-display: swap; src: url('fonts/Roboto-Thin.ttf') format('truetype'); }
+@font-face { font-family: 'Roboto'; font-style: italic; font-weight: 100; font-display: swap; src: url('fonts/Roboto-ThinItalic.ttf') format('truetype'); }
+@font-face { font-family: 'Roboto'; font-style: normal; font-weight: 200; font-display: swap; src: url('fonts/Roboto-ExtraLight.ttf') format('truetype'); }
+@font-face { font-family: 'Roboto'; font-style: italic; font-weight: 200; font-display: swap; src: url('fonts/Roboto-ExtraLightItalic.ttf') format('truetype'); }
+@font-face { font-family: 'Roboto'; font-style: normal; font-weight: 300; font-display: swap; src: url('fonts/Roboto-Light.ttf') format('truetype'); }
+@font-face { font-family: 'Roboto'; font-style: italic; font-weight: 300; font-display: swap; src: url('fonts/Roboto-LightItalic.ttf') format('truetype'); }
+@font-face { font-family: 'Roboto'; font-style: normal; font-weight: 400; font-display: swap; src: url('fonts/Roboto-Regular.ttf') format('truetype'); }
+@font-face { font-family: 'Roboto'; font-style: italic; font-weight: 400; font-display: swap; src: url('fonts/Roboto-Italic.ttf') format('truetype'); }
+@font-face { font-family: 'Roboto'; font-style: normal; font-weight: 500; font-display: swap; src: url('fonts/Roboto-Medium.ttf') format('truetype'); }
+@font-face { font-family: 'Roboto'; font-style: italic; font-weight: 500; font-display: swap; src: url('fonts/Roboto-MediumItalic.ttf') format('truetype'); }
+@font-face { font-family: 'Roboto'; font-style: normal; font-weight: 600; font-display: swap; src: url('fonts/Roboto-SemiBold.ttf') format('truetype'); }
+@font-face { font-family: 'Roboto'; font-style: italic; font-weight: 600; font-display: swap; src: url('fonts/Roboto-SemiBoldItalic.ttf') format('truetype'); }
+@font-face { font-family: 'Roboto'; font-style: normal; font-weight: 700; font-display: swap; src: url('fonts/Roboto-Bold.ttf') format('truetype'); }
+@font-face { font-family: 'Roboto'; font-style: italic; font-weight: 700; font-display: swap; src: url('fonts/Roboto-BoldItalic.ttf') format('truetype'); }
+@font-face { font-family: 'Roboto'; font-style: normal; font-weight: 800; font-display: swap; src: url('fonts/Roboto-ExtraBold.ttf') format('truetype'); }
+@font-face { font-family: 'Roboto'; font-style: italic; font-weight: 800; font-display: swap; src: url('fonts/Roboto-ExtraBoldItalic.ttf') format('truetype'); }
+@font-face { font-family: 'Roboto'; font-style: normal; font-weight: 900; font-display: swap; src: url('fonts/Roboto-Black.ttf') format('truetype'); }
+@font-face { font-family: 'Roboto'; font-style: italic; font-weight: 900; font-display: swap; src: url('fonts/Roboto-BlackItalic.ttf') format('truetype'); }
+
+/* --- Roboto Condensed --- */
+@font-face { font-family: 'Roboto Condensed'; font-style: normal; font-weight: 100; font-display: swap; src: url('fonts/Roboto_Condensed-Thin.ttf') format('truetype'); }
+@font-face { font-family: 'Roboto Condensed'; font-style: italic; font-weight: 100; font-display: swap; src: url('fonts/Roboto_Condensed-ThinItalic.ttf') format('truetype'); }
+@font-face { font-family: 'Roboto Condensed'; font-style: normal; font-weight: 200; font-display: swap; src: url('fonts/Roboto_Condensed-ExtraLight.ttf') format('truetype'); }
+@font-face { font-family: 'Roboto Condensed'; font-style: italic; font-weight: 200; font-display: swap; src: url('fonts/Roboto_Condensed-ExtraLightItalic.ttf') format('truetype'); }
+@font-face { font-family: 'Roboto Condensed'; font-style: normal; font-weight: 300; font-display: swap; src: url('fonts/Roboto_Condensed-Light.ttf') format('truetype'); }
+@font-face { font-family: 'Roboto Condensed'; font-style: italic; font-weight: 300; font-display: swap; src: url('fonts/Roboto_Condensed-LightItalic.ttf') format('truetype'); }
+@font-face { font-family: 'Roboto Condensed'; font-style: normal; font-weight: 400; font-display: swap; src: url('fonts/Roboto_Condensed-Regular.ttf') format('truetype'); }
+@font-face { font-family: 'Roboto Condensed'; font-style: italic; font-weight: 400; font-display: swap; src: url('fonts/Roboto_Condensed-Italic.ttf') format('truetype'); }
+@font-face { font-family: 'Roboto Condensed'; font-style: normal; font-weight: 500; font-display: swap; src: url('fonts/Roboto_Condensed-Medium.ttf') format('truetype'); }
+@font-face { font-family: 'Roboto Condensed'; font-style: italic; font-weight: 500; font-display: swap; src: url('fonts/Roboto_Condensed-MediumItalic.ttf') format('truetype'); }
+@font-face { font-family: 'Roboto Condensed'; font-style: normal; font-weight: 600; font-display: swap; src: url('fonts/Roboto_Condensed-SemiBold.ttf') format('truetype'); }
+@font-face { font-family: 'Roboto Condensed'; font-style: italic; font-weight: 600; font-display: swap; src: url('fonts/Roboto_Condensed-SemiBoldItalic.ttf') format('truetype'); }
+@font-face { font-family: 'Roboto Condensed'; font-style: normal; font-weight: 700; font-display: swap; src: url('fonts/Roboto_Condensed-Bold.ttf') format('truetype'); }
+@font-face { font-family: 'Roboto Condensed'; font-style: italic; font-weight: 700; font-display: swap; src: url('fonts/Roboto_Condensed-BoldItalic.ttf') format('truetype'); }
+@font-face { font-family: 'Roboto Condensed'; font-style: normal; font-weight: 800; font-display: swap; src: url('fonts/Roboto_Condensed-ExtraBold.ttf') format('truetype'); }
+@font-face { font-family: 'Roboto Condensed'; font-style: italic; font-weight: 800; font-display: swap; src: url('fonts/Roboto_Condensed-ExtraBoldItalic.ttf') format('truetype'); }
+@font-face { font-family: 'Roboto Condensed'; font-style: normal; font-weight: 900; font-display: swap; src: url('fonts/Roboto_Condensed-Black.ttf') format('truetype'); }
+@font-face { font-family: 'Roboto Condensed'; font-style: italic; font-weight: 900; font-display: swap; src: url('fonts/Roboto_Condensed-BlackItalic.ttf') format('truetype'); }
+
+/* --- Roboto SemiCondensed --- */
+@font-face { font-family: 'Roboto SemiCondensed'; font-style: normal; font-weight: 100; font-display: swap; src: url('fonts/Roboto_SemiCondensed-Thin.ttf') format('truetype'); }
+@font-face { font-family: 'Roboto SemiCondensed'; font-style: italic; font-weight: 100; font-display: swap; src: url('fonts/Roboto_SemiCondensed-ThinItalic.ttf') format('truetype'); }
+@font-face { font-family: 'Roboto SemiCondensed'; font-style: normal; font-weight: 200; font-display: swap; src: url('fonts/Roboto_SemiCondensed-ExtraLight.ttf') format('truetype'); }
+@font-face { font-family: 'Roboto SemiCondensed'; font-style: italic; font-weight: 200; font-display: swap; src: url('fonts/Roboto_SemiCondensed-ExtraLightItalic.ttf') format('truetype'); }
+@font-face { font-family: 'Roboto SemiCondensed'; font-style: normal; font-weight: 300; font-display: swap; src: url('fonts/Roboto_SemiCondensed-Light.ttf') format('truetype'); }
+@font-face { font-family: 'Roboto SemiCondensed'; font-style: italic; font-weight: 300; font-display: swap; src: url('fonts/Roboto_SemiCondensed-LightItalic.ttf') format('truetype'); }
+@font-face { font-family: 'Roboto SemiCondensed'; font-style: normal; font-weight: 400; font-display: swap; src: url('fonts/Roboto_SemiCondensed-Regular.ttf') format('truetype'); }
+@font-face { font-family: 'Roboto SemiCondensed'; font-style: italic; font-weight: 400; font-display: swap; src: url('fonts/Roboto_SemiCondensed-Italic.ttf') format('truetype'); }
+@font-face { font-family: 'Roboto SemiCondensed'; font-style: normal; font-weight: 500; font-display: swap; src: url('fonts/Roboto_SemiCondensed-Medium.ttf') format('truetype'); }
+@font-face { font-family: 'Roboto SemiCondensed'; font-style: italic; font-weight: 500; font-display: swap; src: url('fonts/Roboto_SemiCondensed-MediumItalic.ttf') format('truetype'); }
+@font-face { font-family: 'Roboto SemiCondensed'; font-style: normal; font-weight: 600; font-display: swap; src: url('fonts/Roboto_SemiCondensed-SemiBold.ttf') format('truetype'); }
+@font-face { font-family: 'Roboto SemiCondensed'; font-style: italic; font-weight: 600; font-display: swap; src: url('fonts/Roboto_SemiCondensed-SemiBoldItalic.ttf') format('truetype'); }
+@font-face { font-family: 'Roboto SemiCondensed'; font-style: normal; font-weight: 700; font-display: swap; src: url('fonts/Roboto_SemiCondensed-Bold.ttf') format('truetype'); }
+@font-face { font-family: 'Roboto SemiCondensed'; font-style: italic; font-weight: 700; font-display: swap; src: url('fonts/Roboto_SemiCondensed-BoldItalic.ttf') format('truetype'); }
+@font-face { font-family: 'Roboto SemiCondensed'; font-style: normal; font-weight: 800; font-display: swap; src: url('fonts/Roboto_SemiCondensed-ExtraBold.ttf') format('truetype'); }
+@font-face { font-family: 'Roboto SemiCondensed'; font-style: italic; font-weight: 800; font-display: swap; src: url('fonts/Roboto_SemiCondensed-ExtraBoldItalic.ttf') format('truetype'); }
+@font-face { font-family: 'Roboto SemiCondensed'; font-style: normal; font-weight: 900; font-display: swap; src: url('fonts/Roboto_SemiCondensed-Black.ttf') format('truetype'); }
+@font-face { font-family: 'Roboto SemiCondensed'; font-style: italic; font-weight: 900; font-display: swap; src: url('fonts/Roboto_SemiCondensed-BlackItalic.ttf') format('truetype'); }
+
+:root {
+  /* --- BRAND ---------------------------------------------------------- */
+  --surfr-cyan:           #01BCD7;  /* PRIMARY — "lightgreen" in code */
+  --surfr-cyan-dark:      #0097A7;  /* "darkgreen" */
+  --surfr-cyan-15:        rgba(1, 188, 215, 0.15);
+  --surfr-cyan-30:        rgba(1, 188, 215, 0.30);
+  --surfr-cyan-50:        rgba(1, 188, 215, 0.50);
+  --surfr-cyan-80:        rgba(1, 188, 215, 0.80);
+
+  /* Secondary accent blue (react-native-paper primary) */
+  --surfr-blue:           rgb(79, 158, 215);
+  --surfr-blue-20:        rgba(79, 158, 215, 0.20);
+
+  /* Live / follow accent */
+  --surfr-follow-green:   rgba(0, 229, 255, 1);
+
+  /* --- SUBSCRIPTION TIERS --------------------------------------------
+     Surfr has two paid tiers. Each is a single solid color — use the
+     base for fills (badge background, pricing card accent, row chevron)
+     and the matching *-ink for text that sits ON that fill.
+
+     PLUS = neutral gray (positioned as "the upgrade"). Use --fg-default
+            for label ink (white on gray passes AA).
+     PRO  = brand cyan (positioned as "the top tier"). PRO literally IS
+            the Surfr brand color — when you see a cyan badge, it's PRO.
+
+     DO NOT invent other tier colors. DO NOT use cyan for PLUS or gray
+     for PRO, ever. The whole point is that cyan = PRO in users' minds. */
+  --tier-plus:           #8E99A4;                    /* PLUS badge fill */
+  --tier-plus-ink:       #FFFFFF;                    /* text on PLUS fill */
+  --tier-pro:            var(--surfr-cyan);          /* = #01BCD7 */
+  --tier-pro-ink:        #FFFFFF;                    /* text on PRO fill */
+
+  /* --- SURFACE (dark-first — default theme) ---------------------------
+     The app runs on a 3-step gray surface ladder. These are the ACTUAL
+     colors shipping in production — don't invent new darks, use these.
+
+         --gray-page    #1F2229  = app background, behind everything
+         --gray-card    #313542  = elevated surface (cards, rows, sheets)
+         --gray-raised  #4E5157  = pressed / selected / topmost
+
+     Aliases below (--bg-page / --bg-card-who / etc.) map to these
+     and preserve the original semantic names from the codebase. */
+  --gray-page:            #1F2229;           /* rgb(31,34,41) — app bg */
+  --gray-card:            #313542;           /* rgb(49,53,66) — card */
+  --gray-raised:          #4E5157;           /* rgb(78,81,87) — pressed */
+
+  --bg-page:              var(--gray-page);
+  --bg-page-rec:          rgba(31, 34, 41, 0.8);
+  --bg-light-page:        #1D2D36;           /* onboarding / landing */
+  --bg-card-who:          var(--gray-card);  /* elevated card */
+  --bg-mycolor:           var(--gray-card);
+  --bg-selected:          var(--gray-card);
+  --bg-selected-intense:  var(--gray-raised);
+  --bg-card-border:       rgba(255, 255, 255, 0.10);
+  --bg-divider:           rgba(255, 255, 255, 0.08);
+
+  /* --- FOREGROUND ----------------------------------------------------- */
+  --fg-default:           #FFFFFF;
+  --fg-90:                rgba(255, 255, 255, 0.90);
+  --fg-75:                rgba(255, 255, 255, 0.75);
+  --fg-60:                rgba(255, 255, 255, 0.60);
+  --fg-50:                rgba(255, 255, 255, 0.50);  /* secondary text */
+  --fg-35:                rgba(255, 255, 255, 0.35);  /* tertiary */
+  --fg-30:                rgba(255, 255, 255, 0.30);
+  --fg-25:                rgba(255, 255, 255, 0.25);
+  --fg-18:                rgba(255, 255, 255, 0.18);
+  --fg-15:                rgba(255, 255, 255, 0.15);
+  --fg-10:                rgba(255, 255, 255, 0.10);
+  --fg-06:                rgba(255, 255, 255, 0.06);
+  --fg-05:                rgba(255, 255, 255, 0.05);
+
+  /* Cyan variants — used for cross-theme ink / fills.
+     On DARK: use --surfr-cyan for everything.
+     On LIGHT: use --surfr-cyan-ink for TEXT/LINKS (passes AA on white),
+               keep --surfr-cyan for FILLS (CTAs, badges, pills). */
+  --surfr-cyan-ink:       #0097A7;   /* AA on white */
+  --surfr-cyan-ink-hover: #007684;
+
+  /* Light-mode legacy tokens (pre-existing — kept for back-compat) */
+  --fg-dark-default:      #222222;
+  --fg-dark-light:        #999999;
+  --hint:                 #CCCCCC;
+
+  /* --- SEMANTIC ------------------------------------------------------- */
+  --error:                #FF0000;
+  --error-text:           #DC4949;
+  --red-delete-50:        rgba(220, 73, 73, 0.5);
+  --red-light-10:         rgba(254, 167, 167, 0.1);
+  --red-light-75:         rgba(254, 167, 167, 0.75);
+
+  --recording-orange:     rgb(255, 153, 0);
+  --recording-yellow:     rgb(255, 255, 0);
+  --live-red:             #FF3B30;   /* pulsing "LIVE" dot */
+
+  /* Rating / podium */
+  --star-yellow:          #FFD700;
+  --star-rating-yellow:   rgb(241, 196, 15);
+  --silver:               #C0C0C0;
+  --bronze:               #CD7F32;
+
+  /* Pie / data colors (used in insights) */
+  --pie-25:               #8E6017;
+  --pie-50:               #4F9419;
+  --pie-75:               #5B7C98;
+  --pie-100:              #823F97;
+
+  /* ---- WIND PALETTE (10-step, sampled from Windy) --------------------
+     Surfr's canonical wind-speed palette, used across forecast tables,
+     spot cards, wind tiles, live rows and map overlays — AND reused as
+     an extended accent palette for illustrations, highlights, badges,
+     chart series and category chips. Each stop roughly maps to a knot
+     range; stronger wind = stronger, warmer/hotter color. */
+  --wind-00:  #5070C0;  /* 0 kt   — calm blue */
+  --wind-05:  #40B8C8;  /* 5 kt   — cyan */
+  --wind-10:  #50C878;  /* 10 kt  — green */
+  --wind-15:  #90D840;  /* 15 kt  — lime */
+  --wind-20:  #D0D828;  /* 20 kt  — yellow-green */
+  --wind-25:  #E8A830;  /* 25 kt  — orange-yellow */
+  --wind-30:  #E06848;  /* 30 kt  — orange-red */
+  --wind-35:  #E04898;  /* 35 kt  — hot pink */
+  --wind-40:  #D048C0;  /* 40 kt  — magenta */
+  --wind-50:  #8858C8;  /* 50 kt+ — purple / storm */
+
+  /* Session "who-with" tag colors (translucent) */
+  --tag-orange:           rgba(255, 153, 0, 0.6);
+  --tag-purple:           rgba(231, 87, 255, 0.6);
+  --tag-green:            rgba(0, 229, 255, 0.6);
+  --tag-blue:             rgba(152, 206, 255, 0.6);
+  --tag-red:              #973F3F;
+
+  /* --- RADII ---------------------------------------------------------- */
+  --radius-sm:  4px;
+  --radius-md:  8px;   /* default (Theme.roundness) */
+  --radius-lg:  10px;  /* banners, live-pill */
+  --radius-xl:  16px;  /* modals, large cards */
+  --radius-full: 9999px;
+
+  /* --- SPACING (Spacing.* in typography.js) --------------------------- */
+  --space-half:       4px;
+  --space-single:     8px;
+  --space-double:     16px;
+  --space-triple:     24px;
+  --space-quadruple:  32px;
+  --nav-height:       50px;
+
+  /* --- ICON SIZES ----------------------------------------------------- */
+  --icon-xs: 5px;
+  --icon-sm: 14px;
+  --icon-md: 18px;
+  --icon-xm: 22px;
+  --icon-lg: 30px;
+
+  /* --- FONT -----------------------------------------------------------
+     Type policy:
+       • Roboto is the LOGO font ONLY. Used for the surfr. wordmark and
+         nothing else. Full family is still shipped in /fonts (3 widths
+         × 9 weights × italics) in case a brand moment needs it, but the
+         default product / UI / email stack is the native system font.
+       • Everything else uses the system stack — fast, no network load,
+         consistent with iOS/Android/Windows/macOS, email-safe.
+
+     Rule of thumb: if you're typing 'font-family' and it isn't the
+     wordmark, you almost certainly want --font-sans. */
+
+  /* System stack — product UI, body copy, buttons, stats, emails. */
+  --font-sans:      -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+
+  /* Logo font — surfr. wordmark ONLY. Never use for body copy. */
+  --font-logo:      'Roboto', -apple-system, BlinkMacSystemFont, sans-serif;
+
+  /* Condensed / SemiCondensed widths — opt-in for data-dense contexts
+     (chart axes, forecast pills, wind chips). Falls back through the
+     system stack cleanly if Roboto isn't present. */
+  --font-condensed: 'Roboto Condensed', -apple-system, BlinkMacSystemFont, 'Segoe UI Condensed', 'Arial Narrow', sans-serif;
+  --font-semi:      'Roboto SemiCondensed', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+  /* Type ramp (FontSize.* + observed usage) */
+  --fs-xs:   12px;  /* meta / captions */
+  --fs-sm:   14px;  /* body small / usernames in feed */
+  --fs-md:   16px;  /* default body, title1 */
+  --fs-xm:   18px;
+  --fs-lg:   20px;
+  --fs-xl:   24px;  /* screen titles */
+  --fs-2xl:  32px;  /* hero numbers (small) */
+  --fs-3xl:  44px;  /* hero stat (session card) */
+  --fs-display: 56px;
+
+  /* Font weights: Roboto (full range 100–900) */
+  --fw-light:   300;
+  --fw-regular: 400;
+  --fw-medium:  500;  /* "Bolder" in code */
+  --fw-semi:    600;
+  --fw-bold:    700;
+
+  /* --- SHADOWS (glow-on-cyan, dark-ambient) --------------------------- */
+  --shadow-cyan-soft: 0 0 10px rgba(1, 188, 215, 0.5);
+  --shadow-cyan-hard: 0 0 16px rgba(1, 188, 215, 0.8);
+  --shadow-card:      0 4px 14px rgba(0, 0, 0, 0.35);
+  --shadow-sheet:     0 -6px 24px rgba(0, 0, 0, 0.45);
+  --text-shadow-glow: 0 0 10px rgba(255, 255, 255, 0.75);
+
+  /* --- BORDERS -------------------------------------------------------- */
+  --border-hairline: 1px solid rgba(255, 255, 255, 0.1);
+  --border-subtle:   1px solid rgba(255, 255, 255, 0.18);
+  --border-input:    1px solid rgba(255, 255, 255, 0.5);
+  --border-cyan:     1px solid rgba(1, 188, 215, 0.3);
+
+  /* --- GRADIENTS ------------------------------------------------------ */
+  --gradient-profile: linear-gradient(180deg, rgba(30,40,48,0) 0%, rgba(30,40,48,1) 100%);
+  --gradient-hero:    linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.7) 100%);
+  --gradient-cyan-brand: linear-gradient(135deg, #01BCD7 0%, #0097A7 100%);
+}
+
+/* ==========================================================================
+   LIGHT THEME
+   ==========================================================================
+   Opt in by setting [data-theme="light"] on <html>, <body>, or any subtree.
+   Used by: website, email (via preview), and the in-app light-mode toggle.
+   Emails should NOT rely on this selector — Moosend strips non-inline
+   styles in some clients. For emails, use inline styles or the values below.
+
+   Design intent on light:
+   • Page: pure-ish white (#FFFFFF) or slightly off-white (#F6F8FA) for tint.
+   • Surfaces: white cards on a tinted page, or tinted cards on white.
+   • Ink scale: near-black → gray, mirroring the dark white-alpha scale.
+   • Brand cyan: fills stay #01BCD7; text/links switch to --surfr-cyan-ink
+     (#0097A7, AA on white). Dividers/borders use black-alpha at 6–15%.
+   • Wind palette: unchanged — the 10 stops are mid-saturated and work on
+     both dark and light without adjustment. */
+[data-theme="light"] {
+  /* Surfaces */
+  --bg-page:              #FFFFFF;           /* default page on light */
+  --bg-page-tint:         #F6F8FA;           /* subtly warmer page bg */
+  --bg-page-rec:          rgba(255, 255, 255, 0.92);
+  --bg-light-page:        #F0F4F7;           /* onboarding / landing equiv */
+  --bg-card-who:          #FFFFFF;           /* elevated card (on tint) */
+  --bg-card-alt:          #F6F8FA;           /* elevated card (on white) */
+  --bg-mycolor:           #EEF1F4;
+  --bg-selected:          #EEF4F6;
+  --bg-selected-intense:  #DCE7EC;
+  --bg-card-border:       rgba(15, 23, 31, 0.10);
+  --bg-divider:           rgba(15, 23, 31, 0.08);
+
+  /* Ink scale — mirrors the white-alpha scale token-for-token.
+     Use --fg-* on light exactly as you would on dark; the value
+     flips from white-alpha to black-alpha automatically. */
+  --fg-default:           #0F1720;           /* near-black */
+  --fg-90:                rgba(15, 23, 32, 0.90);
+  --fg-75:                rgba(15, 23, 32, 0.75);
+  --fg-60:                rgba(15, 23, 32, 0.60);
+  --fg-50:                rgba(15, 23, 32, 0.50);
+  --fg-35:                rgba(15, 23, 32, 0.35);
+  --fg-30:                rgba(15, 23, 32, 0.30);
+  --fg-25:                rgba(15, 23, 32, 0.25);
+  --fg-18:                rgba(15, 23, 32, 0.18);
+  --fg-15:                rgba(15, 23, 32, 0.15);
+  --fg-10:                rgba(15, 23, 32, 0.10);
+  --fg-06:                rgba(15, 23, 32, 0.06);
+  --fg-05:                rgba(15, 23, 32, 0.05);
+
+  /* Shadows — real on light. */
+  --shadow-glow-cyan:     0 0 0 1px rgba(1, 188, 215, 0.15), 0 4px 14px rgba(1, 188, 215, 0.18);
+  --shadow-glow-cyan-hard: 0 0 0 2px rgba(1, 188, 215, 0.25), 0 6px 20px rgba(1, 188, 215, 0.28);
+  --shadow-card:          0 1px 2px rgba(15, 23, 32, 0.04), 0 4px 16px rgba(15, 23, 32, 0.08);
+  --shadow-sheet:         0 -6px 24px rgba(15, 23, 32, 0.12);
+  --text-shadow-glow:     none;
+
+  /* Borders */
+  --border-hairline:      1px solid rgba(15, 23, 32, 0.08);
+  --border-subtle:        1px solid rgba(15, 23, 32, 0.14);
+  --border-input:         1px solid rgba(15, 23, 32, 0.22);
+  --border-cyan:          1px solid rgba(1, 188, 215, 0.35);
+
+  /* Gradients */
+  --gradient-profile:     linear-gradient(180deg, rgba(246, 248, 250, 0) 0%, rgba(246, 248, 250, 1) 100%);
+  --gradient-hero:        linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.85) 100%);
+}
+
+/* ==========================================================================
+   Semantic element styles
+   ========================================================================== */
+
+html, body {
+  background: var(--bg-page);
+  color: var(--fg-default);
+  font-family: var(--font-sans);
+  font-size: var(--fs-md);
+  line-height: 1.45;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, .h1 {
+  font-size: var(--fs-xl);
+  font-weight: var(--fw-bold);
+  color: var(--fg-default);
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+}
+
+h2, .h2 {
+  font-size: var(--fs-lg);
+  font-weight: var(--fw-bold);
+  color: var(--fg-default);
+  line-height: 1.25;
+}
+
+h3, .h3 {
+  font-size: var(--fs-md);
+  font-weight: var(--fw-bold);
+  color: var(--fg-default);
+}
+
+.title1 {               /* Theme.fonts.title1 */
+  font-size: var(--fs-md);
+  font-weight: var(--fw-bold);
+  color: var(--fg-default);
+}
+
+.subtitle {             /* Theme.fonts.subtitle */
+  font-size: var(--fs-md);
+  color: var(--fg-dark-light);
+}
+
+p, .body {
+  font-size: var(--fs-md);
+  color: var(--fg-default);
+}
+
+.body-sm {
+  font-size: var(--fs-sm);
+  color: var(--fg-90);
+}
+
+.meta {
+  font-size: var(--fs-xs);
+  color: var(--fg-50);
+}
+
+.meta-dim {
+  font-size: var(--fs-xs);
+  color: var(--fg-35);
+}
+
+.hero-stat {            /* 44px bold white — session card no-photo hero */
+  font-size: var(--fs-3xl);
+  font-weight: var(--fw-bold);
+  color: var(--fg-default);
+  line-height: 1;
+}
+
+.hero-unit {
+  font-size: var(--fs-xm);
+  font-weight: var(--fw-regular);
+  color: var(--fg-75);
+}
+
+.stat-value {
+  font-size: var(--fs-xm);
+  font-weight: var(--fw-bold);
+  color: var(--fg-default);
+}
+
+.stat-label {
+  font-size: 10px;
+  color: var(--fg-50);
+  margin-top: 2px;
+}

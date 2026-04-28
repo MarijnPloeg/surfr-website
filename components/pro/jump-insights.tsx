@@ -1,8 +1,10 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { TrendingUp, BarChart3, Award, Target, Zap } from "lucide-react";
+import { TrendingUp, BarChart3, Award, Target } from "lucide-react";
 import { Section } from "@/components/ui/section";
+import { Eyebrow } from "@/components/ui/eyebrow";
+import { SectionHeading } from "@/components/ui/headings";
 import { PhoneMockup } from "@/components/ui/phone-mockup";
 
 const insights = [
@@ -10,25 +12,25 @@ const insights = [
     icon: TrendingUp,
     title: "Jump Formula",
     description:
-      "Our proprietary scoring algorithm evaluates height, hang time, and technique to give each jump a comprehensive score.",
+      "A scoring algorithm developed with Mike MacDonald (GHWM). Evaluates height, hang time, and approach to give every jump a comprehensive score.",
   },
   {
     icon: BarChart3,
-    title: "Detailed Stats",
+    title: "Per-jump stats",
     description:
-      "Track your average jump height, max height, total airtime, and progression over sessions.",
+      "Average height, max height, total airtime, G-force at apex. Drill into a single jump or compare across a season.",
   },
   {
     icon: Award,
-    title: "Learn from the Pros",
+    title: "Read the pros",
     description:
-      "Compare your jump metrics with professional riders and understand what separates good from great.",
+      "Compare your numbers against pro reference profiles to see exactly what separates your jumps from theirs.",
   },
   {
     icon: Target,
-    title: "POP Chart",
+    title: "POP chart",
     description:
-      "Visualize your Power of Progression with our unique chart that tracks your improvement trajectory.",
+      "Power of Progression. Your improvement trajectory over weeks and seasons, in one chart.",
   },
 ];
 
@@ -37,31 +39,32 @@ export function JumpInsights() {
     <Section id="jump-insights">
       <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-20">
         <div>
-          <h2>
-            Want to jump{" "}
-            <span className="text-[var(--color-primary)]">higher</span>?
-          </h2>
-          <p className="mt-4 text-lg text-[var(--color-secondary)]">
-            Get unparalleled insights into your jumps. Together with Mike
-            MacDonald (GHWM) we developed a model that focuses on the essential
-            steps to get you jumping higher.
+          <Eyebrow>PRO Insights</Eyebrow>
+          <SectionHeading className="mt-5">
+            Want to jump <em>higher</em>?
+          </SectionHeading>
+          <p className="mt-5 max-w-[55ch] text-[17px] leading-relaxed text-(--color-ink-75)">
+            PRO Insights gives every jump a score, every session a curve, and every
+            season a story. The scoring model was developed in collaboration with
+            Mike MacDonald (GHWM), who knows what big-air actually requires.
           </p>
 
           <div className="mt-10 grid gap-6 sm:grid-cols-2">
             {insights.map((insight, i) => (
               <motion.div
                 key={insight.title}
-                initial={{ opacity: 0, y: 15 }}
+                initial={{ opacity: 0, y: 12 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.3, delay: i * 0.1 }}
+                transition={{ duration: 0.35, delay: i * 0.08 }}
               >
                 <insight.icon
                   size={20}
-                  className="text-[var(--color-primary)]"
+                  strokeWidth={1.75}
+                  className="text-(--color-cyan-ink)"
                 />
-                <h3 className="mt-2 text-base">{insight.title}</h3>
-                <p className="mt-1 text-sm text-[var(--color-secondary)]">
+                <h3 className="mt-2 text-[16px]">{insight.title}</h3>
+                <p className="mt-1.5 text-[14px] leading-relaxed text-(--color-ink-75)">
                   {insight.description}
                 </p>
               </motion.div>
@@ -70,22 +73,17 @@ export function JumpInsights() {
         </div>
 
         <motion.div
-          initial={{ opacity: 0, x: 30 }}
+          initial={{ opacity: 0, x: 20 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
+          transition={{ duration: 0.55, ease: "easeOut" }}
           className="flex justify-center"
         >
           <PhoneMockup
-            size="lg"
-            placeholder={
-              <div className="flex h-full w-full flex-col items-center justify-center bg-gradient-to-b from-[var(--color-primary)] to-[#0d8fa8]">
-                <Zap size={40} className="text-white/80" />
-                <span className="mt-3 text-sm font-medium text-white/60">
-                  Jump Insights
-                </span>
-              </div>
-            }
+            // screenshot="/screenshots/pro-jump-detail.png"
+            alt="Surfr PRO Insights — per-jump score with pro comparison"
+            fallbackDescribes="PRO Insights · per-jump score with POP chart and pro comparison"
+            className="w-[300px]"
           />
         </motion.div>
       </div>

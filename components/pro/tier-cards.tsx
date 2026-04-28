@@ -1,118 +1,71 @@
 "use client";
 
-import { motion } from "framer-motion";
 import { Section } from "@/components/ui/section";
-import { Button } from "@/components/ui/button";
-import { Check } from "lucide-react";
-import { PLUS_FEATURES, PRO_FEATURES, APP_STORE_URL } from "@/lib/constants";
+import { TierCard } from "@/components/ui/tier-card";
+import {
+  PLUS_FEATURES,
+  PRO_FEATURES,
+  PRICING,
+  APP_STORE_URL,
+} from "@/lib/constants";
+
+const FREE_FEATURES = [
+  "Basic GPS tracking",
+  "Phone & Garmin jump detection",
+  "3-hourly wind forecast",
+  "Spot discovery & search",
+  "Social feed, likes & comments",
+  "Strava export",
+] as const;
 
 export function TierCards() {
   return (
-    <Section alternate>
-      <div className="mx-auto grid max-w-4xl gap-6 md:grid-cols-2 md:items-start">
-        {/* Plus Card */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.4 }}
-          className="overflow-hidden rounded-2xl border border-[var(--color-border)] bg-white shadow-[var(--shadow-sm)]"
-        >
-          <div className="border-b border-[var(--color-border)] px-7 py-6">
-            <span className="inline-block rounded-full bg-[var(--color-plus)]/10 px-3 py-1 text-sm font-semibold text-[var(--color-plus)]">
-              Plus
-            </span>
-            <p className="mt-3 text-sm text-[var(--color-secondary)]">
-              Unlock the features that match your style
-            </p>
-          </div>
-          <div className="px-7 py-6">
-            <ul className="space-y-3">
-              {PLUS_FEATURES.map((feature) => (
-                <li
-                  key={feature}
-                  className="flex items-start gap-3 text-sm text-[var(--color-body)]"
-                >
-                  <Check
-                    size={16}
-                    className="mt-0.5 shrink-0 text-[var(--color-plus)]"
-                  />
-                  {feature}
-                </li>
-              ))}
-            </ul>
-          </div>
-          <div className="border-t border-[var(--color-border)] px-7 py-5">
-            <Button
-              href={APP_STORE_URL}
-              external
-              variant="secondary"
-              className="w-full"
-            >
-              Get Plus
-            </Button>
-            <p className="mt-2 text-center text-xs text-[var(--color-muted)]">
-              Try free for 2 weeks
-            </p>
-          </div>
-        </motion.div>
+    <Section id="tiers" alternate>
+      <div className="mx-auto grid max-w-5xl gap-6 md:grid-cols-3 md:items-stretch">
+        <TierCard
+          tier="free"
+          name="Free"
+          tagline="Track every session, at no cost."
+          features={FREE_FEATURES}
+          ctaLabel="Download Surfr"
+          ctaHref={APP_STORE_URL}
+          ctaExternal
+        />
 
-        {/* PRO Card (highlighted) */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.4, delay: 0.1 }}
-          className="overflow-hidden rounded-2xl border-2 border-[var(--color-primary)]/30 bg-white shadow-[var(--shadow-md)] md:-translate-y-2"
-        >
-          <div className="border-b border-[var(--color-border)] bg-[var(--color-accent-tint)] px-7 py-6">
-            <div className="flex items-center gap-2">
-              <span className="inline-block rounded-full bg-[var(--color-primary)]/10 px-3 py-1 text-sm font-semibold text-[var(--color-primary)]">
-                PRO
-              </span>
-              <span className="rounded-full bg-[var(--color-primary)] px-2 py-0.5 text-[10px] font-bold text-white">
-                POPULAR
-              </span>
-            </div>
-            <p className="mt-3 text-sm text-[var(--color-secondary)]">
-              Everything in Plus +
-            </p>
-          </div>
-          <div className="px-7 py-6">
-            <ul className="space-y-3">
-              {PRO_FEATURES.map((feature) => (
-                <li
-                  key={feature}
-                  className="flex items-start gap-3 text-sm text-[var(--color-body)]"
-                >
-                  <Check
-                    size={16}
-                    className="mt-0.5 shrink-0 text-[var(--color-primary)]"
-                  />
-                  {feature}
-                </li>
-              ))}
-            </ul>
-          </div>
-          <div className="border-t border-[var(--color-border)] px-7 py-5">
-            <Button
-              href={APP_STORE_URL}
-              external
-              variant="primary"
-              className="w-full"
-            >
-              Get PRO
-            </Button>
-            <p className="mt-2 text-center text-xs text-[var(--color-muted)]">
-              Try free for 2 weeks
-            </p>
-          </div>
-        </motion.div>
+        <TierCard
+          tier="plus"
+          name="Plus"
+          tagline="More signal, less noise."
+          monthlyPrice={PRICING.plus.monthly}
+          yearlyPrice={PRICING.plus.yearly}
+          yearlySavings={PRICING.plus.yearlySavings}
+          features={PLUS_FEATURES}
+          ctaLabel="Get Plus"
+          ctaHref={APP_STORE_URL}
+          ctaExternal
+        />
+
+        <TierCard
+          tier="pro"
+          name="PRO"
+          tagline="Engineered for progression."
+          monthlyPrice={PRICING.pro.monthly}
+          yearlyPrice={PRICING.pro.yearly}
+          yearlySavings={PRICING.pro.yearlySavings}
+          features={PRO_FEATURES}
+          ctaLabel="Get PRO"
+          ctaHref={APP_STORE_URL}
+          ctaExternal
+          highlight
+          badge="Most popular"
+        />
       </div>
 
-      <p className="mt-8 text-center text-sm text-[var(--color-muted)]">
-        All purchases through App Store / Google Play. Cancel anytime.
-      </p>
+      <div className="mx-auto mt-8 max-w-2xl space-y-1.5 text-center text-[13px] text-(--color-ink-50)">
+        <p>{PRICING.trialDays}-day free trial on Plus and PRO. Cancel any time.</p>
+        <p>{PRICING.currencyNote}</p>
+        <p>All purchases through the App Store or Google Play.</p>
+      </div>
     </Section>
   );
 }

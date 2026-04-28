@@ -3,6 +3,8 @@
 import { motion } from "framer-motion";
 import { Watch, Smartphone, Activity } from "lucide-react";
 import { Section } from "@/components/ui/section";
+import { Eyebrow } from "@/components/ui/eyebrow";
+import { SectionHeading } from "@/components/ui/headings";
 import { WatchMockup } from "@/components/ui/watch-mockup";
 
 const devices = [
@@ -10,19 +12,19 @@ const devices = [
     icon: Watch,
     name: "Apple Watch",
     description:
-      "Full session tracking with real-time jump detection on your wrist.",
+      "Full standalone session tracking with real-time jump detection on your wrist. Series 4+.",
   },
   {
     icon: Activity,
     name: "Garmin",
     description:
-      "Sync your Garmin data seamlessly with Surfr for deep analysis.",
+      "Connect IQ app syncs your Garmin sessions seamlessly with Surfr for deep analysis.",
   },
   {
     icon: Smartphone,
-    name: "Wear OS",
+    name: "Wear OS 2.0",
     description:
-      "Full WearOS 2.0 companion app for Android smartwatches.",
+      "Full companion app for Android smartwatches with live jump detection and metrics.",
   },
 ];
 
@@ -30,25 +32,29 @@ export function WatchTracking() {
   return (
     <Section id="watch-tracking" alternate>
       <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-20">
-        {/* Watch mockup */}
         <motion.div
-          initial={{ opacity: 0, x: -30 }}
+          initial={{ opacity: 0, x: -20 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
+          transition={{ duration: 0.55, ease: "easeOut" }}
           className="flex justify-center"
         >
-          <WatchMockup size="lg" />
+          <WatchMockup
+            // screenshot="/screenshots/watch-session.png"
+            alt="Apple Watch — live session metrics"
+            fallbackDescribes="Apple Watch face · live session metrics during recording"
+            className="w-[200px]"
+          />
         </motion.div>
 
         <div>
-          <h2>
-            Leave your phone on the{" "}
-            <span className="text-[var(--color-primary)]">beach</span>
-          </h2>
-          <p className="mt-4 text-lg text-[var(--color-secondary)]">
-            Get accurate measurements right on your wrist. You don&apos;t even
-            need to bring your phone — all tracking is done by the watch itself.
+          <Eyebrow>Watch tracking</Eyebrow>
+          <SectionHeading className="mt-5">
+            Leave your phone <em>on the beach</em>.
+          </SectionHeading>
+          <p className="mt-5 max-w-[55ch] text-[17px] leading-relaxed text-(--color-ink-75)">
+            Get accurate measurements right on your wrist. No phone needed.
+            Tracking happens entirely on the watch.
           </p>
 
           <div className="mt-10 space-y-6">
@@ -58,18 +64,15 @@ export function WatchTracking() {
                 initial={{ opacity: 0, x: 20 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.3, delay: i * 0.1 }}
+                transition={{ duration: 0.4, delay: i * 0.08 }}
                 className="flex items-start gap-4"
               >
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-[var(--color-accent-tint)]">
-                  <device.icon
-                    size={20}
-                    className="text-[var(--color-primary)]"
-                  />
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-(--radius-md) bg-(--color-cyan-15) text-(--color-cyan-ink)">
+                  <device.icon size={20} strokeWidth={1.75} />
                 </div>
                 <div>
-                  <h3 className="text-base">{device.name}</h3>
-                  <p className="mt-1 text-sm text-[var(--color-secondary)]">
+                  <h3 className="text-[18px]">{device.name}</h3>
+                  <p className="mt-1.5 text-[14px] leading-relaxed text-(--color-ink-75)">
                     {device.description}
                   </p>
                 </div>

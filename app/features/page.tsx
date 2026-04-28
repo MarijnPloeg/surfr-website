@@ -8,7 +8,7 @@ import { DownloadCTA } from "@/components/home/download-cta";
 export const metadata: Metadata = {
   title: "Features",
   description:
-    "Track sessions with jump detection, discover 5000+ spots, compete on leaderboards, and connect with riders worldwide. Everything you need on the water.",
+    "Track jumps, find spots, ride a forecast that's actually useful, and see where you stand. Six things Surfr does well, and the technical detail behind each one.",
 };
 
 export default function FeaturesPage() {

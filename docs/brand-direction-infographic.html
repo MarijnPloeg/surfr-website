@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Surfr — Brand Direction</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --primary: #1EB7D8;
+    --primary-light: #5DD3EF;
+    --primary-dim: rgba(30, 183, 216, 0.12);
+    --dark: #0A1929;
+    --dark-surface: #0F2236;
+    --dark-border: rgba(255, 255, 255, 0.08);
+    --text: #E8EEF4;
+    --muted: #8A9AAE;
+    --danger: #FF6B7A;
+    --danger-dim: rgba(255, 107, 122, 0.1);
+    --success: #4ADE80;
+    --success-dim: rgba(74, 222, 128, 0.1);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Outfit', -apple-system, sans-serif;
+    background: var(--dark);
+    color: var(--text);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .container {
+    max-width: 920px;
+    margin: 0 auto;
+    padding: 56px 32px 96px;
+  }
+
+  /* ========== HEADER ========== */
+  .eyebrow {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--primary);
+    margin-bottom: 16px;
+  }
+
+  h1 {
+    font-size: 44px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    margin-bottom: 12px;
+  }
+
+  .lede {
+    font-size: 18px;
+    color: var(--muted);
+    max-width: 600px;
+    line-height: 1.55;
+  }
+
+  /* ========== SECTIONS ========== */
+  section {
+    margin-top: 72px;
+  }
+
+  .section-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .section-label::before {
+    content: '';
+    width: 24px;
+    height: 1px;
+    background: var(--primary);
+  }
+
+  h2 {
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    line-height: 1.2;
+    margin-bottom: 24px;
+  }
+
+  /* ========== NARRATIVE LINE ========== */
+  .narrative {
+    background: linear-gradient(135deg, rgba(30,183,216,0.08), rgba(30,183,216,0.02));
+    border: 1px solid var(--dark-border);
+    border-left: 3px solid var(--primary);
+    border-radius: 16px;
+    padding: 36px 36px 32px;
+    position: relative;
+  }
+
+  .narrative-quote {
+    font-size: 26px;
+    font-weight: 600;
+    line-height: 1.35;
+    letter-spacing: -0.01em;
+    color: #fff;
+  }
+
+  .narrative-meta {
+    margin-top: 24px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+
+  .narrative-meta-item {
+    border-top: 1px solid var(--dark-border);
+    padding-top: 14px;
+  }
+
+  .narrative-meta-key {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--primary-light);
+    margin-bottom: 4px;
+  }
+
+  .narrative-meta-val {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.45;
+  }
+
+  /* ========== PILLARS ========== */
+  .pillars {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+
+  .pillar {
+    background: var(--dark-surface);
+    border: 1px solid var(--dark-border);
+    border-radius: 14px;
+    padding: 24px;
+    transition: border-color 0.2s;
+  }
+
+  .pillar:hover {
+    border-color: rgba(30,183,216,0.3);
+  }
+
+  .pillar-num {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--primary);
+    letter-spacing: 0.1em;
+  }
+
+  .pillar-title {
+    font-size: 18px;
+    font-weight: 700;
+    margin: 8px 0 12px;
+    line-height: 1.25;
+  }
+
+  .pillar-desc {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.55;
+  }
+
+  .pillar-divider {
+    height: 1px;
+    background: var(--dark-border);
+    margin: 16px 0;
+  }
+
+  .pillar-kill-label {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--danger);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .pillar-kill {
+    font-size: 12px;
+    color: var(--muted);
+    font-style: italic;
+  }
+
+  /* ========== TENSION ========== */
+  .tension {
+    background: var(--dark-surface);
+    border: 1px solid var(--dark-border);
+    border-radius: 14px;
+    padding: 24px 28px;
+    margin-top: 16px;
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  .tension strong {
+    color: var(--text);
+    font-weight: 600;
+  }
+
+  /* ========== HERO RULE ========== */
+  .hero-rule {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  .compare-card {
+    border-radius: 14px;
+    padding: 24px;
+  }
+
+  .compare-card.off {
+    background: var(--danger-dim);
+    border: 1px solid rgba(255, 107, 122, 0.25);
+  }
+
+  .compare-card.on {
+    background: var(--success-dim);
+    border: 1px solid rgba(74, 222, 128, 0.25);
+  }
+
+  .compare-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  .compare-card.off .compare-label { color: var(--danger); }
+  .compare-card.on .compare-label { color: var(--success); }
+
+  .compare-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .compare-list li {
+    font-size: 14px;
+    line-height: 1.45;
+    padding-left: 20px;
+    position: relative;
+  }
+
+  .compare-card.off li::before {
+    content: '×';
+    position: absolute;
+    left: 0;
+    color: var(--danger);
+    font-weight: 700;
+  }
+
+  .compare-card.on li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: var(--success);
+    font-weight: 700;
+  }
+
+  /* ========== FORBIDDEN ========== */
+  .swap-table {
+    background: var(--dark-surface);
+    border: 1px solid var(--dark-border);
+    border-radius: 14px;
+    overflow: hidden;
+  }
+
+  .swap-row {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 20px;
+    padding: 16px 24px;
+    border-bottom: 1px solid var(--dark-border);
+    align-items: center;
+  }
+
+  .swap-row:last-child {
+    border-bottom: none;
+  }
+
+  .swap-from {
+    font-size: 14px;
+    color: var(--muted);
+    text-decoration: line-through;
+    text-decoration-color: rgba(255, 107, 122, 0.5);
+  }
+
+  .swap-arrow {
+    color: var(--primary);
+    font-size: 14px;
+  }
+
+  .swap-to {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text);
+  }
+
+  /* ========== PAGE JOBS ========== */
+  .pages {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .page-row {
+    display: grid;
+    grid-template-columns: 130px 1fr;
+    gap: 24px;
+    padding: 18px 24px;
+    background: var(--dark-surface);
+    border: 1px solid var(--dark-border);
+    border-radius: 12px;
+    align-items: start;
+  }
+
+  .page-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--primary);
+  }
+
+  .page-job {
+    font-size: 14px;
+    color: var(--text);
+    line-height: 1.5;
+  }
+
+  .page-job-takeaway {
+    display: block;
+    font-size: 13px;
+    color: var(--muted);
+    margin-top: 6px;
+    font-style: italic;
+  }
+
+  /* ========== TEST ========== */
+  .test-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+
+  .test-q {
+    background: var(--dark-surface);
+    border: 1px solid var(--dark-border);
+    border-radius: 12px;
+    padding: 18px 20px;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+  }
+
+  .test-num {
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: var(--primary-dim);
+    color: var(--primary);
+    font-size: 12px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .test-text {
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--text);
+  }
+
+  /* ========== FOOTER ========== */
+  footer {
+    margin-top: 72px;
+    padding-top: 32px;
+    border-top: 1px solid var(--dark-border);
+    text-align: center;
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  footer a {
+    color: var(--primary);
+    text-decoration: none;
+  }
+
+  /* ========== RESPONSIVE ========== */
+  @media (max-width: 720px) {
+    .container { padding: 40px 20px 60px; }
+    h1 { font-size: 32px; }
+    .narrative { padding: 24px; }
+    .narrative-quote { font-size: 20px; }
+    .narrative-meta { grid-template-columns: 1fr; }
+    .pillars { grid-template-columns: 1fr; }
+    .hero-rule { grid-template-columns: 1fr; }
+    .swap-row { grid-template-columns: 1fr; gap: 6px; padding: 14px 18px; }
+    .swap-arrow { display: none; }
+    .swap-from { font-size: 13px; }
+    .page-row { grid-template-columns: 1fr; gap: 6px; }
+    .test-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- HEADER -->
+  <header>
+    <div class="eyebrow">Brand Direction · April 2026</div>
+    <h1>Surfr — the product story</h1>
+    <p class="lede">
+      A one-page summary of what the website is supposed to feel like, who the hero is,
+      and how to tell when copy is on or off-brand.
+    </p>
+  </header>
+
+  <!-- THE LINE -->
+  <section>
+    <div class="section-label">The single narrative line</div>
+    <div class="narrative">
+      <p class="narrative-quote">
+        "Every session is worth measuring —<br>and worth sharing with the people who get it."
+      </p>
+      <div class="narrative-meta">
+        <div class="narrative-meta-item">
+          <div class="narrative-meta-key">measuring</div>
+          <div class="narrative-meta-val">Technical excellence &amp; accuracy</div>
+        </div>
+        <div class="narrative-meta-item">
+          <div class="narrative-meta-key">every</div>
+          <div class="narrative-meta-val">Inclusivity. First jump and 30m record both count.</div>
+        </div>
+        <div class="narrative-meta-item">
+          <div class="narrative-meta-key">people who get it</div>
+          <div class="narrative-meta-val">Harbor the community</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PILLARS -->
+  <section>
+    <div class="section-label">The three pillars</div>
+    <div class="pillars">
+      <div class="pillar">
+        <div class="pillar-num">01</div>
+        <div class="pillar-title">Harbor the community</div>
+        <div class="pillar-desc">A place riders return to, not just an app they record with. The kite world checks in here.</div>
+        <div class="pillar-divider"></div>
+        <div class="pillar-kill-label">Kills</div>
+        <div class="pillar-kill">Loneliness on the water. Sessions disappearing into a camera roll.</div>
+      </div>
+      <div class="pillar">
+        <div class="pillar-num">02</div>
+        <div class="pillar-title">Inclusivity</div>
+        <div class="pillar-desc">First session or 30m session — same map. Everyone has a stat that matters to them.</div>
+        <div class="pillar-divider"></div>
+        <div class="pillar-kill-label">Kills</div>
+        <div class="pillar-kill">The intimidation of pro-only highlight reels.</div>
+      </div>
+      <div class="pillar">
+        <div class="pillar-num">03</div>
+        <div class="pillar-title">Technical excellence</div>
+        <div class="pillar-desc">Measured, not estimated. Numbers a rider would defend in court. Engineering as care.</div>
+        <div class="pillar-divider"></div>
+        <div class="pillar-kill-label">Kills</div>
+        <div class="pillar-kill">Vague "fitness app" vibes. Untrustworthy data.</div>
+      </div>
+    </div>
+    <div class="tension">
+      The pillars are in <strong>productive tension</strong>. Leaderboards risk excluding new riders. Pure inclusivity dilutes the technical claim. <strong>The story job is to hold all three at once</strong> — the way Nike held "elite performance" and "everyone is an athlete" simultaneously.
+    </div>
+  </section>
+
+  <!-- RIDER IS HERO -->
+  <section>
+    <div class="section-label">Who is the hero</div>
+    <h2>The rider is the hero. The app is the tool.</h2>
+    <div class="hero-rule">
+      <div class="compare-card off">
+        <div class="compare-label">Off-brand · app-as-hero</div>
+        <ul class="compare-list">
+          <li>Surfr tracks every jump.</li>
+          <li>The app you need on the water.</li>
+          <li>Built for kitesurfers.</li>
+        </ul>
+      </div>
+      <div class="compare-card on">
+        <div class="compare-label">On-brand · rider-as-hero</div>
+        <ul class="compare-list">
+          <li>Know it happened.</li>
+          <li>Find your tribe by the numbers.</li>
+          <li>Don't miss the day.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- FORBIDDEN -->
+  <section>
+    <div class="section-label">Slop swaps</div>
+    <h2>Specifics defeat slop.</h2>
+    <div class="swap-table">
+      <div class="swap-row">
+        <div class="swap-from">"Built by riders, for riders"</div>
+        <div class="swap-arrow">→</div>
+        <div class="swap-to">A founder photo + the year you started</div>
+      </div>
+      <div class="swap-row">
+        <div class="swap-from">"Don't take our word for it"</div>
+        <div class="swap-arrow">→</div>
+        <div class="swap-to">A real quote, named, with a real spot</div>
+      </div>
+      <div class="swap-row">
+        <div class="swap-from">"All-in-one app"</div>
+        <div class="swap-arrow">→</div>
+        <div class="swap-to">The one job this section actually does</div>
+      </div>
+      <div class="swap-row">
+        <div class="swap-from">"99% of active users"</div>
+        <div class="swap-arrow">→</div>
+        <div class="swap-to">One real customer or no testimonial at all</div>
+      </div>
+      <div class="swap-row">
+        <div class="swap-from">"Advanced algorithms"</div>
+        <div class="swap-arrow">→</div>
+        <div class="swap-to">The algorithm's name. ±height accuracy. 1Hz GPS.</div>
+      </div>
+      <div class="swap-row">
+        <div class="swap-from">"Seamlessly", "effortlessly", "powerful"</div>
+        <div class="swap-arrow">→</div>
+        <div class="swap-to">Delete. Use the noun. Trust the verb.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PAGE JOBS -->
+  <section>
+    <div class="section-label">Page story jobs</div>
+    <h2>Every page does one job.</h2>
+    <div class="pages">
+      <div class="page-row">
+        <div class="page-name">Home</div>
+        <div class="page-job">Frame the world. Promise the feeling.<span class="page-job-takeaway">"Surfr is where my session belongs."</span></div>
+      </div>
+      <div class="page-row">
+        <div class="page-name">Features</div>
+        <div class="page-job">Prove technical excellence with stories, not specs.<span class="page-job-takeaway">"These people are obsessed with getting it right."</span></div>
+      </div>
+      <div class="page-row">
+        <div class="page-name">Spots</div>
+        <div class="page-job">Make the map feel inhabited.<span class="page-job-takeaway">"Real riders have been here. I want to be next."</span></div>
+      </div>
+      <div class="page-row">
+        <div class="page-name">Leaderboard</div>
+        <div class="page-job">Progression for everyone — not a pro highlights reel.<span class="page-job-takeaway">"There's a board where I count."</span></div>
+      </div>
+      <div class="page-row">
+        <div class="page-name">Roadmap</div>
+        <div class="page-job">Trust through transparency.<span class="page-job-takeaway">"They ship in the open. They listen."</span></div>
+      </div>
+      <div class="page-row">
+        <div class="page-name">Team</div>
+        <div class="page-job">The why behind the why.<span class="page-job-takeaway">"Built by people who actually ride."</span></div>
+      </div>
+      <div class="page-row">
+        <div class="page-name">Pro / Pricing</div>
+        <div class="page-job">Value, not feature gates.<span class="page-job-takeaway">"Plus pays for itself in one good day."</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- THE TEST -->
+  <section>
+    <div class="section-label">Pre-publish test</div>
+    <h2>Six questions before any copy ships.</h2>
+    <div class="test-grid">
+      <div class="test-q">
+        <div class="test-num">1</div>
+        <div class="test-text">Does it serve the single narrative line?</div>
+      </div>
+      <div class="test-q">
+        <div class="test-num">2</div>
+        <div class="test-text">Does it pass the slop list?</div>
+      </div>
+      <div class="test-q">
+        <div class="test-num">3</div>
+        <div class="test-text">Is the rider the hero, not the app?</div>
+      </div>
+      <div class="test-q">
+        <div class="test-num">4</div>
+        <div class="test-text">Is there a specific, real, textured detail in here?</div>
+      </div>
+      <div class="test-q">
+        <div class="test-num">5</div>
+        <div class="test-text">Would a first-time rider feel welcome reading this?</div>
+      </div>
+      <div class="test-q">
+        <div class="test-num">6</div>
+        <div class="test-text">Could a competitor's brand team have written this exact sentence?</div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    Reference: <a href="brand-and-copy-reference.md">brand-and-copy-reference.md</a> · Inspired by Greg Hoffman, <em>Emotion by Design</em>
+  </footer>
+
+</div>
+</body>
+</html>

@@ -1,17 +1,17 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Section } from "@/components/ui/section";
-import { Badge } from "@/components/ui/badge";
+import { Wind, BarChart3, MapPin, Watch, Headphones, Navigation } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Eyebrow } from "@/components/ui/eyebrow";
+import { SectionHeading } from "@/components/ui/headings";
 import { PhoneMockup } from "@/components/ui/phone-mockup";
 import { PRICING_TEASER } from "@/lib/constants";
-import { Wind, BarChart3, MapPin, Watch, Headphones, Navigation, Zap } from "lucide-react";
 
 const plusHighlights = [
   { icon: Wind, label: "Wind forecasts & alerts" },
-  { icon: BarChart3, label: "Full session details" },
-  { icon: MapPin, label: "Spot statistics" },
+  { icon: BarChart3, label: "Full session analytics" },
+  { icon: MapPin, label: "Live Map & spot statistics" },
 ] as const;
 
 const proHighlights = [
@@ -22,92 +22,92 @@ const proHighlights = [
 
 export function ProTeaser() {
   return (
-    <Section>
+    <section className="relative overflow-hidden py-20 md:py-28 lg:py-32">
+      {/* Subtle cyan corner-glow — quieter than Wind Games band */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute -bottom-32 -right-32 h-[420px] w-[420px] rounded-full bg-(--color-cyan) opacity-[0.10] blur-[120px]"
+      />
+      <div className="relative mx-auto max-w-[1200px] px-6 md:px-8">
       <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-20">
-        {/* Left: Phone mockup */}
         <motion.div
-          initial={{ opacity: 0, x: -30 }}
+          initial={{ opacity: 0, x: -20 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="flex justify-center"
+          transition={{ duration: 0.55, ease: "easeOut" }}
+          className="flex justify-center lg:order-2 lg:justify-end"
         >
           <PhoneMockup
-            size="lg"
-            placeholder={
-              <div className="flex h-full w-full flex-col items-center justify-center bg-gradient-to-b from-[var(--color-dark)] to-[var(--color-dark-surface)]">
-                <span className="text-xs font-bold uppercase tracking-widest text-[var(--color-primary)]">
-                  PRO
-                </span>
-                <Zap
-                  size={48}
-                  className="mt-4 text-[var(--color-primary)]"
-                  strokeWidth={1}
-                />
-              </div>
-            }
+            // screenshot="/screenshots/pro-insights.png"
+            alt="Surfr PRO Insights. Per-jump score with POP chart"
+            fallbackDescribes="PRO Insights screen · per-jump score with POP chart"
+            className="w-[280px]"
           />
         </motion.div>
 
-        {/* Right: Copy */}
         <motion.div
-          initial={{ opacity: 0, x: 30 }}
+          initial={{ opacity: 0, x: 20 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.1 }}
+          transition={{ duration: 0.55, ease: "easeOut", delay: 0.05 }}
+          className="lg:order-1"
         >
-          <Badge>{PRICING_TEASER.badge}</Badge>
-          <h2 className="mt-4">{PRICING_TEASER.headline}</h2>
-          <p className="mt-4 text-lg text-[var(--color-secondary)]">
+          <Eyebrow>{PRICING_TEASER.eyebrow}</Eyebrow>
+          <SectionHeading className="mt-5">
+            <span
+              dangerouslySetInnerHTML={{ __html: PRICING_TEASER.headlineHtml }}
+            />
+          </SectionHeading>
+          <p className="mt-5 max-w-[55ch] text-[17px] leading-relaxed text-(--color-ink-75)">
             {PRICING_TEASER.description}
           </p>
 
           <div className="mt-8 grid gap-6 sm:grid-cols-2">
-            {/* Plus highlights */}
+            {/* Plus column */}
             <div>
-              <span className="text-sm font-semibold text-[var(--color-plus)]">
+              <span className="font-[family-name:var(--font-roboto-condensed)] text-[12px] font-bold uppercase tracking-[0.18em] text-(--color-tier-plus)">
                 Plus
               </span>
-              <div className="mt-3 space-y-3">
+              <ul className="mt-3 space-y-2.5">
                 {plusHighlights.map(({ icon: Icon, label }) => (
-                  <div key={label} className="flex items-center gap-2.5">
-                    <Icon size={15} className="shrink-0 text-[var(--color-plus)]" />
-                    <span className="text-sm text-[var(--color-body)]">
-                      {label}
-                    </span>
-                  </div>
+                  <li
+                    key={label}
+                    className="flex items-center gap-2.5 text-[14px] text-(--color-ink-90)"
+                  >
+                    <Icon size={15} className="shrink-0 text-(--color-tier-plus)" />
+                    {label}
+                  </li>
                 ))}
-              </div>
+              </ul>
             </div>
 
-            {/* PRO highlights */}
+            {/* PRO column */}
             <div>
-              <span className="text-sm font-semibold text-[var(--color-primary)]">
+              <span className="font-[family-name:var(--font-roboto-condensed)] text-[12px] font-bold uppercase tracking-[0.18em] text-(--color-cyan-ink)">
                 PRO
               </span>
-              <div className="mt-3 space-y-3">
+              <ul className="mt-3 space-y-2.5">
                 {proHighlights.map(({ icon: Icon, label }) => (
-                  <div key={label} className="flex items-center gap-2.5">
-                    <Icon
-                      size={15}
-                      className="shrink-0 text-[var(--color-primary)]"
-                    />
-                    <span className="text-sm text-[var(--color-body)]">
-                      {label}
-                    </span>
-                  </div>
+                  <li
+                    key={label}
+                    className="flex items-center gap-2.5 text-[14px] text-(--color-ink-90)"
+                  >
+                    <Icon size={15} className="shrink-0 text-(--color-cyan-ink)" />
+                    {label}
+                  </li>
                 ))}
-              </div>
+              </ul>
             </div>
           </div>
 
-          <div className="mt-8">
+          <div className="mt-9">
             <Button href="/pro" variant="primary" size="lg">
               {PRICING_TEASER.cta}
             </Button>
           </div>
         </motion.div>
       </div>
-    </Section>
+      </div>
+    </section>
   );
 }

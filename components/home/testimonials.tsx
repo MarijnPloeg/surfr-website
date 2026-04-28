@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Quote } from "lucide-react";
+import { Quote, MapPin } from "lucide-react";
 import { Section } from "@/components/ui/section";
 import { SectionHeader } from "@/components/ui/section-header";
 import { TESTIMONIALS } from "@/lib/constants";
@@ -10,49 +10,55 @@ export function Testimonials() {
   return (
     <Section alternate>
       <SectionHeader
-        badge="Testimonials"
-        title="Don't take our word for it"
-        description="Trusted by professional athletes, competition organizers, and riders in 120+ countries."
+        eyebrow="Riders"
+        title={
+          <>
+            What riders <em>actually</em> say.
+          </>
+        }
+        description="Two real quotes from people we know personally. The third spot is open. See docs/INPUT_NEEDED.md."
       />
 
-      <div className="mt-16 grid gap-8 md:grid-cols-3">
-        {TESTIMONIALS.map((testimonial, i) => (
-          <motion.div
-            key={testimonial.author}
-            initial={{ opacity: 0, y: 20 }}
+      <div className="mx-auto mt-16 grid max-w-5xl gap-6 md:grid-cols-2">
+        {TESTIMONIALS.map((t, i) => (
+          <motion.figure
+            key={t.author}
+            initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.4, delay: i * 0.1 }}
-            className={`rounded-2xl bg-white p-8 shadow-[var(--shadow-sm)] ${
-              i === 1 ? "md:-translate-y-4 md:shadow-[var(--shadow-md)]" : ""
-            }`}
+            transition={{ duration: 0.45, delay: i * 0.08 }}
+            className="rounded-(--radius-md) border border-(--color-card-border) bg-(--color-card) p-8 shadow-[var(--shadow-card)]"
           >
             <Quote
               size={28}
-              className="text-[var(--color-primary)] opacity-30"
+              className="text-(--color-cyan-ink)"
+              strokeWidth={1.5}
             />
-            <p className="mt-4 leading-relaxed text-[var(--color-secondary)]">
-              &ldquo;{testimonial.quote}&rdquo;
-            </p>
-            <div className="mt-6 flex items-center gap-3 border-t border-[var(--color-border)] pt-5">
-              {/* Avatar placeholder */}
-              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-[var(--color-primary)] to-[#0d8fa8] text-sm font-bold text-white">
-                {testimonial.author
+            <blockquote className="mt-4 text-[16px] leading-relaxed text-(--color-ink-90)">
+              &ldquo;{t.quote}&rdquo;
+            </blockquote>
+            <figcaption className="mt-6 flex items-center gap-3 border-t border-(--color-divider) pt-5">
+              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-(--color-cyan-15) text-[13px] font-bold text-(--color-cyan-ink)">
+                {t.author
                   .split(" ")
                   .map((n) => n[0])
-                  .join("")
-                  .slice(0, 2)}
+                  .slice(0, 2)
+                  .join("")}
               </div>
               <div>
-                <p className="text-sm font-semibold text-[var(--color-dark)]">
-                  {testimonial.author}
+                <p className="text-[14px] font-semibold text-(--color-ink)">
+                  {t.author}
                 </p>
-                <p className="text-xs text-[var(--color-muted)]">
-                  {testimonial.role}
-                </p>
+                <p className="text-[12px] text-(--color-ink-60)">{t.role}</p>
               </div>
-            </div>
-          </motion.div>
+              {t.spot && (
+                <span className="ml-auto inline-flex items-center gap-1 text-[12px] text-(--color-ink-50)">
+                  <MapPin size={12} />
+                  {t.spot}
+                </span>
+              )}
+            </figcaption>
+          </motion.figure>
         ))}
       </div>
     </Section>

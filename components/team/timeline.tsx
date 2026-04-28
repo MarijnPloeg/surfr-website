@@ -3,75 +3,44 @@
 import { motion } from "framer-motion";
 import { Section } from "@/components/ui/section";
 import { SectionHeader } from "@/components/ui/section-header";
-
-const milestones = [
-  {
-    year: "2019",
-    title: "Founded",
-    description:
-      "Surfr launched as the first app to accurately track kitesurfing jump heights using just a phone.",
-  },
-  {
-    year: "2021",
-    title: "10K Users",
-    description:
-      "Reached 10,000 active riders and launched Apple Watch support for wrist-only tracking.",
-  },
-  {
-    year: "2023",
-    title: "50K Users",
-    description:
-      "Became the official tracking app for the Big Air Kite League and GKA competitions.",
-  },
-  {
-    year: "2024",
-    title: "100K Users",
-    description:
-      "Hit 100,000 active riders across 120+ countries with 1M+ sessions tracked.",
-  },
-  {
-    year: "2026",
-    title: "Surfr 4.0",
-    description:
-      "Complete redesign with social feeds, new Discover tab, WearOS 2.0, and smart wind intelligence.",
-  },
-] as const;
+import { TEAM_TIMELINE } from "@/lib/constants";
 
 export function TeamTimeline() {
   return (
     <Section alternate>
       <SectionHeader
-        badge="Our Journey"
-        title="From side project to global community"
+        eyebrow="Timeline"
+        title={
+          <>
+            From side project to <em>global community</em>.
+          </>
+        }
       />
 
       <div className="mx-auto mt-16 max-w-2xl">
-        {milestones.map((milestone, i) => (
+        {TEAM_TIMELINE.map((m, i) => (
           <motion.div
-            key={milestone.year}
-            initial={{ opacity: 0, x: -20 }}
+            key={m.year}
+            initial={{ opacity: 0, x: -16 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.4, delay: i * 0.1 }}
             className="relative flex gap-6 pb-10 last:pb-0"
           >
-            {/* Timeline line */}
             <div className="flex flex-col items-center">
-              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[var(--color-primary)] text-xs font-bold text-white">
-                {milestone.year.slice(2)}
+              <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-(--color-cyan) text-[12px] font-bold text-black shadow-[var(--shadow-cyan-soft)]">
+                {m.year.slice(2)}
               </div>
-              {i < milestones.length - 1 && (
-                <div className="w-px grow bg-[var(--color-border)]" />
+              {i < TEAM_TIMELINE.length - 1 && (
+                <div className="w-px grow bg-(--color-divider)" />
               )}
             </div>
-
-            {/* Content */}
             <div className="pb-2 pt-1.5">
-              <h3 className="text-base">
-                {milestone.year} — {milestone.title}
+              <h3 className="text-[18px]">
+                {m.year} · {m.title}
               </h3>
-              <p className="mt-1 text-sm text-[var(--color-secondary)]">
-                {milestone.description}
+              <p className="mt-1.5 text-[15px] leading-relaxed text-(--color-ink-75)">
+                {m.description}
               </p>
             </div>
           </motion.div>

@@ -1,57 +1,46 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Badge } from "@/components/ui/badge";
+import { Eyebrow } from "@/components/ui/eyebrow";
+import { SectionHeading } from "@/components/ui/headings";
+import { Lede } from "@/components/ui/headings";
 
 interface SectionHeaderProps {
-  badge?: string;
+  eyebrow?: string;
+  /** Pass a string with <em>...</em> for the italic-cyan accent. */
   title: string | React.ReactNode;
-  description?: string;
+  description?: string | React.ReactNode;
   align?: "center" | "left";
-  dark?: boolean;
   className?: string;
 }
 
+/**
+ * Canonical section opener: Eyebrow + SectionHeading + Lede.
+ * Use plain HTML <em> inside the title to get the italic-cyan accent —
+ * styled globally in globals.css.
+ */
 export function SectionHeader({
-  badge,
+  eyebrow,
   title,
   description,
   align = "center",
-  dark = false,
   className = "",
 }: SectionHeaderProps) {
   const alignClass = align === "center" ? "text-center mx-auto" : "text-left";
+  const ledeAlign = align === "center" ? "mx-auto" : "";
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
+      initial={{ opacity: 0, y: 16 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-50px" }}
-      transition={{ duration: 0.5 }}
-      className={`max-w-2xl ${alignClass} ${className}`}
+      viewport={{ once: true, margin: "-40px" }}
+      transition={{ duration: 0.5, ease: "easeOut" }}
+      className={`max-w-3xl ${alignClass} ${className}`}
     >
-      {badge && (
-        <Badge
-          className={
-            dark
-              ? "bg-[var(--color-primary)]/10 text-[var(--color-primary-light)]"
-              : ""
-          }
-        >
-          {badge}
-        </Badge>
-      )}
-      <h2
-        className={`${badge ? "mt-4" : ""} ${dark ? "text-white" : "text-[var(--color-dark)]"}`}
-      >
-        {title}
-      </h2>
+      {eyebrow && <Eyebrow>{eyebrow}</Eyebrow>}
+      <SectionHeading className={eyebrow ? "mt-5" : ""}>{title}</SectionHeading>
       {description && (
-        <p
-          className={`mt-4 text-lg ${dark ? "text-[var(--color-dark-muted)]" : "text-[var(--color-secondary)]"}`}
-        >
-          {description}
-        </p>
+        <Lede className={`mt-5 ${ledeAlign}`}>{description}</Lede>
       )}
     </motion.div>
   );

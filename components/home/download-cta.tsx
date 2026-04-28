@@ -2,50 +2,54 @@
 
 import { motion } from "framer-motion";
 import { AppStoreButtons } from "@/components/ui/app-store-buttons";
+import { Eyebrow } from "@/components/ui/eyebrow";
+import { SectionHeading } from "@/components/ui/headings";
 import { PhoneMockup } from "@/components/ui/phone-mockup";
 
 export function DownloadCTA() {
   return (
-    <section className="bg-[var(--color-dark)] py-20 md:py-28 lg:py-32">
+    <section id="get-the-app" className="bg-(--color-page-tint) py-20 md:py-28 lg:py-32 scroll-mt-24">
       <div className="mx-auto max-w-[1200px] px-6 md:px-8">
         <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-20">
-          {/* Left: Copy + CTA */}
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
+            transition={{ duration: 0.55, ease: "easeOut" }}
             className="text-center lg:text-left"
           >
-            <h2 className="text-white">Your next session starts here</h2>
-            <p className="mt-4 text-lg text-[var(--color-dark-muted)]">
-              Download Surfr and start tracking your sessions, connecting with
-              riders, and pushing your limits today.
+            <Eyebrow>Free to start</Eyebrow>
+            <SectionHeading className="mt-5">
+              Your next session <em>starts here</em>.
+            </SectionHeading>
+            <p className="mx-auto mt-5 max-w-[55ch] text-[17px] leading-relaxed text-(--color-ink-75) lg:mx-0">
+              Surfr is free to download and free to use for tracking, leaderboards,
+              and the social feed. Plus and PRO unlock deeper analytics. You can
+              try both for two weeks before you commit.
             </p>
-            <p className="mt-2 text-sm text-[var(--color-dark-muted)]/60">
-              Free to download. No credit card required.
-            </p>
-            <div className="mt-8 flex justify-center lg:justify-start">
+            <div className="mt-9 flex justify-center lg:justify-start">
               <AppStoreButtons />
             </div>
+            <p className="mt-4 text-[13px] text-(--color-ink-50)">
+              Free. No credit card required.
+            </p>
           </motion.div>
 
-          {/* Right: Tilted phone */}
           <motion.div
-            initial={{ opacity: 0, rotate: 0 }}
-            whileInView={{ opacity: 1, rotate: 6 }}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.7, delay: 0.2 }}
-            className="hidden lg:flex lg:justify-center"
+            transition={{ duration: 0.6, delay: 0.1 }}
+            className="hidden justify-center lg:flex"
           >
-            <PhoneMockup
-              size="md"
-              placeholder={
-                <div className="flex h-full w-full flex-col items-center justify-center bg-gradient-to-b from-[var(--color-primary)] to-[#0d8fa8]">
-                  <span className="text-3xl font-bold text-white">surfr</span>
-                </div>
-              }
-            />
+            <div className="rotate-[6deg]">
+              <PhoneMockup
+                // screenshot="/screenshots/download-home.png"
+                alt="Surfr home tab. Recent session."
+                fallbackDescribes="Home tab · recent session card with hero jump number"
+                className="w-[260px]"
+              />
+            </div>
           </motion.div>
         </div>
       </div>

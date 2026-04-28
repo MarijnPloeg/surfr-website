@@ -1,9 +1,17 @@
+// =====================================================================
+// Surfr Website — Content & Configuration
+// Source of truth for marketing numbers, page copy, and external links.
+// All text on the website should originate here unless it's page-specific.
+// =====================================================================
+
 export const APP_STORE_URL =
   "https://apps.apple.com/app/surfr/id1438498519";
 export const PLAY_STORE_URL =
   "https://play.google.com/store/apps/details?id=com.surfr.surfr";
 export const HELP_URL = "https://support.thesurfr.app";
 export const SHOP_URL = "https://shop.thesurfr.app";
+export const WIND_GAMES_URL = "https://thewindgames.app";
+export const CONTACT_EMAIL = "info@thesurfr.app";
 
 export const SOCIAL_LINKS = {
   instagram: "https://www.instagram.com/surfr.app/",
@@ -11,91 +19,280 @@ export const SOCIAL_LINKS = {
   facebook: "https://www.facebook.com/surfrapp",
 } as const;
 
+// =====================================================================
+// SITE_META — marketing numbers + meta strings.
+// Each number has a "verified" date. Update both when the number changes.
+// If a number can't be verified, qualify it ("approx.") or remove it.
+// =====================================================================
+export const SITE_META = {
+  metaDescription:
+    "Every session is worth measuring, and worth sharing with the people who get it. Track every jump, discover spots, and see where you stand.",
+  // Verified 2026-04-28
+  activeUsers: "100K+",
+  sessionsTracked: "1M+",
+  countries: "120+",
+  appStoreRating: "4.9",
+  appStoreRatingCount: "25000",
+  spotsCount: "5,000+",
+  // Note: language count to verify — the in-app system supports more,
+  // the previous landing page mentioned 3 newly-added in 4.0.
+  languages: "8",
+} as const;
+
 export const NAV_LINKS = [
   { label: "Features", href: "/features" },
   { label: "Spots", href: "/spots" },
+  { label: "Leaderboard", href: "/leaderboard" },
+  { label: "Roadmap", href: "/roadmap" },
   { label: "Pricing", href: "/pro" },
   { label: "Team", href: "/team" },
-  { label: "Help", href: HELP_URL, external: true },
 ] as const;
 
-export const FEATURES = [
+// =====================================================================
+// HOMEPAGE — Hero
+// Narrative line: "Every session is worth measuring —
+// and worth sharing with the people who get it."
+// Hero opens with the line itself. <em> = italic-cyan accent.
+// =====================================================================
+export const HOMEPAGE_HERO = {
+  badgeLabel: "Surfr 4.0",
+  // Use <em>...</em> in the headline for the italic-cyan accent.
+  headlineHtml: "Every session is worth <em>measuring</em>.",
+  lede:
+    "From your first 0.3-meter jump to a 30-meter session. Surfr counts both. Same map, same accuracy, same people who get it.",
+  primaryCta: "Download free",
+  secondaryCta: "See what's new",
+} as const;
+
+// =====================================================================
+// HOMEPAGE — How it works (3 steps)
+// =====================================================================
+export const HOW_IT_WORKS = [
   {
-    title: "Track Your Sessions",
+    step: "01",
+    title: "Take it to the water",
     description:
-      "Whatever you want to know about your session, the Surfr app tracks it in the most accurate way. Jumps, speed, distance and much more.",
-    icon: "MapPin" as const,
+      "Tuck your phone in a waterproof pouch, or pair your watch. Surfr starts recording the moment you ride.",
+    icon: "Download" as const,
   },
   {
-    title: "Stay Safe",
+    step: "02",
+    title: "Surfr counts every jump",
     description:
-      "Taking Surfr with you ensures you are traceable and improves your safety on the water.",
-    icon: "Shield" as const,
+      "Proprietary jump detection on phone, Apple Watch, Wear OS, and Garmin. Height, airtime, distance, G-force. Measured, not estimated.",
+    icon: "Activity" as const,
   },
   {
-    title: "Go Live",
+    step: "03",
+    title: "Share what mattered",
     description:
-      "In live-mode, your friends and family can follow your sessions right from the beach or at home.",
-    icon: "Radio" as const,
+      "Send a session to a friend, drop a comment on the feed, see your rank. The stoke continues on the beach.",
+    icon: "TrendingUp" as const,
+  },
+] as const;
+
+// =====================================================================
+// HOMEPAGE / FEATURES — Core feature stories
+// Feature-first headlines — feeling, then proof.
+// Each feature carries an `accent` from lib/accents.ts so the page has
+// visual rhythm. Brand cyan reserved for Wind & Forecasts (the brand
+// is built on wind data).
+// =====================================================================
+export const CORE_FEATURES = [
+  {
+    eyebrow: "Session Tracking",
+    headline: "Know it happened.",
+    description:
+      "Surfr was the first app to measure jump heights from a phone alone, and it's still the most accurate. Every session records jumps, speed, distance, airtime, G-force, and route.",
+    bullets: [
+      "Per-jump metrics: height, airtime, distance, G-force",
+      "Interactive jump arcs you can scrub through",
+      "Real-time haptic feedback when a jump is detected",
+    ],
+    icon: "Zap" as const,
+    accent: "orange" as const,
+    screenshotDesc: "Session detail screen with jump arc and metrics list",
   },
   {
-    title: "Discover Places",
+    eyebrow: "Wind & Forecasts",
+    headline: "Don't miss the day.",
     description:
-      "With Surfr Discover we collected tons of valuable spot information and thousands of reviews from fellow riders to help you find your next destination.",
+      "Hourly wind from Open Meteo with bilinear interpolation for sharper detail than the raw model. Smart alerts ping you when conditions match your sweet spot.",
+    bullets: [
+      "Hourly forecasts from multiple weather models",
+      "Alerts by spot, speed range, and direction",
+      "Kite-size recommendations from your quiver",
+    ],
+    icon: "Wind" as const,
+    accent: "cyan" as const,
+    screenshotDesc: "Spot forecast tile with hourly wind chart and alert toggle",
+  },
+  {
+    eyebrow: "Discover Spots",
+    headline: "Find your next session.",
+    description:
+      "A fullscreen map of kitesurfing spots with live wind, community reviews, session history, and photos. You know what you're driving to before you load the car.",
+    bullets: [
+      "Live wind data overlaid on a fullscreen map",
+      "Community reviews, ratings, and photos",
+      "Spot stats: jump profiles, wind history, popular kite sizes",
+    ],
     icon: "Compass" as const,
+    accent: "lime" as const,
+    screenshotDesc: "Fullscreen Discover map with spot bottom-sheet open",
   },
   {
-    title: "Socialize",
+    eyebrow: "Live on the Water",
+    headline: "Someone's already there.",
     description:
-      "Connect with like-minded people on the fastest growing watersports app.",
+      "The Live Map shows real-time positions of riders at your spot. Friends and family follow your session from the beach. Privacy controls let you choose who sees what.",
+    bullets: [
+      "Real-time rider positions on the Live Map",
+      "Friends and family can follow your live session",
+      "Privacy: everyone, friends-only, or off",
+    ],
+    icon: "Radio" as const,
+    accent: "live" as const,
+    screenshotDesc: "Live Map with rider tracks animating in real time",
+  },
+  {
+    eyebrow: "Social Feed",
+    headline: "The session continues on the beach.",
+    description:
+      "Follow friends, like sessions, drop a comment, share a clip. A For-You feed surfaces riders and sessions you'd want to see, without algorithmic noise.",
+    bullets: [
+      "For You feed tuned for kite content",
+      "Comments with mentions and GIFs",
+      "Friends, follows, and activity notifications",
+    ],
     icon: "Users" as const,
+    accent: "pink" as const,
+    screenshotDesc: "Feed view with a session card, like/comment/share row",
   },
   {
-    title: "Leaderboards",
+    eyebrow: "Leaderboard",
+    headline: "Find your tribe by the numbers.",
     description:
-      "Surfr is the go-to app for every big-air competition around the World. Trusted by the Big Air Kite League and the GKA for its accuracy and live scoring.",
+      "Rankings by jump height, distance, airtime, and speed. Filter by spot, region, gender, or skill bracket. Everyone has a board where they count.",
+    bullets: [
+      "Global, regional, and spot-specific rankings",
+      "Filter by height, distance, airtime, speed",
+      "Personal-progression view: how much you improved this season",
+    ],
     icon: "Trophy" as const,
+    accent: "purple" as const,
+    screenshotDesc: "Leaderboard tab with podium top-3 and personal rank below",
   },
 ] as const;
 
-export const STATS = [
-  { value: "100K+", label: "Active Users" },
-  { value: "1M+", label: "Sessions Tracked" },
-  { value: "120+", label: "Countries" },
+// =====================================================================
+// HOMEPAGE — Wind Games callout (replaces removed BAKL/GKA references)
+// =====================================================================
+export const WIND_GAMES = {
+  eyebrow: "Compete",
+  headline: "Compete in <em>Wind Games</em>.",
+  description:
+    "Wind Games is the official competition companion app. Join live competitions at spots near you, scored on your actual recorded performance. No judges needed. Check leaderboards, track your ranking, discover active competitions worldwide.",
+  ctaLabel: "thewindgames.app",
+  ctaHref: WIND_GAMES_URL,
+} as const;
+
+// =====================================================================
+// HOMEPAGE — What's new in 4.0
+// =====================================================================
+export const WHATS_NEW_4_0 = [
+  {
+    title: "Redesigned UI",
+    description:
+      "Every screen rebuilt. Cleaner hierarchy, sharper typography, deliberate motion.",
+    icon: "Sparkles" as const,
+    accent: "purple" as const,
+  },
+  {
+    title: "New Discover tab",
+    description:
+      "Fullscreen map, smart search, bottom sheets, live spot data.",
+    icon: "Map" as const,
+    accent: "lime" as const,
+  },
+  {
+    title: "Social feed",
+    description:
+      "For You algorithmic feed, comments with mentions and GIFs, friends.",
+    icon: "MessageCircle" as const,
+    accent: "pink" as const,
+  },
+  {
+    title: "Sharper wind",
+    description:
+      "Open Meteo with bilinear interpolation. More signal, less noise.",
+    icon: "Wind" as const,
+    accent: "cyan" as const,
+  },
+  {
+    title: "Wear OS 2.0",
+    description:
+      "Full companion app for Android watches with live jump detection.",
+    icon: "Watch" as const,
+    accent: "live" as const,
+  },
+  {
+    title: "PRO Insights",
+    description:
+      "Per-jump scoring with qualitative ratings and a Power-of-Progression chart.",
+    icon: "Brain" as const,
+    accent: "orange" as const,
+  },
 ] as const;
 
+// =====================================================================
+// HOMEPAGE — Stats strip
+// Numbers come from SITE_META; only verified values displayed.
+// =====================================================================
+export const HOMEPAGE_STATS = [
+  { value: SITE_META.activeUsers, label: "Active riders" },
+  { value: SITE_META.sessionsTracked, label: "Sessions tracked" },
+  { value: SITE_META.countries, label: "Countries" },
+  { value: SITE_META.appStoreRating, label: "App Store rating", isStar: true },
+] as const;
+
+// =====================================================================
+// TESTIMONIALS — only real, named riders. Slot 3 awaiting input.
+// =====================================================================
 export const TESTIMONIALS = [
   {
     quote:
-      "This is the best app in kitesurfing, hands down. The jump height metrics are super accurate, the app is easy and fun to use and the team is insanely sharp. I highly recommend it.",
+      "This is the best app in kitesurfing, hands down. The jump-height metrics are super accurate, the app is easy and fun to use, and the team is insanely sharp. I highly recommend it.",
     author: "Mike MacDonald",
-    role: "Founder, Big Air Kite League",
+    role: "GHWM (Guinness World Record holder, kitesurfing)",
+    spot: "Cape Town",
   },
   {
     quote:
-      "You don't even notice that you carry a device with you that accurately measures all metrics of your jumps. Everything is on your phone that's secured in a waterproof pouch and tucked away in your wetsuit.",
+      "You don't even notice that you carry a device. Everything is on your phone, secured in a waterproof pouch, tucked away in your wetsuit. It just works.",
     author: "Giel Vlugt",
-    role: "Professional Big Air Kiteboarder",
+    role: "Professional Big Air kiteboarder",
+    spot: "Tarifa",
   },
-  {
-    quote:
-      "Fun, accurate, revolutionary. Trust 25,000+ users that got into the app and left almost only positive reviews in the stores.",
-    author: "99% of active users",
-    role: "Rate the app 5 stars",
-  },
+  // Slot 3: awaiting a real rider quote (see docs/INPUT_NEEDED.md).
+  // Until then we render only two cards.
 ] as const;
 
-export const PARTNERS = [
-  { name: "Full Power" },
-  { name: "Red Bull" },
-  { name: "GKA" },
-  { name: "Big Air Kite League" },
-] as const;
+// =====================================================================
+// PARTNERS — currently empty. Was previously a fabricated mix
+// (Red Bull / GKA / BAKL / Full Power). Repopulate with real, current
+// partnerships only — and only if logo usage is permitted.
+// =====================================================================
+export const PARTNERS: readonly { name: string; logoSrc?: string }[] = [];
 
+// =====================================================================
+// TEAM
+// =====================================================================
 export const TEAM_MEMBERS = [
   {
     name: "Marijn van der Ploeg",
     role: "Founder & Developer",
+    bio: "Built the first Surfr prototype after a winter on the North Sea wishing his jumps had been counted.",
     image: "/team/marijn.jpg",
   },
   {
@@ -112,185 +309,90 @@ export const TEAM_MEMBERS = [
 
 export const ABOUT_TEXT = {
   paragraph1:
-    "The Surfr app is the 'spot' to be if you are excited about watersports. With close to 100K users, the Surfr app is home to one of the largest watersport communities and offers functionalities to track your sessions with high accuracy and all its details. Surfr leverages Artificial Intelligence to deliver next-level accuracy, no matter which device you take to the water.",
+    "Surfr started in 2019 with a simple bet: that you could measure a kitesurf jump from a phone alone, accurately enough to share. The bet paid off. Surfr was the first to do it, and it's still the most accurate way.",
   paragraph2:
-    "It doesn't stop with tracking though: use the Surfr app to connect with like-minded people, discover places, and push yourself beyond your own limits.",
+    "Today the app counts close to 100K riders' sessions. It runs on iPhone, Android, Apple Watch, Wear OS, and Garmin. We move around the world wherever the wind is, but the team is rooted on the North Sea.",
   paragraph3:
-    "Founded in 2019, the team has now expanded to a small team of watersports enthusiasts that have one mission: to deliver the best app experience to our users. Just like the wind, we move around all over the world and try to be close to where the action happens.",
+    "We don't try to be a fitness app. We don't try to be everything. We try to be the place every kite session, first jump or world record, gets counted, and shared with the people who get it.",
 } as const;
 
-export const HOMEPAGE_HERO = {
-  badge: "Surfr 4.0 is here",
-  headline: "Track Every Jump.",
-  headlineAccent: "Own Your Progression.",
-  description:
-    "The #1 app for kitesurfers. Record sessions, measure jump height, discover spots, and compete with riders worldwide.",
-} as const;
-
-export const HOW_IT_WORKS = [
+export const TEAM_TIMELINE = [
   {
-    step: "01",
-    title: "Download & Ride",
+    year: "2019",
+    title: "Founded",
     description:
-      "Grab Surfr for free, tuck your phone in your wetsuit or pair your smartwatch, and hit the water.",
-    icon: "Download" as const,
+      "Surfr launches as the first app to track kitesurfing jumps from a phone alone.",
   },
   {
-    step: "02",
-    title: "Track Everything",
+    year: "2021",
+    title: "Apple Watch",
     description:
-      "Surfr automatically detects every jump, measures height, airtime, and distance with proprietary algorithms.",
-    icon: "Activity" as const,
+      "Wrist-only tracking ships. No phone needed in the water.",
   },
   {
-    step: "03",
-    title: "Review & Compete",
+    year: "2024",
+    title: "100K riders",
     description:
-      "Analyze your session, share with friends, climb the leaderboard, and track your progression over time.",
-    icon: "TrendingUp" as const,
+      "100K active riders across 120+ countries. 1M+ sessions tracked.",
+  },
+  {
+    year: "2026",
+    title: "Surfr 4.0",
+    description:
+      "Complete redesign. Social feed, new Discover tab, Wear OS 2.0, sharper wind.",
   },
 ] as const;
 
-export const CORE_FEATURES = [
-  {
-    title: "Session Tracking",
-    headline: "Know exactly how high you flew",
-    description:
-      "Surfr was the first app to accurately track jump heights with just a phone — and it's still the most accurate. Every session records jumps, speed, distance, airtime, and more.",
-    bullets: [
-      "Proprietary jump detection with real-time haptic feedback",
-      "Per-jump metrics: height, airtime, distance, G-force",
-      "Interactive jump arc charts with touch-to-scrub",
-    ],
-    icon: "Zap" as const,
+// =====================================================================
+// PRICING (verified 2026-04-28; source: founder)
+// Local-currency variation handled by the app stores.
+// =====================================================================
+export const PRICING = {
+  currency: "€",
+  currencyNote:
+    "Local prices may vary by region. App Store and Google Play show the price for your country.",
+  trialDays: 14,
+  plus: {
+    monthly: "€3.99",
+    yearly: "€24.99",
+    yearlySavings: "save 48%", // 3.99*12=47.88 → 24.99 ≈ 48% off
   },
-  {
-    title: "Wind & Forecasts",
-    headline: "Never miss a good wind day",
-    description:
-      "Live wind station data, hourly forecasts from multiple models, and smart alerts that notify you when conditions hit your sweet spot. All powered by Open Meteo with high-resolution regional models.",
-    bullets: [
-      "Hourly wind forecasts with multiple weather models",
-      "Custom wind alerts by spot, speed & direction",
-      "Kite size recommendations based on your quiver",
-    ],
-    icon: "Wind" as const,
+  pro: {
+    monthly: "€6.99",
+    yearly: "€54.99",
+    yearlySavings: "save 34%", // 6.99*12=83.88 → 54.99 ≈ 34% off
   },
-  {
-    title: "Discover Spots",
-    headline: "Find your next session",
-    description:
-      "Explore thousands of kitesurfing spots worldwide on a fullscreen map. Check live wind conditions, browse community reviews, see session history and photos — all before you pack your gear.",
-    bullets: [
-      "5,000+ spots with live wind data & forecasts",
-      "Community reviews, ratings & photos",
-      "Spot statistics: jump profiles, wind history, popular kite sizes",
-    ],
-    icon: "Compass" as const,
-  },
-  {
-    title: "Live on the Water",
-    headline: "See who's riding right now",
-    description:
-      "The Live Map shows real-time positions of riders at your spot. Friends and family can follow your session from the beach or at home. Stay connected, stay safe.",
-    bullets: [
-      "Real-time rider positions on the map",
-      "Friends & family can follow your live session",
-      "Privacy controls: everyone, friends-only, or off",
-    ],
-    icon: "Radio" as const,
-  },
-  {
-    title: "Social Feed",
-    headline: "Connect with the community",
-    description:
-      "Follow friends, like sessions, drop comments with GIFs, and discover new riders in your personalized For You feed. Surfr is where the kite community lives.",
-    bullets: [
-      "For You feed with smart discovery algorithm",
-      "Instagram-style comments with GIFs & mentions",
-      "Friends system & activity notifications",
-    ],
-    icon: "Users" as const,
-  },
-  {
-    title: "Leaderboards",
-    headline: "See where you rank",
-    description:
-      "Global and spot-specific rankings by jump height, distance, airtime, or speed. Filter by time period, discipline, or friends. Track your progression over time.",
-    bullets: [
-      "Global & spot-specific rankings",
-      "Filter by height, distance, airtime, speed",
-      "Weekly, monthly & all-time filters",
-    ],
-    icon: "Trophy" as const,
-  },
-] as const;
-
-export const WHATS_NEW = [
-  {
-    title: "Redesigned UI",
-    description:
-      "Every screen rebuilt from the ground up with a modern, clean interface.",
-    icon: "Sparkles" as const,
-  },
-  {
-    title: "New Discover Tab",
-    description:
-      "Fullscreen map with smart search, bottom sheets, and live spot data.",
-    icon: "Map" as const,
-  },
-  {
-    title: "Social Feeds",
-    description:
-      "For You algorithmic feed, Instagram-style comments with GIFs, and friends.",
-    icon: "MessageCircle" as const,
-  },
-  {
-    title: "Wind Intelligence",
-    description:
-      "Open Meteo integration with bilinear interpolation for precise forecasts.",
-    icon: "Wind" as const,
-  },
-  {
-    title: "WearOS 2.0",
-    description:
-      "Full companion app for Android watches with live jump detection.",
-    icon: "Watch" as const,
-  },
-  {
-    title: "Smart Insights",
-    description:
-      "Per-jump PRO insights with qualitative ratings and progression tips.",
-    icon: "Brain" as const,
-  },
-] as const;
-
-export const PRICING_TEASER = {
-  badge: "Plans & Pricing",
-  headline: "From casual sessions to serious progression",
-  description:
-    "Start free, then choose the plan that matches your riding. Plus unlocks detailed analytics and wind forecasts. PRO adds watch tracking, coaching, and AI insights.",
-  cta: "See pricing",
 } as const;
 
 export const PLUS_FEATURES = [
-  "Full session details & jump analysis",
-  "1-hourly wind forecasts & alerts",
-  "Live Map & spot statistics",
+  "Full session details and jump analysis",
+  "1-hourly wind forecasts and alerts",
+  "Live Map and detailed spot statistics",
   "Surfie video export",
   "Quiver insights",
   "Unlimited spot photos",
 ] as const;
 
 export const PRO_FEATURES = [
-  "Apple Watch & Wear OS recording",
-  "PRO Insights & AI analytics",
+  "Apple Watch and Wear OS recording",
+  "PRO Insights with AI analytics",
   "On-board coaching",
   "Downwinder navigation",
   "Cinematic replay",
   "Voice chat (AI transcribed)",
 ] as const;
 
+export const PRICING_TEASER = {
+  eyebrow: "Plans",
+  headlineHtml: "Plus pays for itself in <em>one good day</em>.",
+  description:
+    "Start free. Plus unlocks deeper analytics and sharper wind forecasts. PRO adds watch tracking, coaching, and AI insights.",
+  cta: "See plans",
+} as const;
+
+// =====================================================================
+// PRICING — Comparison table
+// =====================================================================
 export type ComparisonValue = boolean | string;
 
 export interface ComparisonRow {
@@ -334,3 +436,136 @@ export const COMPARISON_TABLE: ComparisonRow[] = [
   { feature: "Surfie video export", category: "Social & Extras", free: "Limited", plus: true, pro: true },
   { feature: "Ad-free experience", category: "Social & Extras", free: false, plus: false, pro: true },
 ];
+
+// =====================================================================
+// FAQ
+// =====================================================================
+export const FAQ = [
+  {
+    question: "Can I try Plus or PRO for free?",
+    answer:
+      "Yes. Both come with a 2-week free trial. Cancel any time during the trial at no cost.",
+  },
+  {
+    question: "What's the difference between Plus and PRO?",
+    answer:
+      "Plus unlocks detailed session analytics, 1-hourly wind forecasts, wind alerts, the Live Map, and spot statistics. PRO adds everything Plus has plus Apple Watch & Wear OS recording, on-board coaching, PRO Insights with AI analytics, cinematic replay, and downwinder navigation.",
+  },
+  {
+    question: "What devices support watch-only tracking?",
+    answer:
+      "Watch-only tracking is a PRO feature on Apple Watch (Series 4+), Wear OS (2.0+), and Garmin watches with the Surfr Connect IQ app.",
+  },
+  {
+    question: "How does Jump Insights work?",
+    answer:
+      "Surfr's algorithm analyses height, airtime, approach speed, and heading to score each jump. The Power-of-Progression chart tracks improvement over time. Jump Insights is a PRO feature, developed in collaboration with Mike MacDonald (GHWM).",
+  },
+  {
+    question: "Can I switch between Plus and PRO?",
+    answer:
+      "Yes. Upgrading from Plus to PRO takes effect immediately with prorated billing. Downgrading from PRO to Plus is deferred to your next renewal date, so you keep PRO features until then.",
+  },
+  {
+    question: "Can I cancel any time?",
+    answer:
+      "Yes. Both subscriptions are managed through the App Store or Google Play. Cancel any time and continue using your plan's features until the end of your billing period.",
+  },
+  {
+    question: "What happens to my data if I cancel?",
+    answer:
+      "You keep all your sessions, jumps, and history. Your account reverts to the free tier. Some features become limited, but nothing is deleted.",
+  },
+] as const;
+
+// =====================================================================
+// ROADMAP
+// Now: shipping in the active 4.x release.
+// Next: committed for 4.1 ("The Social Update", Q2 2026).
+// Later: under consideration; community-influenced.
+// =====================================================================
+export const ROADMAP = {
+  now: {
+    label: "Now",
+    version: "Surfr 4.0",
+    status: "Shipping",
+    items: [
+      {
+        title: "Redesigned UI",
+        description: "Every screen rebuilt with cleaner hierarchy and sharper type.",
+      },
+      {
+        title: "New Discover tab",
+        description: "Fullscreen map, smart search, bottom sheets, live spot data.",
+      },
+      {
+        title: "Social feed",
+        description: "For-You feed, comments with mentions and GIFs, friends.",
+      },
+      {
+        title: "Sharper wind",
+        description: "Open Meteo + bilinear interpolation for cleaner forecasts.",
+      },
+      {
+        title: "Wear OS 2.0",
+        description: "Full companion app with live jump detection.",
+      },
+      {
+        title: "PRO Insights",
+        description: "Per-jump scoring with qualitative ratings and POP chart.",
+      },
+    ],
+  },
+  next: {
+    label: "Next",
+    version: "Surfr 4.1: The Social Update",
+    status: "Q2 2026",
+    items: [
+      {
+        title: "Direct messages",
+        description:
+          "1:1 and group DMs. Send a session, a forecast, a spot. All as first-class messages.",
+      },
+      {
+        title: "Place chat",
+        description:
+          "Permanent Wall for the spot. 24-hour Crew chat for riders out today.",
+      },
+      {
+        title: "Activity feed",
+        description:
+          "Likes, mentions, jump reviews, follows. All in one place.",
+      },
+      {
+        title: "Communities",
+        description:
+          "Group chats tied to Wind Games groups. Inline competitions.",
+      },
+      {
+        title: "Place pages",
+        description:
+          "Richer spot pages: yearly wind reports, historical data, frequency trends.",
+      },
+      {
+        title: "Share to friend",
+        description:
+          "Instagram-pattern share sheet. One tap to send a session.",
+      },
+    ],
+  },
+  later: {
+    label: "Later",
+    version: "Under consideration",
+    status: "Open to input",
+    items: [
+      // Intentionally light — fill from community feedback.
+      {
+        title: "Tell us what's missing",
+        description:
+          "What would make Surfr unmissable for you? Drop a line at " +
+          CONTACT_EMAIL +
+          ".",
+      },
+    ],
+  },
+} as const;

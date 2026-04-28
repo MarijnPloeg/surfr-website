@@ -1,22 +1,42 @@
 import type { Metadata } from "next";
-import { Outfit } from "next/font/google";
+import { Outfit, Roboto, Roboto_Condensed } from "next/font/google";
 import "./globals.css";
 import { Navigation } from "@/components/layout/navigation";
 import { Footer } from "@/components/layout/footer";
+import { SITE_META } from "@/lib/constants";
 
 const outfit = Outfit({
   subsets: ["latin"],
   variable: "--font-outfit",
+  display: "swap",
+});
+
+// Roboto is the LOGO font only — used for the surfr. wordmark.
+// Loaded with weight 900 so the wordmark gets the proper brand weight.
+const roboto = Roboto({
+  subsets: ["latin"],
+  variable: "--font-roboto",
+  weight: ["900"],
+  display: "swap",
+});
+
+// Roboto Condensed for eyebrows and data-dense contexts (forecast pills,
+// chart axes, wind chips). Opt-in via the .font-condensed utility.
+const robotoCondensed = Roboto_Condensed({
+  subsets: ["latin"],
+  variable: "--font-roboto-condensed",
+  weight: ["500", "600", "700"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://thesurfr.app"),
   title: {
-    default: "Surfr — The #1 Kitesurfing App",
+    default: "Surfr · Every session is worth measuring",
     template: "%s | Surfr",
   },
   description:
-    "Track every jump, discover 5000+ spots, compete on global leaderboards, and connect with 100K+ riders worldwide. The #1 app for kitesurfers.",
+    "Every session is worth measuring, and worth sharing with the people who get it. Track every jump, discover spots, and see where you stand.",
   keywords: [
     "kitesurfing",
     "kitesurfing app",
@@ -27,12 +47,11 @@ export const metadata: Metadata = {
     "session tracking",
     "wind forecast",
     "kite spots",
-    "kitesurfing leaderboard",
   ],
   openGraph: {
-    title: "Surfr — The #1 Kitesurfing App",
+    title: "Surfr · Every session is worth measuring",
     description:
-      "Track every jump, discover spots, and compete with riders worldwide. 100K+ active riders. Free to download.",
+      "Track every jump, discover spots, and see where you stand. Free to download.",
     url: "https://thesurfr.app",
     siteName: "Surfr",
     type: "website",
@@ -40,9 +59,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Surfr — The #1 Kitesurfing App",
+    title: "Surfr · Every session is worth measuring",
     description:
-      "Track every jump, discover spots, and compete with riders worldwide.",
+      "Track every jump, discover spots, and see where you stand.",
   },
   icons: {
     icon: "/favicon.ico",
@@ -58,7 +77,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={outfit.variable}>
+    <html
+      lang="en"
+      className={`${outfit.variable} ${roboto.variable} ${robotoCondensed.variable}`}
+    >
       <head>
         <script
           type="application/ld+json"
@@ -68,7 +90,7 @@ export default function RootLayout({
               "@type": "SoftwareApplication",
               name: "Surfr",
               applicationCategory: "SportsApplication",
-              operatingSystem: "iOS, Android",
+              operatingSystem: "iOS, Android, watchOS, Wear OS, Garmin",
               offers: {
                 "@type": "Offer",
                 price: "0",
@@ -76,17 +98,16 @@ export default function RootLayout({
               },
               aggregateRating: {
                 "@type": "AggregateRating",
-                ratingValue: "4.9",
-                ratingCount: "25000",
+                ratingValue: SITE_META.appStoreRating,
+                ratingCount: SITE_META.appStoreRatingCount,
                 bestRating: "5",
               },
-              description:
-                "The #1 kitesurfing app. Track jumps, discover spots, and compete worldwide.",
+              description: SITE_META.metaDescription,
             }),
           }}
         />
       </head>
-      <body className="font-[family-name:var(--font-outfit)] antialiased">
+      <body className="antialiased">
         <Navigation />
         <main>{children}</main>
         <Footer />

@@ -2,69 +2,58 @@
 
 import { motion } from "framer-motion";
 import { Badge } from "@/components/ui/badge";
+import { DisplayHeading, Lede } from "@/components/ui/headings";
+import { Button } from "@/components/ui/button";
 
 export function ProHero() {
   return (
-    <section className="relative overflow-hidden bg-[var(--color-dark)] pb-20 pt-32 md:pb-28 md:pt-40">
-      {/* Watermark */}
+    <section className="relative overflow-hidden pt-32 pb-16 md:pt-40 md:pb-20">
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 flex select-none items-center justify-center overflow-hidden"
-      >
-        <span className="whitespace-nowrap text-[18vw] font-bold uppercase leading-none tracking-tighter text-white opacity-[0.02]">
-          PLUS
-        </span>
-      </div>
-
-      {/* Glow */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute left-1/2 top-1/2 h-[400px] w-[400px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[var(--color-primary)] opacity-[0.06] blur-[100px]"
+        className="pointer-events-none absolute left-1/2 top-1/2 h-[400px] w-[400px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-(--color-cyan) opacity-[0.08] blur-[100px]"
       />
 
       <div className="relative mx-auto max-w-[1200px] px-6 text-center md:px-8">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
-          <Badge className="bg-[var(--color-primary)]/10 text-[var(--color-primary-light)]">
-            Plans &amp; Pricing
-          </Badge>
+          <Badge>Plans &amp; Pricing</Badge>
         </motion.div>
 
-        <motion.h1
-          initial={{ opacity: 0, y: 20 }}
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.1 }}
-          className="mt-6 text-white"
+          transition={{ duration: 0.6, delay: 0.08 }}
+          className="mt-6"
         >
-          Choose your{" "}
-          <span className="text-[var(--color-primary)]">plan</span>
-        </motion.h1>
-
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-          className="mx-auto mt-6 max-w-2xl text-lg text-[var(--color-dark-muted)]"
-        >
-          Start free, unlock detailed analytics with Plus, or go all-in with PRO
-          for watch tracking, coaching, and AI-powered insights.
-        </motion.p>
+          <DisplayHeading>
+            Pick the plan that <em>matches your riding</em>.
+          </DisplayHeading>
+        </motion.div>
 
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.3 }}
-          className="mt-8"
+          transition={{ duration: 0.5, delay: 0.18 }}
+          className="mx-auto mt-6 max-w-2xl"
         >
-          <a
-            href="#pricing"
-            className="inline-flex items-center gap-2 rounded-full bg-[var(--color-primary)] px-8 py-3.5 text-base font-semibold text-white transition-colors hover:bg-[var(--color-primary-dark)]"
-          >
+          <Lede className="mx-auto">
+            Start free. Plus unlocks deeper analytics and sharper forecasts.
+            PRO adds watch tracking, on-board coaching, and AI insights.
+          </Lede>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.28 }}
+          className="mt-9"
+        >
+          <Button href="#tiers" variant="primary" size="lg">
             Compare plans
-          </a>
+          </Button>
         </motion.div>
       </div>
     </section>

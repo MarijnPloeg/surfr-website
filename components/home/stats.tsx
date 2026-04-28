@@ -1,40 +1,48 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { STATS } from "@/lib/constants";
 import { Star } from "lucide-react";
-
-const EXTENDED_STATS = [
-  ...STATS,
-  { value: "4.9", label: "App Store Rating" },
-] as const;
+import { HOMEPAGE_STATS } from "@/lib/constants";
+import { CountUp } from "@/components/ui/count-up";
 
 export function Stats() {
   return (
-    <section className="border-b border-[var(--color-border)] bg-[var(--color-light-bg)] py-8 md:py-10">
-      <div className="mx-auto max-w-[1200px] px-6 md:px-8">
-        <div className="flex flex-wrap items-center justify-center gap-8 md:gap-16">
-          {EXTENDED_STATS.map((stat, i) => (
+    <section className="relative overflow-hidden border-y border-(--color-divider) bg-(--color-page) py-12 md:py-14">
+      {/* Soft cyan band running through the stats — quiet brand presence */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0"
+        style={{
+          backgroundImage:
+            "linear-gradient(180deg, rgba(1,188,215,0.04) 0%, rgba(1,188,215,0.00) 60%)",
+        }}
+      />
+      <div className="relative mx-auto max-w-[1200px] px-6 md:px-8">
+        <div className="grid grid-cols-2 gap-y-8 sm:grid-cols-4 sm:gap-y-0">
+          {HOMEPAGE_STATS.map((stat, i) => (
             <motion.div
               key={stat.label}
-              initial={{ opacity: 0, y: 10 }}
+              initial={{ opacity: 0, y: 8 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: i * 0.1 }}
-              className="flex items-center gap-3 text-center"
+              transition={{ duration: 0.4, delay: i * 0.06 }}
+              className={`flex flex-col items-center text-center sm:items-center ${
+                i > 0 ? "sm:border-l sm:border-(--color-divider)" : ""
+              }`}
             >
-              <span className="text-2xl font-bold text-[var(--color-dark)] md:text-3xl">
-                {stat.value}
-              </span>
-              <div className="flex items-center gap-1 text-sm text-[var(--color-secondary)]">
-                {stat.label === "App Store Rating" && (
+              <CountUp
+                value={stat.value}
+                className="text-[36px] font-bold leading-none tracking-[-0.025em] text-(--color-ink) md:text-[44px] tabular-nums"
+              />
+              <span className="mt-3 inline-flex items-center gap-1.5 font-[family-name:var(--font-roboto-condensed)] text-[11px] font-bold uppercase tracking-[0.18em] text-(--color-ink-60)">
+                {"isStar" in stat && stat.isStar && (
                   <Star
-                    size={14}
-                    className="fill-amber-400 text-amber-400"
+                    size={12}
+                    className="fill-(--color-star) text-(--color-star)"
                   />
                 )}
-                <span>{stat.label}</span>
-              </div>
+                {stat.label}
+              </span>
             </motion.div>
           ))}
         </div>

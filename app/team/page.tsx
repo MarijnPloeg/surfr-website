@@ -3,12 +3,11 @@ import { TeamHero } from "@/components/team/team-hero";
 import { About } from "@/components/team/about";
 import { TeamTimeline } from "@/components/team/timeline";
 import { Team } from "@/components/home/team";
-import { SocialProof } from "@/components/home/social-proof";
 
 export const metadata: Metadata = {
-  title: "Team",
+  title: "Why Surfr exists",
   description:
-    "Meet the team behind Surfr. Built by riders, for riders since 2019.",
+    "Built on the North Sea since 2019. The first app to track kitesurf jumps from a phone alone, and still the most accurate.",
 };
 
 export default function TeamPage() {
@@ -18,7 +17,6 @@ export default function TeamPage() {
       <About />
       <TeamTimeline />
       <Team />
-      <SocialProof />
     </>
   );
 }
