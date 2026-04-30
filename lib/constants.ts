@@ -13,6 +13,10 @@ export const SHOP_URL = "https://shop.thesurfr.app";
 export const WIND_GAMES_URL = "https://thewindgames.app";
 export const CONTACT_EMAIL = "info@thesurfr.app";
 
+// Intercom workspace app ID. Used by components/integrations/intercom.tsx
+// to boot the Messenger site-wide.
+export const INTERCOM_APP_ID = "nnkr5ybi";
+
 export const SOCIAL_LINKS = {
   instagram: "https://www.instagram.com/surfr.app/",
   youtube: "https://www.youtube.com/@surfrapp",
@@ -39,11 +43,19 @@ export const SITE_META = {
   languages: "8",
 } as const;
 
+// Top-level nav. Items with `children` render as a dropdown.
+// Items with `href` render as a direct link.
 export const NAV_LINKS = [
   { label: "Features", href: "/features" },
-  { label: "Spots", href: "/spots" },
-  { label: "Leaderboard", href: "/leaderboard" },
-  { label: "Roadmap", href: "/roadmap" },
+  {
+    label: "Explore",
+    children: [
+      { label: "Spots", href: "/spots" },
+      { label: "Leaderboard", href: "/leaderboard" },
+      { label: "Roadmap", href: "/roadmap" },
+    ],
+  },
+  { label: "Compare", href: "/compare" },
   { label: "Pricing", href: "/pro" },
   { label: "Team", href: "/team" },
 ] as const;
@@ -653,3 +665,174 @@ export const ROADMAP = {
     ],
   },
 } as const;
+
+// =====================================================================
+// COMPARE PAGE — Surfr vs alternatives + internal setup picker.
+// Honest, evidence-based. Update when capabilities shift in either
+// direction. Competitor pricing is approximate and should be re-verified
+// before any public claim. Last review: 2026-04-30.
+// =====================================================================
+
+export const COMPARE_HERO = {
+  eyebrow: "Compare",
+  headlineHtml: "How Surfr <em>stacks up</em>.",
+  description:
+    "An honest, side-by-side look at Surfr next to the alternatives, plus a guide to picking the setup that fits how you ride.",
+  primaryCta: { label: "vs other trackers", href: "#vs-others" },
+  secondaryCta: { label: "Pick your Surfr setup", href: "#pick-setup" },
+} as const;
+
+export const COMPARE_WHY = [
+  {
+    title: "Jump height from a phone alone.",
+    description:
+      "First app to measure jump height from a phone, and the algorithm that other trackers get measured against. No board sensor, no harness clip.",
+  },
+  {
+    title: "Standalone watch tracking, not just Apple.",
+    description:
+      "Apple Watch, Wear OS, and Garmin all run Surfr solo on the wrist. Live haptics on every jump, on-wrist height, sync when you're back on the beach.",
+  },
+  {
+    title: "Forecasts you trust, riders you can see.",
+    description:
+      "Cross-checked multi-model wind forecasts with custom alerts, and a live map showing real-time rider positions at your spot.",
+  },
+] as const;
+
+// Competitive comparison cells.
+// - true / false render as check / cross.
+// - "partial" renders a half-state with a tooltip via `note`.
+// - string values render verbatim (use for prices, qualifiers).
+type CompareCell = boolean | "partial" | string;
+
+type CompetitorId = "surfr" | "hardware" | "strava";
+
+interface CompareRow {
+  label: string;
+  note?: string;
+  cells: Record<CompetitorId, CompareCell>;
+}
+
+export const COMPARE_TABLE: {
+  competitors: readonly { id: CompetitorId; name: string }[];
+  rows: readonly CompareRow[];
+} = {
+  competitors: [
+    { id: "surfr", name: "Surfr" },
+    { id: "hardware", name: "Hardware sensor" },
+    { id: "strava", name: "Strava" },
+  ],
+  rows: [
+    {
+      label: "Jump height from phone alone",
+      cells: { surfr: true, hardware: false, strava: false },
+    },
+    {
+      label: "Standalone tracking on Apple Watch, Wear OS, Garmin",
+      note: "Hardware-tracker apps usually only support Apple Watch.",
+      cells: { surfr: true, hardware: "partial", strava: "partial" },
+    },
+    {
+      label: "No hardware sensor required",
+      cells: { surfr: true, hardware: false, strava: true },
+    },
+    {
+      label: "Multi-model wind forecasts with custom alerts",
+      cells: { surfr: true, hardware: false, strava: false },
+    },
+    {
+      label: "Real-time live map of riders at your spot",
+      cells: { surfr: true, hardware: false, strava: false },
+    },
+    {
+      label: "Kite-size recommendations from your quiver",
+      cells: { surfr: true, hardware: false, strava: false },
+    },
+    {
+      label: "Leaderboard and community feed",
+      cells: { surfr: true, hardware: true, strava: true },
+    },
+    {
+      label: "Multi-discipline (kite, wing, windsurf)",
+      note: "Strava covers many disciplines but isn't kite-specific.",
+      cells: { surfr: true, hardware: "partial", strava: "partial" },
+    },
+    {
+      label: "Free tier",
+      cells: {
+        surfr: true,
+        hardware: "App free, sensor required",
+        strava: true,
+      },
+    },
+    {
+      label: "Entry price to track",
+      cells: {
+        surfr: "Free",
+        hardware: "approx. €229 sensor",
+        strava: "Free",
+      },
+    },
+  ],
+};
+
+// Internal setup picker — three options. Board mount removed.
+// Anchored from the hero via id="pick-setup" on the section.
+export const SURFR_SETUPS = [
+  {
+    id: "pouch",
+    name: "Phone in a wetsuit pouch",
+    price: "Free",
+    headline: "Take what you already own.",
+    description:
+      "Phone in a waterproof pouch, secured in your wetsuit. Wetsuit Mode delivers Surfr's most accurate jump detection. The original Surfr workflow.",
+    bestFor: "Best entry point for new riders. Zero extra cost.",
+  },
+  {
+    id: "watch",
+    name: "Smartwatch standalone",
+    price: "Apple Watch, Wear OS, or Garmin",
+    headline: "Leave the phone on the beach.",
+    description:
+      "Surfr runs solo on the wrist. Live jump detection, on-wrist height, haptic tap when a jump lands, sync when you're back. Compatible with watches you likely already own.",
+    bestFor: "Best for riders who don't want a phone on the water.",
+  },
+  {
+    id: "plus",
+    name: "Phone with Surfr Plus",
+    price: "From €3.99 / month",
+    headline: "The full data picture.",
+    description:
+      "Phone tracking with Plus layered on top. Detailed session analytics, 1-hourly wind forecasts with custom alerts, the Live Map, detailed spot statistics, and quiver insights for kite-size picks.",
+    bestFor: "Best for riders who want the deeper data without the watch.",
+  },
+] as const;
+
+export const COMPARE_FAQ = [
+  {
+    question: "How accurate is phone-only jump height vs a hardware sensor?",
+    answer:
+      "Surfr was the first app to measure jump height from a phone, and the algorithm has been refined over years of real session data. For the riders we hear from, the numbers match hardware sensors closely enough that the convenience of having no extra device wins out.",
+  },
+  {
+    question: "Do I need Pro to track jumps?",
+    answer:
+      "No. Jump height, airtime, distance, and speed are all in the free tier on phone, Apple Watch, Wear OS, and Garmin. Pro adds deeper analytics, longer history, kite-size recommendations, and high-resolution regional forecasts.",
+  },
+  {
+    question: "Can I switch setups later?",
+    answer:
+      "Yes. Your account, sessions, and history follow you. Start with the phone, add the watch when you want to leave the phone on the beach, upgrade to Pro when you want the deeper data.",
+  },
+  {
+    question: "Does Surfr work alongside my Garmin?",
+    answer:
+      "Yes. The Surfr Connect IQ app handles the sync. You keep using Garmin for the parts Garmin does well, and Surfr handles kite-specific session metrics and jump detection.",
+  },
+  {
+    question: "What if I already use a hardware sensor?",
+    answer:
+      "Surfr complements it, it doesn't fight it. Many riders run both for a season and compare the numbers. The phone or watch tracking gives you the social, forecast, and live-map sides that hardware-only sensors can't.",
+  },
+] as const;

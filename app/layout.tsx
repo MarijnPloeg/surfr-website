@@ -3,6 +3,7 @@ import { Outfit, Roboto, Roboto_Condensed } from "next/font/google";
 import "./globals.css";
 import { Navigation } from "@/components/layout/navigation";
 import { Footer } from "@/components/layout/footer";
+import { IntercomMessenger } from "@/components/integrations/intercom";
 import { SITE_META } from "@/lib/constants";
 
 const outfit = Outfit({
@@ -111,6 +112,7 @@ export default function RootLayout({
         <Navigation />
         <main>{children}</main>
         <Footer />
+        <IntercomMessenger />
       </body>
     </html>
   );
