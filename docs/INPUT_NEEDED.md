@@ -43,7 +43,16 @@ Aspect ratio 1:1 (square). Drop in `public/community/`.
 
 ### 1.3 Team headshots
 
-`/team/marijn.jpg`, `/team/milan.jpg`, `/team/ruben.jpg` — referenced in `lib/constants.ts` `TEAM_MEMBERS`. Square crops, ~600×600 minimum. Authenticity > studio polish.
+Referenced in `lib/constants.ts` `TEAM_MEMBERS` — files needed in `public/team/`:
+
+- `herbert.jpg` — Founder & CEO
+- `alireza.jpg` — CTO
+- `marijn.jpg` — Product Owner
+- `carlos.jpg` — Developer
+- `loes.jpg` — Operational Manager
+- `bruna.jpg` — Marketing Director
+
+Portrait crops, **roughly 3:4 (600×800 minimum)** to fill the right half of the team card without cropping faces awkwardly. Cards render with a dark background + initial letter as a fallback until photos drop in. Authenticity > studio polish.
 
 ### 1.4 Bonus: a 2019 prototype / origin photo
 

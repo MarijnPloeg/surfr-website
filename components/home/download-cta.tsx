@@ -44,7 +44,7 @@ export function DownloadCTA() {
           >
             <div className="rotate-[6deg]">
               <PhoneMockup
-                // screenshot="/screenshots/download-home.png"
+                screenshot="/screenshots/hero.PNG"
                 alt="Surfr home tab. Recent session."
                 fallbackDescribes="Home tab · recent session card with hero jump number"
                 className="w-[260px]"

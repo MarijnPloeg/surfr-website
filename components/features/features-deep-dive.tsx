@@ -5,7 +5,8 @@ import { Check, Zap, Wind, Compass, Radio, Users, Trophy } from "lucide-react";
 import { Section } from "@/components/ui/section";
 import { FeatureHeading } from "@/components/ui/headings";
 import { PhoneMockup } from "@/components/ui/phone-mockup";
-import { WatchMockup } from "@/components/ui/watch-mockup";
+import { JumpGraphCard } from "@/components/features/visuals/jump-graph-card";
+import { JumpWatchFace } from "@/components/features/visuals/jump-watch-face";
 import { CORE_FEATURES } from "@/lib/constants";
 import { ACCENTS } from "@/lib/accents";
 
@@ -90,26 +91,60 @@ export function FeaturesDeepDive() {
               <div
                 className={`flex justify-center ${isReversed ? "lg:[direction:ltr]" : ""}`}
               >
-                <div
-                  className="relative inline-block"
-                  style={{ filter: `drop-shadow(${accent.glow})` }}
-                >
-                  <PhoneMockup
-                    alt={feature.eyebrow}
-                    fallbackDescribes={feature.screenshotDesc}
-                    className="w-[300px]"
-                  />
-                  {feature.icon === "Zap" && (
-                    <div className="absolute -right-10 bottom-[14%] z-10 w-[130px]">
-                      <WatchMockup
-                        // screenshot="/screenshots/watch-jump.png"
-                        alt="Apple Watch — jump detected with height"
-                        fallbackDescribes="Apple Watch · jump detected with height number"
-                        className="w-full"
-                      />
+                {feature.eyebrow === "Session Tracking" ? (
+                  <div className="relative inline-block">
+                    <div className="relative inline-block">
+                      <div style={{ filter: `drop-shadow(${accent.glow})` }}>
+                        <PhoneMockup
+                          screenshot={
+                            "screenshot" in feature
+                              ? feature.screenshot
+                              : undefined
+                          }
+                          alt="Surfr session detail screen"
+                          className="w-[280px]"
+                        />
+                      </div>
+                      <div
+                        className="absolute z-20 w-[120px]"
+                        style={{ bottom: "10%", right: "-92px" }}
+                      >
+                        <JumpWatchFace className="w-full" />
+                      </div>
                     </div>
-                  )}
-                </div>
+                    <div
+                      className="hidden lg:block"
+                      style={{
+                        position: "absolute",
+                        top: "18%",
+                        left: "-218px",
+                        width: 260,
+                        zIndex: 10,
+                        transform: "scale(0.8)",
+                        transformOrigin: "top right",
+                      }}
+                    >
+                      <JumpGraphCard />
+                    </div>
+                    <div className="mx-auto mt-6 w-[260px] max-w-full lg:hidden">
+                      <JumpGraphCard />
+                    </div>
+                  </div>
+                ) : (
+                  <div
+                    className="relative inline-block"
+                    style={{ filter: `drop-shadow(${accent.glow})` }}
+                  >
+                    <PhoneMockup
+                      screenshot={
+                        "screenshot" in feature ? feature.screenshot : undefined
+                      }
+                      alt={feature.eyebrow}
+                      fallbackDescribes={feature.screenshotDesc}
+                      className="w-[300px]"
+                    />
+                  </div>
+                )}
               </div>
             </motion.div>
           </Section>

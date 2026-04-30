@@ -101,30 +101,36 @@ export const HOW_IT_WORKS = [
 export const CORE_FEATURES = [
   {
     eyebrow: "Session Tracking",
-    headline: "Know it happened.",
+    headline: "Feel it counted.",
+    teaser:
+      "Jump heights measured from your phone alone. Plus standalone tracking on Apple Watch, Wear OS, and Garmin.",
     description:
-      "Surfr was the first app to measure jump heights from a phone alone, and it's still the most accurate. Every session records jumps, speed, distance, airtime, G-force, and route.",
+      "That 10-meter jump. You know it happened. Surfr knows it happened. The haptic tap on your wrist is the proof. First app to measure jump height from a phone alone. On Apple Watch, Wear OS, and Garmin it runs standalone: on-wrist metrics, live height, sync when you're done.",
     bullets: [
-      "Per-jump metrics: height, airtime, distance, G-force",
-      "Interactive jump arcs you can scrub through",
-      "Real-time haptic feedback when a jump is detected",
+      "Height, airtime, and distance per jump. Not the session average.",
+      "Apple Watch, Wear OS, and Garmin: standalone, on-wrist metrics, haptic tap on every jump.",
+      "Scrubbable arcs on the map: see the line, the peak, the landing.",
     ],
     icon: "Zap" as const,
     accent: "orange" as const,
+    screenshot: "/screenshots/session_tracking.png",
     screenshotDesc: "Session detail screen with jump arc and metrics list",
   },
   {
     eyebrow: "Wind & Forecasts",
     headline: "Don't miss the day.",
+    teaser:
+      "Cross-checked forecasts ping you when your spot hits its sweet spot.",
     description:
-      "Hourly wind from Open Meteo with bilinear interpolation for sharper detail than the raw model. Smart alerts ping you when conditions match your sweet spot.",
+      "You checked at midnight. It looked fine. You woke up to 45 knots and nowhere to go. Surfr alerts you before that happens: pick your spot, speed range, and window. Cross-checked forecasts do the watching.",
     bullets: [
-      "Hourly forecasts from multiple weather models",
-      "Alerts by spot, speed range, and direction",
-      "Kite-size recommendations from your quiver",
+      "Alerts up to 5 days ahead, via notification or email.",
+      "Multiple weather models, cross-checked: fewer false calls.",
+      "Kite-size picks pulled from your own quiver.",
     ],
     icon: "Wind" as const,
     accent: "cyan" as const,
+    screenshot: "/screenshots/wind_forecast.png",
     screenshotDesc: "Spot forecast tile with hourly wind chart and alert toggle",
   },
   {
@@ -139,11 +145,14 @@ export const CORE_FEATURES = [
     ],
     icon: "Compass" as const,
     accent: "lime" as const,
+    screenshot: "/screenshots/discover_spots.png",
     screenshotDesc: "Fullscreen Discover map with spot bottom-sheet open",
   },
   {
     eyebrow: "Live on the Water",
     headline: "Someone's already there.",
+    teaser:
+      "Real-time rider positions on the map. Friends and family follow your session from the beach.",
     description:
       "The Live Map shows real-time positions of riders at your spot. Friends and family follow your session from the beach. Privacy controls let you choose who sees what.",
     bullets: [
@@ -153,6 +162,7 @@ export const CORE_FEATURES = [
     ],
     icon: "Radio" as const,
     accent: "live" as const,
+    screenshot: "/screenshots/live_activity.png",
     screenshotDesc: "Live Map with rider tracks animating in real time",
   },
   {
@@ -167,6 +177,7 @@ export const CORE_FEATURES = [
     ],
     icon: "Users" as const,
     accent: "pink" as const,
+    screenshot: "/screenshots/connect.PNG",
     screenshotDesc: "Feed view with a session card, like/comment/share row",
   },
   {
@@ -181,6 +192,7 @@ export const CORE_FEATURES = [
     ],
     icon: "Trophy" as const,
     accent: "purple" as const,
+    screenshot: "/screenshots/leaderboard.png",
     screenshotDesc: "Leaderboard tab with podium top-3 and personal rank below",
   },
 ] as const;
@@ -225,7 +237,7 @@ export const WHATS_NEW_4_0 = [
   {
     title: "Sharper wind",
     description:
-      "Open Meteo with bilinear interpolation. More signal, less noise.",
+      "Cross-checked weather models, high-resolution regional data. More signal, less noise.",
     icon: "Wind" as const,
     accent: "cyan" as const,
   },
@@ -288,22 +300,94 @@ export const PARTNERS: readonly { name: string; logoSrc?: string }[] = [];
 // =====================================================================
 // TEAM
 // =====================================================================
+// Team roster mirrors the live /team page on thesurfr.app. Stats are each
+// member's actual personal records inside the app — meta on purpose.
+// Marijn (Product Owner) and Loes (Operational Manager) override the public
+// site's titles per direct request from the team.
 export const TEAM_MEMBERS = [
   {
-    name: "Marijn van der Ploeg",
-    role: "Founder & Developer",
-    bio: "Built the first Surfr prototype after a winter on the North Sea wishing his jumps had been counted.",
+    name: "Herbert",
+    role: "Founder & CEO",
+    country: "The Netherlands",
+    countryFlag: "🇳🇱",
+    age: 37,
+    stats: {
+      height: "24.3m",
+      distance: "141m",
+      airtime: "10.8s",
+      speed: "83kmh",
+    },
+    image: "/team/herbert.jpg",
+  },
+  {
+    name: "Alireza",
+    role: "CTO · Head of Development",
+    country: "Germany",
+    countryFlag: "🇩🇪",
+    age: 44,
+    stats: {
+      height: "13.3m",
+      distance: "89m",
+      airtime: "8.2s",
+      speed: "58kmh",
+    },
+    image: "/team/alireza.jpg",
+  },
+  {
+    name: "Marijn",
+    role: "Product Owner",
+    country: "The Netherlands",
+    countryFlag: "🇳🇱",
+    age: 27,
+    stats: {
+      height: "24.5m",
+      distance: "176m",
+      airtime: "17.3s",
+      speed: "116kmh",
+    },
     image: "/team/marijn.jpg",
   },
   {
-    name: "Milan Sluiter",
-    role: "Co-Founder & Developer",
-    image: "/team/milan.jpg",
+    name: "Carlos",
+    role: "Developer",
+    country: "Spain",
+    countryFlag: "🇪🇸",
+    age: 37,
+    stats: {
+      height: "32.8m",
+      distance: "211m",
+      airtime: "22s",
+      speed: "88kmh",
+    },
+    image: "/team/carlos.jpg",
   },
   {
-    name: "Ruben Verhoef",
-    role: "Developer",
-    image: "/team/ruben.jpg",
+    name: "Loes",
+    role: "Operational Manager",
+    country: "The Netherlands",
+    countryFlag: "🇳🇱",
+    age: 30,
+    stats: {
+      height: "11.1m",
+      distance: "96m",
+      airtime: "7.1s",
+      speed: "82kmh",
+    },
+    image: "/team/loes.jpg",
+  },
+  {
+    name: "Bruna",
+    role: "Marketing Director",
+    country: "Brazil",
+    countryFlag: "🇧🇷",
+    age: 29,
+    stats: {
+      height: "9.1m",
+      distance: "64m",
+      airtime: "6.1s",
+      speed: "88kmh",
+    },
+    image: "/team/bruna.jpg",
   },
 ] as const;
 
@@ -504,7 +588,7 @@ export const ROADMAP = {
       },
       {
         title: "Sharper wind",
-        description: "Open Meteo + bilinear interpolation for cleaner forecasts.",
+        description: "Cross-checked models with high-resolution regional data for cleaner forecasts.",
       },
       {
         title: "Wear OS 2.0",

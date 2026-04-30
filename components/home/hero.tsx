@@ -198,18 +198,18 @@ export function Hero() {
               className="relative inline-block"
             >
               <PhoneMockup
-                // screenshot="/screenshots/home-hero.png"
+                screenshot="/screenshots/hero.PNG"
                 alt="Surfr home tab. Session summary."
                 fallbackDescribes="Surfr 4.0 home · session summary card with hero jump number"
                 className="w-[280px] sm:w-[320px]"
                 priority
               />
-              {/* Watch overlaps the phone's bottom-right — watch is the
+              {/* Watch overlaps the phone's bottom-right. Watch is the
                   primary capture device, so it sits in front. */}
               <div className="absolute -right-6 bottom-[14%] z-10 w-[110px] sm:-right-10 sm:w-[130px]">
                 <WatchMockup
-                  // screenshot="/screenshots/watch-session.png"
-                  alt="Apple Watch — live session metrics"
+                  screenshot="/screenshots/watch.PNG"
+                  alt="Apple Watch. Live session metrics."
                   fallbackDescribes="Apple Watch · live session metrics during recording"
                   className="w-full"
                 />

@@ -50,15 +50,15 @@ export function DeviceCompatibility() {
           className="flex items-end justify-center gap-6"
         >
           <WatchMockup
-            // screenshot="/screenshots/watch-recording.png"
-            alt="Apple Watch — Surfr session recording face"
-            fallbackDescribes="Apple Watch · Surfr session recording face"
+            screenshot="/screenshots/watch.PNG"
+            alt="Apple Watch. Surfr session recording face."
+            fallbackDescribes="Apple Watch. Surfr session recording face."
             className="w-[140px]"
           />
           <PhoneMockup
-            // screenshot="/screenshots/iphone-recording-start.png"
-            alt="iPhone — recording start screen"
-            fallbackDescribes="iPhone · recording start screen"
+            screenshot="/screenshots/recording_phone.png"
+            alt="iPhone. Recording start screen."
+            fallbackDescribes="iPhone. Recording start screen."
             className="w-[260px]"
           />
         </motion.div>

@@ -112,7 +112,7 @@ export function WindGames() {
             }}
           >
             <PhoneMockup
-              // screenshot="/screenshots/wind-games.png"
+              screenshot="/screenshots/wind-games.PNG"
               alt="Wind Games competition leaderboard"
               fallbackDescribes="Wind Games competition screen · live leaderboard for an event"
               className="w-[280px]"
