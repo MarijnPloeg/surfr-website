@@ -1,0 +1,77 @@
+// =====================================================================
+// Country name → ISO 3166-1 alpha-2 code lookup.
+//
+// The Surfr leaderboard API returns full country names (e.g. "Netherlands").
+// We map to alpha-2 codes for flag rendering via flagcdn.com.
+// Add entries as new countries appear in the data.
+// =====================================================================
+
+export const COUNTRY_TO_ALPHA2: Record<string, string> = {
+  Netherlands: "NL",
+  Spain: "ES",
+  France: "FR",
+  Italy: "IT",
+  "South Africa": "ZA",
+  Germany: "DE",
+  "United States": "US",
+  "United States of America": "US",
+  USA: "US",
+  Brazil: "BR",
+  Portugal: "PT",
+  "United Kingdom": "GB",
+  UK: "GB",
+  Australia: "AU",
+  Belgium: "BE",
+  Greece: "GR",
+  Croatia: "HR",
+  Egypt: "EG",
+  Turkey: "TR",
+  Switzerland: "CH",
+  Austria: "AT",
+  Denmark: "DK",
+  Sweden: "SE",
+  Norway: "NO",
+  Poland: "PL",
+  "Czech Republic": "CZ",
+  Czechia: "CZ",
+  Ireland: "IE",
+  Finland: "FI",
+  Hungary: "HU",
+  Slovenia: "SI",
+  Slovakia: "SK",
+  Romania: "RO",
+  Bulgaria: "BG",
+  Lithuania: "LT",
+  Latvia: "LV",
+  Estonia: "EE",
+  Mexico: "MX",
+  Canada: "CA",
+  Argentina: "AR",
+  Chile: "CL",
+  Peru: "PE",
+  Uruguay: "UY",
+  "New Zealand": "NZ",
+  Japan: "JP",
+  China: "CN",
+  "Hong Kong": "HK",
+  Singapore: "SG",
+  Thailand: "TH",
+  Vietnam: "VN",
+  Philippines: "PH",
+  Indonesia: "ID",
+  Malaysia: "MY",
+  India: "IN",
+  Israel: "IL",
+  "United Arab Emirates": "AE",
+  UAE: "AE",
+  "Saudi Arabia": "SA",
+  Morocco: "MA",
+  Tunisia: "TN",
+  Kenya: "KE",
+  Russia: "RU",
+  Ukraine: "UA",
+};
+
+export function countryToAlpha2(country: string): string | null {
+  return COUNTRY_TO_ALPHA2[country] ?? null;
+}

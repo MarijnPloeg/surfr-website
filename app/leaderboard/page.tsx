@@ -88,6 +88,26 @@ export default async function LeaderboardPage() {
             </p>
           </div>
           <WorldRecords entries={entries} />
+
+          {/* Inline CTA at the bottom of Layer 1 — primary download hook
+              while the user has the leaderboard fresh in mind. */}
+          <div className="mx-auto mt-14 flex max-w-2xl flex-col items-center gap-4 rounded-(--radius-lg) bg-(--color-card) p-7 text-center ring-1 ring-(--color-card-border) sm:flex-row sm:items-center sm:gap-6 sm:text-left">
+            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-(--color-cyan-15) text-(--color-cyan-ink)">
+              <Trophy size={22} strokeWidth={2} />
+            </div>
+            <div className="flex-1">
+              <h3 className="text-[18px] font-bold text-(--color-ink)">
+                Want your name on the board?
+              </h3>
+              <p className="mt-1 text-[14px] leading-relaxed text-(--color-ink-75)">
+                Track your sessions with Surfr. Opt in to the leaderboard.
+                Every jump counts.
+              </p>
+            </div>
+            <Button href={APP_STORE_URL} external size="md" className="shrink-0">
+              Download Surfr
+            </Button>
+          </div>
         </div>
       </section>
 
