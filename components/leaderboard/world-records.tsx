@@ -107,6 +107,7 @@ function PodiumCard({ entry, metric, position }: PodiumCardProps) {
         )}
         <RiderAvatar
           name={entry.user.name}
+          profilePicId={entry.user.profilepicid}
           size={avatarSize}
           className={
             isFirst
@@ -226,7 +227,11 @@ function RankRow({
       <span className="w-6 text-right text-[14px] font-bold tabular-nums text-(--color-ink-50)">
         {entry.ranking}
       </span>
-      <RiderAvatar name={entry.user.name} size={40} />
+      <RiderAvatar
+        name={entry.user.name}
+        profilePicId={entry.user.profilepicid}
+        size={40}
+      />
       <div className="min-w-0 flex-1">
         <div className="truncate text-[15px] font-semibold text-(--color-ink)">
           {entry.user.name}
