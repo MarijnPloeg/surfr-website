@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { Loader2, X } from "lucide-react";
+import { AnimatePresence, motion } from "framer-motion";
+import { Filter, Loader2, X, SlidersHorizontal } from "lucide-react";
 import {
   METRIC_LABELS,
   type LeaderboardMetric,
@@ -121,13 +122,49 @@ function countActiveFilters(f: FilterState): number {
   return n;
 }
 
+/**
+ * Active-filter summaries for the mobile chip row. Returns just the
+ * non-default values so the chip row stays compact.
+ */
+function activeChipLabels(
+  f: FilterState,
+  spots: SpotOption[],
+): string[] {
+  const labels: string[] = [];
+  if (f.period !== "alltime") {
+    labels.push(label(PERIOD_OPTIONS, f.period));
+  }
+  if (f.gender) labels.push(label(GENDER_OPTIONS, f.gender));
+  if (f.ageBracket) labels.push(label(AGE_OPTIONS, f.ageBracket));
+  if (f.skillLevel) labels.push(label(SKILL_OPTIONS, f.skillLevel));
+  if (f.boardtype) labels.push(label(BOARDTYPE_OPTIONS, f.boardtype));
+  if (f.kitesize) labels.push(`${f.kitesize}m`);
+  if (f.spotid) {
+    const spot = spots.find((s) => String(s.spotId) === f.spotid);
+    if (spot) labels.push(spot.spotName);
+  }
+  return labels;
+}
+
+function label(
+  options: readonly { value: string; label: string }[],
+  value: string,
+): string {
+  return options.find((o) => o.value === value)?.label ?? value;
+}
+
 export function TribeBoard({ spots }: TribeBoardProps) {
   const [filters, setFilters] = useState<FilterState>(DEFAULT_FILTERS);
   const [entries, setEntries] = useState<LeaderboardEntry[] | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [sheetOpen, setSheetOpen] = useState(false);
 
   const activeCount = useMemo(() => countActiveFilters(filters), [filters]);
+  const activeLabels = useMemo(
+    () => activeChipLabels(filters, spots),
+    [filters, spots],
+  );
   const url = useMemo(() => buildBffUrl(filters), [filters]);
 
   useEffect(() => {
@@ -159,10 +196,22 @@ export function TribeBoard({ spots }: TribeBoardProps) {
     };
   }, [url]);
 
+  // Lock body scroll while the sheet is open.
+  useEffect(() => {
+    if (!sheetOpen) return;
+    const original = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = original;
+    };
+  }, [sheetOpen]);
+
   const update = <K extends keyof FilterState>(
     key: K,
     value: FilterState[K],
   ) => setFilters((prev) => ({ ...prev, [key]: value }));
+
+  const clearAll = () => setFilters(DEFAULT_FILTERS);
 
   return (
     <>
@@ -183,8 +232,8 @@ export function TribeBoard({ spots }: TribeBoardProps) {
         ))}
       </div>
 
-      {/* Compact horizontal filter bar */}
-      <div className="mx-auto mt-6 max-w-5xl">
+      {/* DESKTOP — horizontal pill row */}
+      <div className="mx-auto mt-6 hidden max-w-5xl sm:block">
         <div className="flex flex-wrap items-center gap-2">
           <FilterPill
             value={filters.period}
@@ -236,7 +285,7 @@ export function TribeBoard({ spots }: TribeBoardProps) {
           />
           {activeCount > 0 && (
             <button
-              onClick={() => setFilters(DEFAULT_FILTERS)}
+              onClick={clearAll}
               className="ml-auto inline-flex items-center gap-1.5 rounded-full bg-(--color-cyan-15) px-3 py-1.5 text-[12px] font-semibold text-(--color-cyan-ink) hover:bg-(--color-cyan-30)"
             >
               <X size={12} strokeWidth={2.5} />
@@ -245,6 +294,54 @@ export function TribeBoard({ spots }: TribeBoardProps) {
           )}
         </div>
       </div>
+
+      {/* MOBILE — Filters button + active-chip scroll */}
+      <div className="mt-6 flex items-center gap-2 sm:hidden">
+        <button
+          onClick={() => setSheetOpen(true)}
+          className="inline-flex shrink-0 items-center gap-2 rounded-full bg-(--color-cyan) px-4 py-2 text-[13px] font-semibold text-black shadow-[var(--shadow-cyan-soft)]"
+          aria-label="Open filters"
+        >
+          <SlidersHorizontal size={14} strokeWidth={2.5} />
+          Filters
+          {activeCount > 0 && (
+            <span className="inline-flex h-5 min-w-[20px] items-center justify-center rounded-full bg-black px-1.5 text-[11px] font-bold text-(--color-cyan)">
+              {activeCount}
+            </span>
+          )}
+        </button>
+
+        {activeLabels.length > 0 ? (
+          <div className="flex min-w-0 flex-1 gap-1.5 overflow-x-auto pb-0.5">
+            {activeLabels.map((l) => (
+              <span
+                key={l}
+                className="inline-flex shrink-0 items-center rounded-full bg-(--color-cyan-15) px-3 py-1 text-[12px] font-semibold text-(--color-cyan-ink)"
+              >
+                {l}
+              </span>
+            ))}
+          </div>
+        ) : (
+          <span className="text-[12px] text-(--color-ink-50)">
+            No filters active
+          </span>
+        )}
+      </div>
+
+      {/* Filter bottom sheet (mobile only) */}
+      <AnimatePresence>
+        {sheetOpen && (
+          <FilterSheet
+            filters={filters}
+            spots={spots}
+            activeCount={activeCount}
+            onUpdate={update}
+            onClear={clearAll}
+            onClose={() => setSheetOpen(false)}
+          />
+        )}
+      </AnimatePresence>
 
       {/* Results */}
       {loading && entries === null && (
@@ -280,8 +377,6 @@ interface FilterPillProps {
   value: string;
   onChange: (value: string) => void;
   options: readonly { value: string; label: string }[];
-  /** When true, the pill renders in its neutral state. When false, it
-   *  renders with the cyan-active treatment to signal a non-default value. */
   isDefault: boolean;
 }
 
@@ -310,5 +405,174 @@ function FilterPill({ value, onChange, options, isDefault }: FilterPillProps) {
         ▾
       </span>
     </div>
+  );
+}
+
+interface FilterSheetProps {
+  filters: FilterState;
+  spots: SpotOption[];
+  activeCount: number;
+  onUpdate: <K extends keyof FilterState>(key: K, value: FilterState[K]) => void;
+  onClear: () => void;
+  onClose: () => void;
+}
+
+function FilterSheet({
+  filters,
+  spots,
+  activeCount,
+  onUpdate,
+  onClear,
+  onClose,
+}: FilterSheetProps) {
+  return (
+    <motion.div
+      className="fixed inset-0 z-[60] sm:hidden"
+      initial={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+    >
+      <motion.div
+        className="absolute inset-0 bg-black/50"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.2 }}
+        onClick={onClose}
+        aria-hidden
+      />
+      <motion.div
+        className="absolute inset-x-0 bottom-0 max-h-[88vh] overflow-y-auto rounded-t-3xl bg-(--color-page) shadow-[0_-12px_32px_-8px_rgba(10,25,41,0.25)]"
+        initial={{ y: "100%" }}
+        animate={{ y: 0 }}
+        exit={{ y: "100%" }}
+        transition={{ type: "tween", duration: 0.25, ease: "easeOut" }}
+        role="dialog"
+        aria-label="Filters"
+      >
+        {/* Drag handle */}
+        <div className="flex justify-center pt-3">
+          <span className="h-1 w-10 rounded-full bg-(--color-ink-15)" />
+        </div>
+
+        {/* Header */}
+        <div className="flex items-center justify-between px-5 py-4">
+          <div className="flex items-center gap-2">
+            <Filter size={16} className="text-(--color-ink-75)" />
+            <h3 className="text-[18px] font-bold text-(--color-ink)">
+              Filters
+            </h3>
+            {activeCount > 0 && (
+              <span className="inline-flex h-6 min-w-[24px] items-center justify-center rounded-full bg-(--color-cyan-15) px-2 text-[12px] font-bold text-(--color-cyan-ink)">
+                {activeCount}
+              </span>
+            )}
+          </div>
+          <button
+            onClick={onClose}
+            aria-label="Close filters"
+            className="-m-2 p-2 text-(--color-ink-75) hover:text-(--color-ink)"
+          >
+            <X size={20} strokeWidth={2} />
+          </button>
+        </div>
+
+        {/* Body — vertical filter list */}
+        <div className="space-y-4 px-5 pb-5">
+          <SheetSelect
+            label="Period"
+            value={filters.period}
+            onChange={(v) => onUpdate("period", v as Period)}
+            options={PERIOD_OPTIONS}
+          />
+          <SheetSelect
+            label="Gender"
+            value={filters.gender}
+            onChange={(v) => onUpdate("gender", v)}
+            options={GENDER_OPTIONS}
+          />
+          <SheetSelect
+            label="Age"
+            value={filters.ageBracket}
+            onChange={(v) => onUpdate("ageBracket", v)}
+            options={AGE_OPTIONS}
+          />
+          <SheetSelect
+            label="Skill"
+            value={filters.skillLevel}
+            onChange={(v) => onUpdate("skillLevel", v)}
+            options={SKILL_OPTIONS}
+          />
+          <SheetSelect
+            label="Board type"
+            value={filters.boardtype}
+            onChange={(v) => onUpdate("boardtype", v)}
+            options={BOARDTYPE_OPTIONS}
+          />
+          <SheetSelect
+            label="Kite size"
+            value={filters.kitesize}
+            onChange={(v) => onUpdate("kitesize", v)}
+            options={KITESIZE_OPTIONS}
+          />
+          <SheetSelect
+            label="Spot"
+            value={filters.spotid}
+            onChange={(v) => onUpdate("spotid", v)}
+            options={[
+              { value: "", label: "All spots" },
+              ...spots.map((s) => ({
+                value: String(s.spotId),
+                label: `${s.spotName} · ${s.spotCountry}`,
+              })),
+            ]}
+          />
+        </div>
+
+        {/* Footer */}
+        <div className="sticky bottom-0 flex items-center gap-3 border-t border-(--color-divider) bg-(--color-page) px-5 py-4">
+          <button
+            onClick={onClear}
+            disabled={activeCount === 0}
+            className="text-[14px] font-semibold text-(--color-ink-75) disabled:opacity-40"
+          >
+            Clear all
+          </button>
+          <button
+            onClick={onClose}
+            className="ml-auto rounded-(--radius-md) bg-(--color-cyan) px-6 py-3 text-[14px] font-semibold text-black shadow-[var(--shadow-cyan-soft)]"
+          >
+            Show results
+          </button>
+        </div>
+      </motion.div>
+    </motion.div>
+  );
+}
+
+interface SheetSelectProps {
+  label: string;
+  value: string;
+  onChange: (value: string) => void;
+  options: readonly { value: string; label: string }[];
+}
+
+function SheetSelect({ label, value, onChange, options }: SheetSelectProps) {
+  return (
+    <label className="flex flex-col gap-1.5">
+      <span className="font-[family-name:var(--font-roboto-condensed)] text-[11px] font-bold uppercase tracking-[0.18em] text-(--color-ink-50)">
+        {label}
+      </span>
+      <select
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        className="appearance-none rounded-(--radius-md) border border-(--color-card-border) bg-(--color-card) px-4 py-3 pr-10 text-[15px] font-medium text-(--color-ink) focus:outline-none focus:ring-2 focus:ring-(--color-cyan-30)"
+      >
+        {options.map((o) => (
+          <option key={o.value} value={o.value}>
+            {o.label}
+          </option>
+        ))}
+      </select>
+    </label>
   );
 }
