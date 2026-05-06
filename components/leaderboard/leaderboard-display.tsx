@@ -87,64 +87,74 @@ interface PodiumCardProps {
 
 function PodiumCard({ entry, metric, position }: PodiumCardProps) {
   const isFirst = position === 1;
-  const avatarSize = isFirst ? 96 : 72;
+  const avatarSize = isFirst ? 96 : 76;
+  const pillarHeight = position === 1 ? 96 : position === 2 ? 72 : 56;
 
   return (
-    <div
-      className={`relative flex flex-col items-center rounded-(--radius-md) border bg-(--color-card) px-4 pt-9 pb-5 text-center transition-shadow ${
-        isFirst
-          ? "border-(--color-cyan) shadow-[var(--shadow-cyan-soft)]"
-          : "border-(--color-card-border)"
-      }`}
-    >
-      {isFirst && (
-        <div
-          className="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/2 rounded-full bg-(--color-cyan) p-2 text-black shadow-[var(--shadow-cyan-soft)]"
-          aria-label="First place"
-        >
-          <Crown size={18} strokeWidth={2.5} />
-        </div>
-      )}
+    <div className="flex flex-col items-center text-center">
+      {/* Avatar + crown */}
+      <div className="relative">
+        {isFirst && (
+          <div
+            className="absolute -top-7 left-1/2 -translate-x-1/2 text-(--color-cyan-ink)"
+            aria-label="First place"
+          >
+            <Crown size={26} strokeWidth={2} fill="currentColor" />
+          </div>
+        )}
+        <RiderAvatar
+          name={entry.user.name}
+          profilePicId={entry.user.profilepicid}
+          size={avatarSize}
+          className={
+            isFirst
+              ? "ring-2 ring-(--color-cyan) shadow-[var(--shadow-cyan-soft)]"
+              : ""
+          }
+        />
+      </div>
 
-      <span
-        className={`absolute right-3 top-3 inline-flex h-7 w-7 items-center justify-center rounded-full text-[13px] font-bold tabular-nums ${
+      {/* Name + spot + value */}
+      <div className="mt-3 flex w-full flex-col items-center px-1">
+        <div
+          className={`line-clamp-1 font-bold text-(--color-ink) ${
+            isFirst ? "text-[16px]" : "text-[14px]"
+          }`}
+        >
+          {entry.user.name}
+        </div>
+        <div className="mt-1 flex items-center justify-center gap-1.5 text-[12px] text-(--color-ink-60)">
+          <CountryFlag country={entry.user.country} height={10} />
+          <span className="line-clamp-1 max-w-[18ch]">{entry.spotName}</span>
+        </div>
+        <div
+          className={`mt-2 font-bold tabular-nums text-(--color-cyan-ink) ${
+            isFirst ? "text-[30px]" : "text-[22px]"
+          }`}
+        >
+          {formatMetricValue(entry.value, metric)}
+        </div>
+        <div className="mt-0.5 text-[11px] text-(--color-ink-50)">
+          {formatDate(entry.sessionDatetime)}
+        </div>
+      </div>
+
+      {/* Podium pillar — coloured step block with the rank number */}
+      <div
+        className={`mt-3 flex w-full items-center justify-center rounded-t-(--radius-md) ${
           isFirst
             ? "bg-(--color-cyan-30) text-(--color-cyan-ink)"
             : "bg-(--color-cyan-15) text-(--color-cyan-ink)"
         }`}
+        style={{ height: pillarHeight }}
       >
-        {position}
-      </span>
-
-      <RiderAvatar
-        name={entry.user.name}
-        profilePicId={entry.user.profilepicid}
-        size={avatarSize}
-      />
-
-      <div
-        className={`mt-3 line-clamp-1 font-bold text-(--color-ink) ${
-          isFirst ? "text-[16px]" : "text-[14px]"
-        }`}
-      >
-        {entry.user.name}
-      </div>
-
-      <div className="mt-1 flex items-center justify-center gap-1.5 text-[12px] text-(--color-ink-60)">
-        <CountryFlag country={entry.user.country} height={10} />
-        <span className="line-clamp-1 max-w-[18ch]">{entry.spotName}</span>
-      </div>
-
-      <div
-        className={`mt-3 font-bold tabular-nums text-(--color-cyan-ink) ${
-          isFirst ? "text-[32px]" : "text-[24px]"
-        }`}
-      >
-        {formatMetricValue(entry.value, metric)}
-      </div>
-
-      <div className="mt-1 text-[11px] text-(--color-ink-50)">
-        {formatDate(entry.sessionDatetime)}
+        <span
+          className={`font-bold tabular-nums ${
+            isFirst ? "text-[40px]" : "text-[28px]"
+          }`}
+        >
+          {position}
+        </span>
       </div>
     </div>
   );
@@ -160,12 +170,12 @@ function Podium({
   const [first, second, third] = top3;
 
   return (
-    <div className="mx-auto max-w-[840px]">
-      <div className="grid grid-cols-3 items-stretch gap-3 sm:gap-4">
+    <div className="mx-auto max-w-[720px] px-4">
+      <div className="grid grid-cols-3 items-end gap-4 pt-8 sm:gap-6">
         <div>
           {second && <PodiumCard entry={second} metric={metric} position={2} />}
         </div>
-        <div className="-translate-y-3 sm:-translate-y-4">
+        <div>
           {first && <PodiumCard entry={first} metric={metric} position={1} />}
         </div>
         <div>
