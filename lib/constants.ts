@@ -261,9 +261,9 @@ export const WHATS_NEW_4_0 = [
     accent: "live" as const,
   },
   {
-    title: "PRO Insights",
+    title: "Jump Insights",
     description:
-      "Per-jump scoring with qualitative ratings and a Power-of-Progression chart.",
+      "Per-jump scoring with qualitative ratings and a progression chart.",
     icon: "Brain" as const,
     accent: "orange" as const,
   },
@@ -288,7 +288,7 @@ export const TESTIMONIALS = [
     quote:
       "This is the best app in kitesurfing, hands down. The jump-height metrics are super accurate, the app is easy and fun to use, and the team is insanely sharp. I highly recommend it.",
     author: "Mike MacDonald",
-    role: "GHWM (Guinness World Record holder, kitesurfing)",
+    role: "GetHighWithMike",
     spot: "Cape Town",
   },
   {
@@ -471,18 +471,17 @@ export const PLUS_FEATURES = [
 
 export const PRO_FEATURES = [
   "Apple Watch and Wear OS recording",
-  "PRO Insights with AI analytics",
+  "Jump Insights",
   "On-board coaching",
   "Downwinder navigation",
-  "Cinematic replay",
-  "Voice chat (AI transcribed)",
+  "Voice chat",
 ] as const;
 
 export const PRICING_TEASER = {
   eyebrow: "Plans",
   headlineHtml: "Plus pays for itself in <em>one good day</em>.",
   description:
-    "Start free. Plus unlocks deeper analytics and sharper wind forecasts. PRO adds watch tracking, coaching, and AI insights.",
+    "Start free. Plus unlocks deeper analytics and sharper wind forecasts. PRO adds watch tracking, coaching, and Jump Insights.",
   cta: "See plans",
 } as const;
 
@@ -512,8 +511,7 @@ export const COMPARISON_TABLE: ComparisonRow[] = [
   { feature: "Interactive GPS map", category: "Session Details", free: true, plus: true, pro: true },
   { feature: "Jumps on map", category: "Session Details", free: "Basic", plus: "2D", pro: "3D" },
   { feature: "Full jump details", category: "Session Details", free: "Limited", plus: true, pro: true },
-  { feature: "Cinematic replay", category: "Session Details", free: "Limited", plus: "Limited", pro: true },
-  { feature: "PRO Insights & analytics", category: "Session Details", free: false, plus: false, pro: true },
+  { feature: "Jump Insights", category: "Session Details", free: false, plus: false, pro: true },
   { feature: "Quiver insights", category: "Session Details", free: false, plus: true, pro: true },
   // Wind
   { feature: "3-hourly forecast", category: "Wind", free: true, plus: true, pro: true },
@@ -545,7 +543,7 @@ export const FAQ = [
   {
     question: "What's the difference between Plus and PRO?",
     answer:
-      "Plus unlocks detailed session analytics, 1-hourly wind forecasts, wind alerts, the Live Map, and spot statistics. PRO adds everything Plus has plus Apple Watch & Wear OS recording, on-board coaching, PRO Insights with AI analytics, cinematic replay, and downwinder navigation.",
+      "Plus unlocks detailed session analytics, 1-hourly wind forecasts, wind alerts, the Live Map, and spot statistics. PRO adds everything Plus has plus Apple Watch & Wear OS recording, on-board coaching, Jump Insights, and downwinder navigation.",
   },
   {
     question: "What devices support watch-only tracking?",
@@ -555,7 +553,7 @@ export const FAQ = [
   {
     question: "How does Jump Insights work?",
     answer:
-      "Surfr's algorithm analyses height, airtime, approach speed, and heading to score each jump. The Power-of-Progression chart tracks improvement over time. Jump Insights is a PRO feature, developed in collaboration with Mike MacDonald (GHWM).",
+      "Surfr's algorithm analyses height, airtime, approach speed, and heading to score each jump. The progression chart tracks improvement over time. Jump Insights is a PRO feature, developed in collaboration with GetHighWithMike.",
   },
   {
     question: "Can I switch between Plus and PRO?",
@@ -607,8 +605,8 @@ export const ROADMAP = {
         description: "Full companion app with live jump detection.",
       },
       {
-        title: "PRO Insights",
-        description: "Per-jump scoring with qualitative ratings and POP chart.",
+        title: "Jump Insights",
+        description: "Per-jump scoring with qualitative ratings and progression chart.",
       },
     ],
   },

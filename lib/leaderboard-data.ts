@@ -1,29 +1,9 @@
 // =====================================================================
-// Leaderboard data shapes.
+// Leaderboard display labels and units.
 //
-// IMPORTANT: this file used to ship fabricated rankings attributed to
-// real pro athletes. That has been removed. The website now renders an
-// empty state with a "live data coming via API" note until the backend
-// endpoint is wired.
-//
-// Backend spec: see docs/leaderboard-backend-spec.md
+// The actual entry shape (LeaderboardEntry) and the server-side fetch
+// helper live in lib/leaderboard-api.ts — this file is presentation only.
 // =====================================================================
-
-export interface LeaderboardEntry {
-  rank: number;
-  /** Display name. May be a real rider's verified name OR an anonymized
-   *  placeholder ("Rider · NL") depending on user-leaderboard preference. */
-  name: string;
-  country: string;
-  countryCode: string;
-  value: number;
-  unit: string;
-  spot: string;
-  /** ISO date when the value was recorded. */
-  date: string;
-  /** True if the rider opted into showing their real name. */
-  isVerifiedRider?: boolean;
-}
 
 export type LeaderboardMetric = "height" | "distance" | "airtime" | "speed";
 
@@ -41,11 +21,42 @@ export const METRIC_UNITS: Record<LeaderboardMetric, string> = {
   speed: "kn",
 };
 
-// Empty until the backend ships /api/leaderboard.
-// The website renders an explicit "live data coming" empty state.
-export const LEADERBOARD_DATA: Record<LeaderboardMetric, LeaderboardEntry[]> = {
-  height: [],
-  distance: [],
-  airtime: [],
-  speed: [],
-};
+/**
+ * Pick the right metric value off a Surfr API LeaderboardEntry. The API
+ * already returns `value` for the queried board, but this is a safety net
+ * if a caller wants to read a specific metric off any entry.
+ */
+export function pickMetricValue(
+  entry: { height: number; distance: number; airtime: number; maxspeed: number },
+  metric: LeaderboardMetric,
+): number {
+  switch (metric) {
+    case "height":
+      return entry.height;
+    case "distance":
+      return entry.distance;
+    case "airtime":
+      return entry.airtime;
+    case "speed":
+      return entry.maxspeed;
+  }
+}
+
+/** km/h → knots, used for top-speed display. */
+export function kmhToKnots(kmh: number): number {
+  return kmh * 0.539957;
+}
+
+/** Format a metric value for display, with the right unit and precision. */
+export function formatMetricValue(
+  value: number,
+  metric: LeaderboardMetric,
+): string {
+  if (metric === "speed") {
+    return `${kmhToKnots(value).toFixed(1)} ${METRIC_UNITS.speed}`;
+  }
+  if (metric === "airtime") {
+    return `${value.toFixed(1)} ${METRIC_UNITS.airtime}`;
+  }
+  return `${value.toFixed(1)} ${METRIC_UNITS[metric]}`;
+}

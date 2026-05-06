@@ -39,8 +39,8 @@ export function ProTeaser() {
         >
           <PhoneMockup
             // screenshot="/screenshots/pro-insights.png"
-            alt="Surfr PRO Insights. Per-jump score with POP chart"
-            fallbackDescribes="PRO Insights screen · per-jump score with POP chart"
+            alt="Surfr Jump Insights. Per-jump score with progression chart"
+            fallbackDescribes="Jump Insights screen · per-jump score with progression chart"
             className="w-[280px]"
           />
         </motion.div>

@@ -41,7 +41,7 @@ export function ProHero() {
         >
           <Lede className="mx-auto">
             Start free. Plus unlocks deeper analytics and sharper forecasts.
-            PRO adds watch tracking, on-board coaching, and AI insights.
+            PRO adds watch tracking, on-board coaching, and Jump Insights.
           </Lede>
         </motion.div>
 

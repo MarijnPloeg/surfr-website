@@ -12,7 +12,7 @@ const insights = [
     icon: TrendingUp,
     title: "Jump Formula",
     description:
-      "A scoring algorithm developed with Mike MacDonald (GHWM). Evaluates height, hang time, and approach to give every jump a comprehensive score.",
+      "A scoring algorithm developed with Mike MacDonald (GetHighWithMike). Evaluates height, airtime, and approach to give every jump a comprehensive score.",
   },
   {
     icon: BarChart3,

@@ -1,37 +1,53 @@
-"use client";
-
-import { useState } from "react";
-import { motion } from "framer-motion";
-import { Trophy, Database, Users, LineChart } from "lucide-react";
+import type { Metadata } from "next";
+import { Trophy, Users, LineChart } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { DisplayHeading, Lede, FeatureHeading } from "@/components/ui/headings";
 import { Eyebrow } from "@/components/ui/eyebrow";
+import { WorldRecords } from "@/components/leaderboard/world-records";
 import {
-  LEADERBOARD_DATA,
-  METRIC_LABELS,
-  type LeaderboardMetric,
-} from "@/lib/leaderboard-data";
+  fetchLeaderboard,
+  type LeaderboardEntry,
+} from "@/lib/leaderboard-api";
+import type { LeaderboardMetric } from "@/lib/leaderboard-data";
 import { APP_STORE_URL } from "@/lib/constants";
 
-const METRICS: LeaderboardMetric[] = ["height", "distance", "airtime", "speed"];
+export const metadata: Metadata = {
+  title: "Leaderboard",
+  description:
+    "World records by jump height, distance, airtime, and top speed. Real Surfr riders, real numbers, refreshed every five minutes.",
+};
+
+// Match the backend's 5-minute leaderboard cache.
+export const revalidate = 300;
+
+const BOARDS: LeaderboardMetric[] = ["height", "distance", "airtime", "speed"];
 
 /**
  * Leaderboard — three layers of motivation:
- *   1. World records — the dream (top of page)
- *   2. Your tribe   — filterable boards (middle, where inclusivity lives)
- *   3. Personal    — your own progression (bottom, deepest motivator)
+ *   1. World records — the dream (top of page, live data from Surfr API)
+ *   2. Your tribe   — filterable boards (placeholder, in-app only for now)
+ *   3. Personal    — your own progression (placeholder, in-app only)
  *
- * All three depend on the live backend. Until /api/leaderboard ships,
- * each layer renders an honest "coming via API" empty state instead of
- * fabricated values attributed to real pros.
+ * Layer 1 fetches all four boards in parallel at request time. Per-board
+ * failures are isolated via Promise.allSettled, so one bad board doesn't
+ * block the rest. The world-records sub-component handles tab interaction.
  *
  * Backend spec: docs/leaderboard-backend-spec.md
  */
-export default function LeaderboardPage() {
-  const [metric, setMetric] = useState<LeaderboardMetric>("height");
-  const entries = LEADERBOARD_DATA[metric];
-  const hasData = entries.length > 0;
+export default async function LeaderboardPage() {
+  const results = await Promise.allSettled(
+    BOARDS.map((board) =>
+      fetchLeaderboard({ board, customLimit: 10 }),
+    ),
+  );
+
+  const entries: Record<LeaderboardMetric, LeaderboardEntry[]> = {
+    height: results[0].status === "fulfilled" ? results[0].value : [],
+    distance: results[1].status === "fulfilled" ? results[1].value : [],
+    airtime: results[2].status === "fulfilled" ? results[2].value : [],
+    speed: results[3].status === "fulfilled" ? results[3].value : [],
+  };
 
   return (
     <>
@@ -58,7 +74,7 @@ export default function LeaderboardPage() {
         </div>
       </section>
 
-      {/* LAYER 1 — WORLD RECORDS */}
+      {/* LAYER 1 — WORLD RECORDS (live data) */}
       <section className="border-y border-(--color-divider) bg-(--color-page-tint) py-16 md:py-20">
         <div className="mx-auto max-w-[1000px] px-6 md:px-8">
           <div className="text-center">
@@ -67,61 +83,11 @@ export default function LeaderboardPage() {
               The numbers everyone <em>chases</em>.
             </FeatureHeading>
             <p className="mx-auto mt-4 max-w-xl text-[16px] text-(--color-ink-75)">
-              Verified peaks, by metric. Source: Surfr backend (top-N from
-              opted-in riders).
+              Verified peaks, by metric. Live from the Surfr backend, top
+              ten per board.
             </p>
           </div>
-
-          {/* Metric tabs */}
-          <div className="mt-10 flex justify-center gap-2 overflow-x-auto pb-1">
-            {METRICS.map((m) => (
-              <button
-                key={m}
-                onClick={() => setMetric(m)}
-                className={`rounded-full px-4 py-2 text-[13px] font-semibold whitespace-nowrap transition-colors ${
-                  metric === m
-                    ? "bg-(--color-cyan) text-black shadow-[var(--shadow-cyan-soft)]"
-                    : "bg-(--color-card) text-(--color-ink-75) ring-1 ring-(--color-card-border) hover:text-(--color-ink)"
-                }`}
-              >
-                {METRIC_LABELS[m]}
-              </button>
-            ))}
-          </div>
-
-          {/* Empty state */}
-          {!hasData && (
-            <motion.div
-              key={metric}
-              initial={{ opacity: 0, y: 8 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3 }}
-              className="mx-auto mt-10 max-w-xl rounded-(--radius-md) border-2 border-dashed border-(--color-ink-15) bg-(--color-card) p-10 text-center"
-            >
-              <Database
-                size={28}
-                strokeWidth={1.5}
-                className="mx-auto text-(--color-ink-35)"
-              />
-              <p className="mt-4 font-[family-name:var(--font-roboto-condensed)] text-[12px] font-bold uppercase tracking-[0.18em] text-(--color-ink-50)">
-                Coming via API
-              </p>
-              <p className="mt-3 text-[15px] leading-relaxed text-(--color-ink-75)">
-                The world-record table will populate from the Surfr backend
-                once <code className="rounded bg-(--color-page-tint) px-1.5 py-0.5 font-mono text-[12px]">/api/leaderboard</code> ships.
-                See <span className="font-mono text-[12px]">docs/leaderboard-backend-spec.md</span>{" "}
-                for the contract.
-              </p>
-            </motion.div>
-          )}
-
-          {/* Data state — kept for when LEADERBOARD_DATA is wired */}
-          {hasData && (
-            <div className="mx-auto mt-10 max-w-xl">
-              {/* Future: Podium + table render here. Component stays simple
-                  on purpose — heavy interaction belongs in the app. */}
-            </div>
-          )}
+          <WorldRecords entries={entries} />
         </div>
       </section>
 
@@ -197,7 +163,7 @@ export default function LeaderboardPage() {
                   className="text-(--color-ink-35)"
                 />
                 <p className="mt-3 text-[10px] font-bold uppercase tracking-[0.18em] text-(--color-ink-50)">
-                  Personal POP chart
+                  Personal progression chart
                 </p>
                 <p className="mt-1.5 max-w-[80%] text-center text-[12px] text-(--color-ink-60)">
                   In-app only. Your height curve over time.
