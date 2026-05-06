@@ -120,7 +120,7 @@ export default async function LeaderboardPage() {
 
       {/* LAYER 1 — WORLD RECORDS (live data) */}
       <section className="border-y border-(--color-divider) bg-(--color-page-tint) py-16 md:py-20">
-        <div className="mx-auto max-w-[1000px] px-6 md:px-8">
+        <div className="mx-auto max-w-[1280px] px-6 md:px-8">
           <div className="text-center">
             <Eyebrow>Layer 1 · World records</Eyebrow>
             <FeatureHeading className="mt-5">
@@ -157,7 +157,7 @@ export default async function LeaderboardPage() {
 
       {/* LAYER 2 — YOUR TRIBE (filterable boards) */}
       <section className="py-16 md:py-20">
-        <div className="mx-auto max-w-[1000px] px-6 md:px-8">
+        <div className="mx-auto max-w-[1280px] px-6 md:px-8">
           <div className="text-center">
             <Eyebrow>Layer 2 · Your tribe</Eyebrow>
             <FeatureHeading className="mt-5">

@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Crown, Database } from "lucide-react";
+import { Crown, Database, Calendar, Wind } from "lucide-react";
 import {
   METRIC_LABELS,
   formatMetricValue,
@@ -14,15 +14,13 @@ import { CountryFlag } from "@/components/leaderboard/country-flag";
 interface LeaderboardDisplayProps {
   entries: LeaderboardEntry[];
   metric: LeaderboardMetric;
-  /** Optional empty-state message override. */
   emptyMessage?: string;
 }
 
 /**
  * Shared leaderboard display: podium for top 3, ranked list for the rest.
- * Same shape and styling used by both world records (Layer 1) and the
- * tribe board (Layer 2). Pure presentation — data and metric come in via
- * props.
+ * The same visual treatment is used by world records (Layer 1) and the
+ * tribe board (Layer 2).
  */
 export function LeaderboardDisplay({
   entries,
@@ -89,66 +87,64 @@ interface PodiumCardProps {
 
 function PodiumCard({ entry, metric, position }: PodiumCardProps) {
   const isFirst = position === 1;
-  const avatarSize = isFirst ? 96 : 76;
-  const podiumHeight = position === 1 ? 88 : position === 2 ? 64 : 48;
+  const avatarSize = isFirst ? 96 : 72;
 
   return (
-    <div className="flex flex-col items-center text-center">
-      <div className="relative">
-        {isFirst && (
-          <div className="absolute -top-7 left-1/2 -translate-x-1/2 text-(--color-cyan-ink)">
-            <Crown size={24} strokeWidth={2} fill="currentColor" />
-          </div>
-        )}
-        <RiderAvatar
-          name={entry.user.name}
-          profilePicId={entry.user.profilepicid}
-          size={avatarSize}
-          className={
-            isFirst
-              ? "ring-2 ring-(--color-cyan) shadow-[var(--shadow-cyan-soft)]"
-              : ""
-          }
-        />
+    <div
+      className={`relative flex flex-col items-center rounded-(--radius-md) border bg-(--color-card) px-4 pt-9 pb-5 text-center transition-shadow ${
+        isFirst
+          ? "border-(--color-cyan) shadow-[var(--shadow-cyan-soft)]"
+          : "border-(--color-card-border)"
+      }`}
+    >
+      {isFirst && (
+        <div
+          className="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/2 rounded-full bg-(--color-cyan) p-2 text-black shadow-[var(--shadow-cyan-soft)]"
+          aria-label="First place"
+        >
+          <Crown size={18} strokeWidth={2.5} />
+        </div>
+      )}
+
+      <span
+        className={`absolute right-3 top-3 inline-flex h-7 w-7 items-center justify-center rounded-full text-[13px] font-bold tabular-nums ${
+          isFirst
+            ? "bg-(--color-cyan-30) text-(--color-cyan-ink)"
+            : "bg-(--color-cyan-15) text-(--color-cyan-ink)"
+        }`}
+      >
+        {position}
+      </span>
+
+      <RiderAvatar
+        name={entry.user.name}
+        profilePicId={entry.user.profilepicid}
+        size={avatarSize}
+      />
+
+      <div
+        className={`mt-3 line-clamp-1 font-bold text-(--color-ink) ${
+          isFirst ? "text-[16px]" : "text-[14px]"
+        }`}
+      >
+        {entry.user.name}
       </div>
 
-      <div className="mt-3 flex max-w-[160px] flex-col items-center">
-        <div
-          className={`truncate text-[14px] font-bold text-(--color-ink) ${
-            isFirst ? "text-[15px]" : ""
-          }`}
-          style={{ maxWidth: "160px" }}
-        >
-          {entry.user.name}
-        </div>
-        <div className="mt-1 flex items-center gap-1.5 text-[11px] text-(--color-ink-60)">
-          <CountryFlag country={entry.user.country} height={9} />
-          <span className="truncate" style={{ maxWidth: "120px" }}>
-            {entry.spotName}
-          </span>
-        </div>
-        <div
-          className={`mt-2 font-bold tabular-nums text-(--color-cyan-ink) ${
-            isFirst ? "text-[28px]" : "text-[22px]"
-          }`}
-        >
-          {formatMetricValue(entry.value, metric)}
-        </div>
+      <div className="mt-1 flex items-center justify-center gap-1.5 text-[12px] text-(--color-ink-60)">
+        <CountryFlag country={entry.user.country} height={10} />
+        <span className="line-clamp-1 max-w-[18ch]">{entry.spotName}</span>
       </div>
 
       <div
-        className={`mt-3 flex w-full items-center justify-center rounded-t-(--radius-md) bg-(--color-cyan-15) text-(--color-cyan-ink) ${
-          isFirst ? "bg-(--color-cyan-30)" : ""
+        className={`mt-3 font-bold tabular-nums text-(--color-cyan-ink) ${
+          isFirst ? "text-[32px]" : "text-[24px]"
         }`}
-        style={{ height: podiumHeight }}
       >
-        <span
-          className={`font-bold tabular-nums ${
-            isFirst ? "text-[36px]" : "text-[28px]"
-          }`}
-        >
-          {position}
-        </span>
+        {formatMetricValue(entry.value, metric)}
+      </div>
+
+      <div className="mt-1 text-[11px] text-(--color-ink-50)">
+        {formatDate(entry.sessionDatetime)}
       </div>
     </div>
   );
@@ -161,17 +157,15 @@ function Podium({
   top3: LeaderboardEntry[];
   metric: LeaderboardMetric;
 }) {
-  const first = top3[0];
-  const second = top3[1];
-  const third = top3[2];
+  const [first, second, third] = top3;
 
   return (
-    <div className="mx-auto max-w-[680px]">
-      <div className="grid grid-cols-3 items-end gap-3 sm:gap-6">
+    <div className="mx-auto max-w-[840px]">
+      <div className="grid grid-cols-3 items-stretch gap-3 sm:gap-4">
         <div>
           {second && <PodiumCard entry={second} metric={metric} position={2} />}
         </div>
-        <div>
+        <div className="-translate-y-3 sm:-translate-y-4">
           {first && <PodiumCard entry={first} metric={metric} position={1} />}
         </div>
         <div>
@@ -190,7 +184,7 @@ function RankList({
   metric: LeaderboardMetric;
 }) {
   return (
-    <div className="mx-auto mt-10 max-w-3xl">
+    <div className="mx-auto mt-10 max-w-5xl">
       <div className="overflow-hidden rounded-(--radius-md) border border-(--color-card-border) bg-(--color-card) shadow-[0_4px_16px_-8px_rgba(10,25,41,0.08)]">
         {rows.map((row, i) => (
           <RankRow
@@ -216,32 +210,72 @@ function RankRow({
 }) {
   return (
     <div
-      className={`flex items-center gap-4 px-4 py-4 transition-colors hover:bg-(--color-page-tint) sm:px-5 ${
+      className={`grid grid-cols-[44px_44px_1fr_auto] items-center gap-3 px-4 py-3.5 transition-colors hover:bg-(--color-page-tint) sm:grid-cols-[48px_48px_2fr_1fr_1fr_auto] sm:gap-4 sm:px-5 sm:py-4 ${
         isLast ? "" : "border-b border-(--color-card-border)"
       }`}
     >
-      <span className="w-6 text-right text-[14px] font-bold tabular-nums text-(--color-ink-50)">
+      {/* Rank */}
+      <span className="text-right text-[14px] font-bold tabular-nums text-(--color-ink-50) sm:text-[15px]">
         {entry.ranking}
       </span>
+
+      {/* Avatar */}
       <RiderAvatar
         name={entry.user.name}
         profilePicId={entry.user.profilepicid}
         size={40}
       />
-      <div className="min-w-0 flex-1">
-        <div className="truncate text-[15px] font-semibold text-(--color-ink)">
-          {entry.user.name}
-        </div>
-        <div className="mt-0.5 flex items-center gap-1.5 truncate text-[12px] text-(--color-ink-60)">
+
+      {/* Rider + flag (always) — adds spot inline on mobile, stacks on sm+ */}
+      <div className="min-w-0">
+        <div className="flex items-center gap-1.5 truncate text-[15px] font-semibold text-(--color-ink)">
           <CountryFlag country={entry.user.country} height={10} />
-          <span className="truncate">
-            {entry.spotName} · {entry.spotCountry}
-          </span>
+          <span className="truncate">{entry.user.name}</span>
+        </div>
+        <div className="mt-0.5 truncate text-[12px] text-(--color-ink-60) sm:hidden">
+          {entry.spotName} · {formatDate(entry.sessionDatetime)}
         </div>
       </div>
-      <div className="text-right text-[18px] font-bold tabular-nums text-(--color-cyan-ink) sm:text-[20px]">
+
+      {/* Spot column — sm+ only */}
+      <div className="hidden min-w-0 sm:block">
+        <div className="truncate text-[13px] font-medium text-(--color-ink)">
+          {entry.spotName}
+        </div>
+        <div className="truncate text-[11px] text-(--color-ink-50)">
+          {entry.spotCountry}
+        </div>
+      </div>
+
+      {/* Date + kite — sm+ only */}
+      <div className="hidden min-w-0 sm:block">
+        <div className="flex items-center gap-1.5 truncate text-[12px] text-(--color-ink-75)">
+          <Calendar size={12} className="shrink-0 text-(--color-ink-35)" />
+          {formatDate(entry.sessionDatetime)}
+        </div>
+        {entry.kite && (
+          <div className="mt-0.5 flex items-center gap-1.5 truncate text-[11px] text-(--color-ink-50)">
+            <Wind size={11} className="shrink-0 text-(--color-ink-35)" />
+            <span className="truncate">{entry.kite}</span>
+          </div>
+        )}
+      </div>
+
+      {/* Value */}
+      <div className="text-right text-[16px] font-bold tabular-nums text-(--color-cyan-ink) sm:text-[20px]">
         {formatMetricValue(entry.value, metric)}
       </div>
     </div>
   );
+}
+
+function formatDate(iso: string): string {
+  if (!iso) return "";
+  const d = new Date(iso);
+  if (Number.isNaN(d.getTime())) return "";
+  return d.toLocaleDateString("en-GB", {
+    day: "numeric",
+    month: "short",
+    year: "2-digit",
+  });
 }

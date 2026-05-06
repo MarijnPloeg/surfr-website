@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { Filter, Loader2, X } from "lucide-react";
+import { Loader2, X } from "lucide-react";
 import {
   METRIC_LABELS,
   type LeaderboardMetric,
@@ -19,7 +19,7 @@ const PERIOD_OPTIONS: { value: Period; label: string }[] = [
 ];
 
 const GENDER_OPTIONS = [
-  { value: "", label: "All" },
+  { value: "", label: "All genders" },
   { value: "male", label: "Men" },
   { value: "female", label: "Women" },
 ];
@@ -52,7 +52,7 @@ const BOARDTYPE_OPTIONS = [
 ];
 
 const KITESIZE_OPTIONS = [
-  { value: "", label: "All sizes" },
+  { value: "", label: "All kite sizes" },
   { value: "7", label: "7m" },
   { value: "8", label: "8m" },
   { value: "9", label: "9m" },
@@ -71,8 +71,6 @@ interface SpotOption {
 }
 
 interface TribeBoardProps {
-  /** Popular spots derived from server-side leaderboard data. Used to
-   *  populate the spot picker. */
   spots: SpotOption[];
 }
 
@@ -132,7 +130,6 @@ export function TribeBoard({ spots }: TribeBoardProps) {
   const activeCount = useMemo(() => countActiveFilters(filters), [filters]);
   const url = useMemo(() => buildBffUrl(filters), [filters]);
 
-  // Refetch whenever any filter changes.
   useEffect(() => {
     let cancelled = false;
     setLoading(true);
@@ -186,79 +183,66 @@ export function TribeBoard({ spots }: TribeBoardProps) {
         ))}
       </div>
 
-      {/* Filter bar */}
-      <div className="mx-auto mt-6 max-w-3xl rounded-(--radius-md) border border-(--color-card-border) bg-(--color-card) p-4">
-        <div className="flex items-center gap-2 text-[12px] font-bold uppercase tracking-[0.18em] text-(--color-ink-50)">
-          <Filter size={14} />
-          <span className="font-[family-name:var(--font-roboto-condensed)]">
-            Filters
-          </span>
-          {activeCount > 0 && (
-            <span className="ml-auto inline-flex items-center gap-2 rounded-full bg-(--color-cyan-15) px-2.5 py-1 text-[11px] font-bold normal-case tracking-normal text-(--color-cyan-ink)">
-              {activeCount} active
-              <button
-                onClick={() => setFilters(DEFAULT_FILTERS)}
-                className="inline-flex items-center gap-1 hover:underline"
-                aria-label="Clear filters"
-              >
-                <X size={12} strokeWidth={2.5} />
-                Clear
-              </button>
-            </span>
-          )}
-        </div>
-
-        <div className="mt-3 grid grid-cols-2 gap-2 sm:grid-cols-3 md:grid-cols-4">
-          <FilterSelect
-            label="Period"
+      {/* Compact horizontal filter bar */}
+      <div className="mx-auto mt-6 max-w-5xl">
+        <div className="flex flex-wrap items-center gap-2">
+          <FilterPill
             value={filters.period}
             onChange={(v) => update("period", v as Period)}
             options={PERIOD_OPTIONS}
+            isDefault={filters.period === "alltime"}
           />
-          <FilterSelect
-            label="Gender"
+          <FilterPill
             value={filters.gender}
             onChange={(v) => update("gender", v)}
             options={GENDER_OPTIONS}
+            isDefault={filters.gender === ""}
           />
-          <FilterSelect
-            label="Age"
+          <FilterPill
             value={filters.ageBracket}
             onChange={(v) => update("ageBracket", v)}
             options={AGE_OPTIONS}
+            isDefault={filters.ageBracket === ""}
           />
-          <FilterSelect
-            label="Skill"
+          <FilterPill
             value={filters.skillLevel}
             onChange={(v) => update("skillLevel", v)}
             options={SKILL_OPTIONS}
+            isDefault={filters.skillLevel === ""}
           />
-          <FilterSelect
-            label="Board"
+          <FilterPill
             value={filters.boardtype}
             onChange={(v) => update("boardtype", v)}
             options={BOARDTYPE_OPTIONS}
+            isDefault={filters.boardtype === ""}
           />
-          <FilterSelect
-            label="Kite size"
+          <FilterPill
             value={filters.kitesize}
             onChange={(v) => update("kitesize", v)}
             options={KITESIZE_OPTIONS}
+            isDefault={filters.kitesize === ""}
           />
-          <div className="col-span-2">
-            <FilterSelect
-              label="Spot"
-              value={filters.spotid}
-              onChange={(v) => update("spotid", v)}
-              options={[
-                { value: "", label: "All spots" },
-                ...spots.map((s) => ({
-                  value: String(s.spotId),
-                  label: `${s.spotName} · ${s.spotCountry}`,
-                })),
-              ]}
-            />
-          </div>
+          <FilterPill
+            value={filters.spotid}
+            onChange={(v) => update("spotid", v)}
+            options={[
+              { value: "", label: "All spots" },
+              ...spots.map((s) => ({
+                value: String(s.spotId),
+                label: `${s.spotName} · ${s.spotCountry}`,
+              })),
+            ]}
+            isDefault={filters.spotid === ""}
+          />
+          {activeCount > 0 && (
+            <button
+              onClick={() => setFilters(DEFAULT_FILTERS)}
+              className="ml-auto inline-flex items-center gap-1.5 rounded-full bg-(--color-cyan-15) px-3 py-1.5 text-[12px] font-semibold text-(--color-cyan-ink) hover:bg-(--color-cyan-30)"
+            >
+              <X size={12} strokeWidth={2.5} />
+              Clear {activeCount} filter{activeCount === 1 ? "" : "s"}
+            </button>
+          )}
         </div>
       </div>
 
@@ -292,27 +276,25 @@ export function TribeBoard({ spots }: TribeBoardProps) {
   );
 }
 
-interface FilterSelectProps {
-  label: string;
+interface FilterPillProps {
   value: string;
   onChange: (value: string) => void;
   options: readonly { value: string; label: string }[];
+  /** When true, the pill renders in its neutral state. When false, it
+   *  renders with the cyan-active treatment to signal a non-default value. */
+  isDefault: boolean;
 }
 
-function FilterSelect({ label, value, onChange, options }: FilterSelectProps) {
-  const isActive = value !== "" && value !== "alltime";
+function FilterPill({ value, onChange, options, isDefault }: FilterPillProps) {
   return (
-    <label className="flex flex-col">
-      <span className="font-[family-name:var(--font-roboto-condensed)] text-[10px] font-bold uppercase tracking-[0.18em] text-(--color-ink-50)">
-        {label}
-      </span>
+    <div className="relative">
       <select
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className={`mt-1 rounded-(--radius-sm) border bg-(--color-page) px-3 py-2 text-[13px] font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-(--color-cyan-30) ${
-          isActive
-            ? "border-(--color-cyan) text-(--color-cyan-ink)"
-            : "border-(--color-card-border) text-(--color-ink)"
+        className={`appearance-none rounded-full py-1.5 pl-4 pr-8 text-[13px] font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-(--color-cyan-30) ${
+          isDefault
+            ? "bg-(--color-card) text-(--color-ink-75) ring-1 ring-(--color-card-border) hover:text-(--color-ink)"
+            : "bg-(--color-cyan-15) text-(--color-cyan-ink) ring-1 ring-(--color-cyan-30)"
         }`}
       >
         {options.map((o) => (
@@ -321,6 +303,12 @@ function FilterSelect({ label, value, onChange, options }: FilterSelectProps) {
           </option>
         ))}
       </select>
-    </label>
+      <span
+        aria-hidden
+        className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-[10px] text-(--color-ink-50)"
+      >
+        ▾
+      </span>
+    </div>
   );
 }
