@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
-import { Trophy, LineChart } from "lucide-react";
+import { Trophy } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { DisplayHeading, Lede, FeatureHeading } from "@/components/ui/headings";
 import { Eyebrow } from "@/components/ui/eyebrow";
 import { WorldRecords } from "@/components/leaderboard/world-records";
 import { TribeBoard } from "@/components/leaderboard/tribe-board";
+import { ProgressionGraphCard } from "@/components/leaderboard/visuals/progression-graph-card";
 import {
   fetchLeaderboard,
   type LeaderboardEntry,
@@ -198,18 +199,8 @@ export default async function LeaderboardPage() {
               </div>
             </div>
             <div className="flex justify-center lg:justify-end">
-              <div className="flex h-[300px] w-full max-w-[420px] flex-col items-center justify-center rounded-(--radius-md) border-2 border-dashed border-(--color-ink-15) bg-(--color-card) p-8">
-                <LineChart
-                  size={32}
-                  strokeWidth={1.25}
-                  className="text-(--color-ink-35)"
-                />
-                <p className="mt-3 text-[10px] font-bold uppercase tracking-[0.18em] text-(--color-ink-50)">
-                  Personal progression chart
-                </p>
-                <p className="mt-1.5 max-w-[80%] text-center text-[12px] text-(--color-ink-60)">
-                  In-app only. Your height curve over time.
-                </p>
+              <div className="w-full max-w-[460px]">
+                <ProgressionGraphCard />
               </div>
             </div>
           </div>
