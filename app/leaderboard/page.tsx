@@ -1,16 +1,58 @@
 import type { Metadata } from "next";
-import { Trophy, Users, LineChart } from "lucide-react";
+import { Trophy, LineChart } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { DisplayHeading, Lede, FeatureHeading } from "@/components/ui/headings";
 import { Eyebrow } from "@/components/ui/eyebrow";
 import { WorldRecords } from "@/components/leaderboard/world-records";
+import { TribeBoard } from "@/components/leaderboard/tribe-board";
 import {
   fetchLeaderboard,
   type LeaderboardEntry,
 } from "@/lib/leaderboard-api";
 import type { LeaderboardMetric } from "@/lib/leaderboard-data";
 import { APP_STORE_URL } from "@/lib/constants";
+
+interface SpotOption {
+  spotId: number;
+  spotName: string;
+  spotCountry: string;
+}
+
+/**
+ * Harvest unique spots from leaderboard entries for the tribe filter
+ * picker. Sorted by frequency descending (most-active spots first), then
+ * truncated to a sensible cap.
+ */
+function deriveSpots(
+  entries: Record<LeaderboardMetric, LeaderboardEntry[]>,
+  cap = 30,
+): SpotOption[] {
+  const counts = new Map<number, { spot: SpotOption; count: number }>();
+  for (const board of Object.values(entries)) {
+    for (const e of board) {
+      if (!e.spotId) continue;
+      const existing = counts.get(e.spotId);
+      if (existing) {
+        existing.count++;
+      } else {
+        counts.set(e.spotId, {
+          spot: {
+            spotId: e.spotId,
+            spotName: e.spotName,
+            spotCountry: e.spotCountry,
+          },
+          count: 1,
+        });
+      }
+    }
+  }
+  return Array.from(counts.values())
+    .sort((a, b) => b.count - a.count)
+    .slice(0, cap)
+    .map((x) => x.spot)
+    .sort((a, b) => a.spotName.localeCompare(b.spotName));
+}
 
 export const metadata: Metadata = {
   title: "Leaderboard",
@@ -48,6 +90,8 @@ export default async function LeaderboardPage() {
     airtime: results[2].status === "fulfilled" ? results[2].value : [],
     speed: results[3].status === "fulfilled" ? results[3].value : [],
   };
+
+  const spots = deriveSpots(entries);
 
   return (
     <>
@@ -111,7 +155,7 @@ export default async function LeaderboardPage() {
         </div>
       </section>
 
-      {/* LAYER 2 — YOUR TRIBE */}
+      {/* LAYER 2 — YOUR TRIBE (filterable boards) */}
       <section className="py-16 md:py-20">
         <div className="mx-auto max-w-[1000px] px-6 md:px-8">
           <div className="text-center">
@@ -120,34 +164,12 @@ export default async function LeaderboardPage() {
               Find the board where <em>you count</em>.
             </FeatureHeading>
             <p className="mx-auto mt-4 max-w-xl text-[16px] text-(--color-ink-75)">
-              Filter by spot, region, gender, age, skill bracket, gear type.
+              Filter by spot, gender, age, skill, board type, or kite size.
               Everyone is top-10 of something.
             </p>
           </div>
 
-          <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {[
-              "By spot",
-              "By region",
-              "By gender",
-              "By age bracket",
-              "By skill level",
-              "By kite size",
-            ].map((label) => (
-              <div
-                key={label}
-                className="flex items-center gap-3 rounded-(--radius-md) border border-(--color-card-border) bg-(--color-card) px-5 py-4 opacity-90"
-              >
-                <Users size={18} className="text-(--color-cyan-ink)" />
-                <span className="text-[15px] font-medium text-(--color-ink)">
-                  {label}
-                </span>
-                <span className="ml-auto text-[11px] font-semibold uppercase tracking-[0.14em] text-(--color-ink-50)">
-                  Soon
-                </span>
-              </div>
-            ))}
-          </div>
+          <TribeBoard spots={spots} />
         </div>
       </section>
 

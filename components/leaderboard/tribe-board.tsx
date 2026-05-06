@@ -1,0 +1,326 @@
+"use client";
+
+import { useEffect, useMemo, useState } from "react";
+import { Filter, Loader2, X } from "lucide-react";
+import {
+  METRIC_LABELS,
+  type LeaderboardMetric,
+} from "@/lib/leaderboard-data";
+import type { LeaderboardEntry, Period } from "@/lib/leaderboard-api";
+import { LeaderboardDisplay } from "@/components/leaderboard/leaderboard-display";
+
+const METRICS: LeaderboardMetric[] = ["height", "distance", "airtime", "speed"];
+
+const PERIOD_OPTIONS: { value: Period; label: string }[] = [
+  { value: "alltime", label: "All time" },
+  { value: "monthly", label: "This month" },
+  { value: "weekly", label: "This week" },
+  { value: "daily", label: "Today" },
+];
+
+const GENDER_OPTIONS = [
+  { value: "", label: "All" },
+  { value: "male", label: "Men" },
+  { value: "female", label: "Women" },
+];
+
+const AGE_OPTIONS = [
+  { value: "", label: "All ages" },
+  { value: "u18", label: "Under 18" },
+  { value: "18-25", label: "18 – 25" },
+  { value: "26-35", label: "26 – 35" },
+  { value: "36-45", label: "36 – 45" },
+  { value: "46-55", label: "46 – 55" },
+  { value: "55+", label: "55+" },
+];
+
+const SKILL_OPTIONS = [
+  { value: "", label: "All levels" },
+  { value: "beginner", label: "Beginner" },
+  { value: "intermediate", label: "Intermediate" },
+  { value: "advanced", label: "Advanced" },
+  { value: "expert", label: "Expert" },
+];
+
+const BOARDTYPE_OPTIONS = [
+  { value: "", label: "All boards" },
+  { value: "twintip", label: "Twintip" },
+  { value: "foil", label: "Foil" },
+  { value: "wingfoiling", label: "Wing" },
+  { value: "windsurfing", label: "Windsurf" },
+  { value: "directional", label: "Directional" },
+];
+
+const KITESIZE_OPTIONS = [
+  { value: "", label: "All sizes" },
+  { value: "7", label: "7m" },
+  { value: "8", label: "8m" },
+  { value: "9", label: "9m" },
+  { value: "10", label: "10m" },
+  { value: "11", label: "11m" },
+  { value: "12", label: "12m" },
+  { value: "13", label: "13m" },
+  { value: "14", label: "14m" },
+  { value: "15", label: "15m" },
+];
+
+interface SpotOption {
+  spotId: number;
+  spotName: string;
+  spotCountry: string;
+}
+
+interface TribeBoardProps {
+  /** Popular spots derived from server-side leaderboard data. Used to
+   *  populate the spot picker. */
+  spots: SpotOption[];
+}
+
+interface FilterState {
+  metric: LeaderboardMetric;
+  period: Period;
+  gender: string;
+  ageBracket: string;
+  skillLevel: string;
+  boardtype: string;
+  kitesize: string;
+  spotid: string;
+}
+
+const DEFAULT_FILTERS: FilterState = {
+  metric: "height",
+  period: "alltime",
+  gender: "",
+  ageBracket: "",
+  skillLevel: "",
+  boardtype: "",
+  kitesize: "",
+  spotid: "",
+};
+
+function buildBffUrl(filters: FilterState): string {
+  const { metric, period } = filters;
+  const params = new URLSearchParams();
+  params.set("customLimit", "10");
+  if (filters.gender) params.set("gender", filters.gender);
+  if (filters.ageBracket) params.set("ageBracket", filters.ageBracket);
+  if (filters.skillLevel) params.set("skillLevel", filters.skillLevel);
+  if (filters.boardtype) params.set("boardtype", filters.boardtype);
+  if (filters.kitesize) params.set("kitesize", filters.kitesize);
+  if (filters.spotid) params.set("spotid", filters.spotid);
+  return `/api/leaderboard/list/${metric}/${period}/0?${params.toString()}`;
+}
+
+function countActiveFilters(f: FilterState): number {
+  let n = 0;
+  if (f.period !== "alltime") n++;
+  if (f.gender) n++;
+  if (f.ageBracket) n++;
+  if (f.skillLevel) n++;
+  if (f.boardtype) n++;
+  if (f.kitesize) n++;
+  if (f.spotid) n++;
+  return n;
+}
+
+export function TribeBoard({ spots }: TribeBoardProps) {
+  const [filters, setFilters] = useState<FilterState>(DEFAULT_FILTERS);
+  const [entries, setEntries] = useState<LeaderboardEntry[] | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const activeCount = useMemo(() => countActiveFilters(filters), [filters]);
+  const url = useMemo(() => buildBffUrl(filters), [filters]);
+
+  // Refetch whenever any filter changes.
+  useEffect(() => {
+    let cancelled = false;
+    setLoading(true);
+    setError(null);
+
+    fetch(url)
+      .then((r) => {
+        if (r.status === 204) return [];
+        if (!r.ok) throw new Error(`HTTP ${r.status}`);
+        return r.json();
+      })
+      .then((data: LeaderboardEntry[]) => {
+        if (!cancelled) setEntries(Array.isArray(data) ? data : []);
+      })
+      .catch((err: unknown) => {
+        if (!cancelled) {
+          setError(err instanceof Error ? err.message : "Unknown error");
+          setEntries([]);
+        }
+      })
+      .finally(() => {
+        if (!cancelled) setLoading(false);
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [url]);
+
+  const update = <K extends keyof FilterState>(
+    key: K,
+    value: FilterState[K],
+  ) => setFilters((prev) => ({ ...prev, [key]: value }));
+
+  return (
+    <>
+      {/* Metric tabs */}
+      <div className="mt-10 flex justify-center gap-2 overflow-x-auto pb-1">
+        {METRICS.map((m) => (
+          <button
+            key={m}
+            onClick={() => update("metric", m)}
+            className={`rounded-full px-5 py-2.5 text-[13px] font-semibold whitespace-nowrap transition-colors ${
+              filters.metric === m
+                ? "bg-(--color-cyan) text-black shadow-[var(--shadow-cyan-soft)]"
+                : "bg-(--color-card) text-(--color-ink-75) ring-1 ring-(--color-card-border) hover:text-(--color-ink)"
+            }`}
+          >
+            {METRIC_LABELS[m]}
+          </button>
+        ))}
+      </div>
+
+      {/* Filter bar */}
+      <div className="mx-auto mt-6 max-w-3xl rounded-(--radius-md) border border-(--color-card-border) bg-(--color-card) p-4">
+        <div className="flex items-center gap-2 text-[12px] font-bold uppercase tracking-[0.18em] text-(--color-ink-50)">
+          <Filter size={14} />
+          <span className="font-[family-name:var(--font-roboto-condensed)]">
+            Filters
+          </span>
+          {activeCount > 0 && (
+            <span className="ml-auto inline-flex items-center gap-2 rounded-full bg-(--color-cyan-15) px-2.5 py-1 text-[11px] font-bold normal-case tracking-normal text-(--color-cyan-ink)">
+              {activeCount} active
+              <button
+                onClick={() => setFilters(DEFAULT_FILTERS)}
+                className="inline-flex items-center gap-1 hover:underline"
+                aria-label="Clear filters"
+              >
+                <X size={12} strokeWidth={2.5} />
+                Clear
+              </button>
+            </span>
+          )}
+        </div>
+
+        <div className="mt-3 grid grid-cols-2 gap-2 sm:grid-cols-3 md:grid-cols-4">
+          <FilterSelect
+            label="Period"
+            value={filters.period}
+            onChange={(v) => update("period", v as Period)}
+            options={PERIOD_OPTIONS}
+          />
+          <FilterSelect
+            label="Gender"
+            value={filters.gender}
+            onChange={(v) => update("gender", v)}
+            options={GENDER_OPTIONS}
+          />
+          <FilterSelect
+            label="Age"
+            value={filters.ageBracket}
+            onChange={(v) => update("ageBracket", v)}
+            options={AGE_OPTIONS}
+          />
+          <FilterSelect
+            label="Skill"
+            value={filters.skillLevel}
+            onChange={(v) => update("skillLevel", v)}
+            options={SKILL_OPTIONS}
+          />
+          <FilterSelect
+            label="Board"
+            value={filters.boardtype}
+            onChange={(v) => update("boardtype", v)}
+            options={BOARDTYPE_OPTIONS}
+          />
+          <FilterSelect
+            label="Kite size"
+            value={filters.kitesize}
+            onChange={(v) => update("kitesize", v)}
+            options={KITESIZE_OPTIONS}
+          />
+          <div className="col-span-2">
+            <FilterSelect
+              label="Spot"
+              value={filters.spotid}
+              onChange={(v) => update("spotid", v)}
+              options={[
+                { value: "", label: "All spots" },
+                ...spots.map((s) => ({
+                  value: String(s.spotId),
+                  label: `${s.spotName} · ${s.spotCountry}`,
+                })),
+              ]}
+            />
+          </div>
+        </div>
+      </div>
+
+      {/* Results */}
+      {loading && entries === null && (
+        <div className="mt-10 flex flex-col items-center gap-3 text-(--color-ink-50)">
+          <Loader2 size={24} className="animate-spin" />
+          <span className="text-[13px]">Loading…</span>
+        </div>
+      )}
+
+      {entries !== null && !error && (
+        <div className={loading ? "opacity-60 transition-opacity" : ""}>
+          <LeaderboardDisplay
+            entries={entries}
+            metric={filters.metric}
+            emptyMessage="No entries match these filters yet. Try widening the search."
+          />
+        </div>
+      )}
+
+      {error && (
+        <div className="mx-auto mt-8 max-w-xl rounded-(--radius-md) border border-(--color-card-border) bg-(--color-card) p-6 text-center">
+          <p className="text-[14px] text-(--color-ink-75)">
+            Couldn&apos;t load that combination. Try adjusting the filters or
+            check back in a moment.
+          </p>
+        </div>
+      )}
+    </>
+  );
+}
+
+interface FilterSelectProps {
+  label: string;
+  value: string;
+  onChange: (value: string) => void;
+  options: readonly { value: string; label: string }[];
+}
+
+function FilterSelect({ label, value, onChange, options }: FilterSelectProps) {
+  const isActive = value !== "" && value !== "alltime";
+  return (
+    <label className="flex flex-col">
+      <span className="font-[family-name:var(--font-roboto-condensed)] text-[10px] font-bold uppercase tracking-[0.18em] text-(--color-ink-50)">
+        {label}
+      </span>
+      <select
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        className={`mt-1 rounded-(--radius-sm) border bg-(--color-page) px-3 py-2 text-[13px] font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-(--color-cyan-30) ${
+          isActive
+            ? "border-(--color-cyan) text-(--color-cyan-ink)"
+            : "border-(--color-card-border) text-(--color-ink)"
+        }`}
+      >
+        {options.map((o) => (
+          <option key={o.value} value={o.value}>
+            {o.label}
+          </option>
+        ))}
+      </select>
+    </label>
+  );
+}
