@@ -25,24 +25,6 @@ const GENDER_OPTIONS = [
   { value: "female", label: "Women" },
 ];
 
-const AGE_OPTIONS = [
-  { value: "", label: "All ages" },
-  { value: "u18", label: "Under 18" },
-  { value: "18-25", label: "18 – 25" },
-  { value: "26-35", label: "26 – 35" },
-  { value: "36-45", label: "36 – 45" },
-  { value: "46-55", label: "46 – 55" },
-  { value: "55+", label: "55+" },
-];
-
-const SKILL_OPTIONS = [
-  { value: "", label: "All levels" },
-  { value: "beginner", label: "Beginner" },
-  { value: "intermediate", label: "Intermediate" },
-  { value: "advanced", label: "Advanced" },
-  { value: "expert", label: "Expert" },
-];
-
 const BOARDTYPE_OPTIONS = [
   { value: "", label: "All boards" },
   { value: "twintip", label: "Twintip" },
@@ -79,8 +61,6 @@ interface FilterState {
   metric: LeaderboardMetric;
   period: Period;
   gender: string;
-  ageBracket: string;
-  skillLevel: string;
   boardtype: string;
   kitesize: string;
   spotid: string;
@@ -90,8 +70,6 @@ const DEFAULT_FILTERS: FilterState = {
   metric: "height",
   period: "alltime",
   gender: "",
-  ageBracket: "",
-  skillLevel: "",
   boardtype: "",
   kitesize: "",
   spotid: "",
@@ -102,8 +80,6 @@ function buildBffUrl(filters: FilterState): string {
   const params = new URLSearchParams();
   params.set("customLimit", "10");
   if (filters.gender) params.set("gender", filters.gender);
-  if (filters.ageBracket) params.set("ageBracket", filters.ageBracket);
-  if (filters.skillLevel) params.set("skillLevel", filters.skillLevel);
   if (filters.boardtype) params.set("boardtype", filters.boardtype);
   if (filters.kitesize) params.set("kitesize", filters.kitesize);
   if (filters.spotid) params.set("spotid", filters.spotid);
@@ -114,8 +90,6 @@ function countActiveFilters(f: FilterState): number {
   let n = 0;
   if (f.period !== "alltime") n++;
   if (f.gender) n++;
-  if (f.ageBracket) n++;
-  if (f.skillLevel) n++;
   if (f.boardtype) n++;
   if (f.kitesize) n++;
   if (f.spotid) n++;
@@ -135,8 +109,6 @@ function activeChipLabels(
     labels.push(label(PERIOD_OPTIONS, f.period));
   }
   if (f.gender) labels.push(label(GENDER_OPTIONS, f.gender));
-  if (f.ageBracket) labels.push(label(AGE_OPTIONS, f.ageBracket));
-  if (f.skillLevel) labels.push(label(SKILL_OPTIONS, f.skillLevel));
   if (f.boardtype) labels.push(label(BOARDTYPE_OPTIONS, f.boardtype));
   if (f.kitesize) labels.push(`${f.kitesize}m`);
   if (f.spotid) {
@@ -246,18 +218,6 @@ export function TribeBoard({ spots }: TribeBoardProps) {
             onChange={(v) => update("gender", v)}
             options={GENDER_OPTIONS}
             isDefault={filters.gender === ""}
-          />
-          <FilterPill
-            value={filters.ageBracket}
-            onChange={(v) => update("ageBracket", v)}
-            options={AGE_OPTIONS}
-            isDefault={filters.ageBracket === ""}
-          />
-          <FilterPill
-            value={filters.skillLevel}
-            onChange={(v) => update("skillLevel", v)}
-            options={SKILL_OPTIONS}
-            isDefault={filters.skillLevel === ""}
           />
           <FilterPill
             value={filters.boardtype}
@@ -489,18 +449,6 @@ function FilterSheet({
             value={filters.gender}
             onChange={(v) => onUpdate("gender", v)}
             options={GENDER_OPTIONS}
-          />
-          <SheetSelect
-            label="Age"
-            value={filters.ageBracket}
-            onChange={(v) => onUpdate("ageBracket", v)}
-            options={AGE_OPTIONS}
-          />
-          <SheetSelect
-            label="Skill"
-            value={filters.skillLevel}
-            onChange={(v) => onUpdate("skillLevel", v)}
-            options={SKILL_OPTIONS}
           />
           <SheetSelect
             label="Board type"
