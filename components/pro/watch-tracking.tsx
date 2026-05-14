@@ -1,11 +1,11 @@
 "use client";
 
+import Image from "next/image";
 import { motion } from "framer-motion";
 import { Watch, Smartphone, Activity } from "lucide-react";
 import { Section } from "@/components/ui/section";
 import { Eyebrow } from "@/components/ui/eyebrow";
 import { SectionHeading } from "@/components/ui/headings";
-import { WatchMockup } from "@/components/ui/watch-mockup";
 
 const devices = [
   {
@@ -39,11 +39,16 @@ export function WatchTracking() {
           transition={{ duration: 0.55, ease: "easeOut" }}
           className="flex justify-center"
         >
-          <WatchMockup
-            // screenshot="/screenshots/watch-session.png"
-            alt="Apple Watch — live session metrics"
-            fallbackDescribes="Apple Watch face · live session metrics during recording"
-            className="w-[200px]"
+          <Image
+            src="/screenshots/watch-metrics.png"
+            alt="Apple Watch — live session metrics during recording"
+            width={376}
+            height={637}
+            sizes="(max-width: 768px) 220px, 260px"
+            className="w-[220px] md:w-[260px] h-auto"
+            style={{
+              filter: "drop-shadow(0 20px 40px rgba(10,25,41,0.3))",
+            }}
           />
         </motion.div>
 

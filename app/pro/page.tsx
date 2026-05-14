@@ -4,6 +4,9 @@ import { TierCards } from "@/components/pro/tier-cards";
 import { JumpInsights } from "@/components/pro/jump-insights";
 import { WatchTracking } from "@/components/pro/watch-tracking";
 import { Coaching } from "@/components/pro/coaching";
+import { Downwinder } from "@/components/pro/downwinder";
+import { Competition } from "@/components/pro/competition";
+import { LiveCommunication } from "@/components/pro/live-communication";
 import { Pricing } from "@/components/pro/pricing";
 import { Faq } from "@/components/pro/faq";
 
@@ -21,6 +24,9 @@ export default function ProPage() {
       <JumpInsights />
       <WatchTracking />
       <Coaching />
+      <Downwinder />
+      <Competition />
+      <LiveCommunication />
       <Pricing />
       <Faq />
     </>

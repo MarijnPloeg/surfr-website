@@ -64,9 +64,6 @@ export const metadata: Metadata = {
     description:
       "Track every jump, discover spots, and see where you stand.",
   },
-  icons: {
-    icon: "/favicon.ico",
-  },
   other: {
     "apple-itunes-app": "app-id=1438498519",
   },

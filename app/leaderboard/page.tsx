@@ -6,7 +6,6 @@ import { DisplayHeading, Lede, FeatureHeading } from "@/components/ui/headings";
 import { Eyebrow } from "@/components/ui/eyebrow";
 import { WorldRecords } from "@/components/leaderboard/world-records";
 import { TribeBoard } from "@/components/leaderboard/tribe-board";
-import { ProgressionGraphCard } from "@/components/leaderboard/visuals/progression-graph-card";
 import {
   fetchLeaderboard,
   type LeaderboardEntry,
@@ -171,39 +170,6 @@ export default async function LeaderboardPage() {
           </div>
 
           <TribeBoard spots={spots} />
-        </div>
-      </section>
-
-      {/* LAYER 3 — PERSONAL PROGRESSION */}
-      <section className="border-t border-(--color-divider) bg-(--color-page-tint) py-16 md:py-20">
-        <div className="mx-auto max-w-[1000px] px-6 md:px-8">
-          <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
-            <div>
-              <Eyebrow>Layer 3 · You</Eyebrow>
-              <FeatureHeading className="mt-5">
-                The only board that <em>really</em> matters.
-              </FeatureHeading>
-              <p className="mt-5 text-[16px] leading-relaxed text-(--color-ink-75)">
-                Your height curve over 30, 90, 365 days. How much you improved
-                this season. How close you are to your own personal best,
-                live, every session.
-              </p>
-              <p className="mt-3 text-[15px] leading-relaxed text-(--color-ink-60)">
-                This view lives in the app. Open the Leaderboard tab in Surfr
-                to see your numbers.
-              </p>
-              <div className="mt-7">
-                <Button href={APP_STORE_URL} external size="md">
-                  Open in Surfr
-                </Button>
-              </div>
-            </div>
-            <div className="flex justify-center lg:justify-end">
-              <div className="w-full max-w-[460px]">
-                <ProgressionGraphCard />
-              </div>
-            </div>
-          </div>
         </div>
       </section>
 

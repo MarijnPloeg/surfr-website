@@ -18,7 +18,7 @@ const insights = [
     icon: BarChart3,
     title: "Per-jump stats",
     description:
-      "Average height, max height, total airtime, G-force at apex. Drill into a single jump or compare across a season.",
+      "Average height, max height, and total airtime. Drill into a single jump or compare across a season.",
   },
   {
     icon: Award,
@@ -80,7 +80,7 @@ export function JumpInsights() {
           className="flex justify-center"
         >
           <PhoneMockup
-            // screenshot="/screenshots/pro-jump-detail.png"
+            screenshot="/screenshots/session_tracking.png"
             alt="Surfr PRO Insights — per-jump score with pro comparison"
             fallbackDescribes="PRO Insights · per-jump score with POP chart and pro comparison"
             className="w-[300px]"

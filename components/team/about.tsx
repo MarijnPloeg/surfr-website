@@ -2,12 +2,22 @@
 
 import { motion } from "framer-motion";
 import { Section } from "@/components/ui/section";
+import { SectionHeader } from "@/components/ui/section-header";
 import { ABOUT_TEXT } from "@/lib/constants";
 
 export function About() {
   return (
-    <Section>
-      <div className="mx-auto max-w-3xl">
+    <Section alternate>
+      <SectionHeader
+        eyebrow="Our story"
+        title={
+          <>
+            A bet that <em>paid off</em>.
+          </>
+        }
+      />
+
+      <div className="mx-auto mt-12 max-w-3xl">
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}

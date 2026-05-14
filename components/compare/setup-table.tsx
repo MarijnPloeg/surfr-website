@@ -5,7 +5,6 @@ import { Check, X, Minus } from "lucide-react";
 import { Section } from "@/components/ui/section";
 import { SectionHeader } from "@/components/ui/section-header";
 import { COMPARE_TABLE } from "@/lib/constants";
-import { CapabilityScorecard } from "@/components/compare/capability-scorecard";
 
 type CompareCell = boolean | "partial" | string;
 
@@ -47,17 +46,17 @@ function Cell({ value }: { value: CompareCell }) {
   );
 }
 
-export function CompetitiveTable() {
+export function SetupTable() {
   return (
-    <Section id="vs-others" alternate>
+    <Section id="setup-table" alternate>
       <SectionHeader
-        eyebrow="vs the alternatives"
+        eyebrow="Side by side"
         title={
           <>
-            Side by side, <em>honestly</em>.
+            What changes between <em>pouch and wrist</em>.
           </>
         }
-        description="What Surfr does on its own, and where the alternatives still earn their place."
+        description="Same Surfr.AI jump detection. Different workflow on the water."
       />
 
       <motion.div
@@ -65,9 +64,9 @@ export function CompetitiveTable() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-40px" }}
         transition={{ duration: 0.5 }}
-        className="mx-auto mt-12 max-w-4xl overflow-x-auto"
+        className="mx-auto mt-12 max-w-3xl overflow-x-auto"
       >
-        <table className="w-full min-w-[560px] border-collapse text-left">
+        <table className="w-full min-w-[420px] border-collapse text-left">
           <thead>
             <tr className="border-b border-(--color-divider)">
               <th className="py-4 pr-4 font-[family-name:var(--font-roboto-condensed)] text-[12px] font-bold uppercase tracking-[0.18em] text-(--color-ink-60)">
@@ -76,11 +75,7 @@ export function CompetitiveTable() {
               {COMPARE_TABLE.competitors.map((c) => (
                 <th
                   key={c.id}
-                  className={`py-4 px-3 text-center text-[14px] font-bold ${
-                    c.id === "surfr"
-                      ? "text-(--color-cyan-ink)"
-                      : "text-(--color-ink)"
-                  }`}
+                  className="py-4 px-3 text-center text-[14px] font-bold text-(--color-ink)"
                 >
                   {c.name}
                 </th>
@@ -105,15 +100,7 @@ export function CompetitiveTable() {
                   )}
                 </th>
                 {COMPARE_TABLE.competitors.map((c) => (
-                  <td
-                    key={c.id}
-                    className="py-4 px-3 text-center"
-                    style={
-                      c.id === "surfr"
-                        ? { backgroundColor: "var(--color-cyan-15)" }
-                        : undefined
-                    }
-                  >
+                  <td key={c.id} className="py-4 px-3 text-center">
                     <Cell value={row.cells[c.id]} />
                   </td>
                 ))}
@@ -122,8 +109,6 @@ export function CompetitiveTable() {
           </tbody>
         </table>
       </motion.div>
-
-      <CapabilityScorecard />
     </Section>
   );
 }

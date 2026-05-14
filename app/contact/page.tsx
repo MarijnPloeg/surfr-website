@@ -183,14 +183,6 @@ export default function ContactPage() {
             >
               YouTube
             </a>
-            <a
-              href={SOCIAL_LINKS.facebook}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-[15px] font-semibold text-(--color-cyan-ink) hover:text-(--color-cyan-ink-hover)"
-            >
-              Facebook
-            </a>
           </div>
         </div>
       </section>

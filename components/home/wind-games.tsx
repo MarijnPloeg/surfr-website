@@ -7,6 +7,7 @@ import {
   useTransform,
   useReducedMotion,
 } from "framer-motion";
+import Image from "next/image";
 import { ArrowUpRight } from "lucide-react";
 import { Eyebrow } from "@/components/ui/eyebrow";
 import { FeatureHeading } from "@/components/ui/headings";
@@ -72,7 +73,16 @@ export function WindGames() {
           viewport={{ once: true }}
           transition={{ duration: 0.55, ease: "easeOut" }}
         >
-          <Eyebrow>{WIND_GAMES.eyebrow}</Eyebrow>
+          <div className="flex items-center gap-3">
+            <Image
+              src="/brand/windgames-brandmark.svg"
+              alt=""
+              width={28}
+              height={28}
+              aria-hidden
+            />
+            <Eyebrow>{WIND_GAMES.eyebrow}</Eyebrow>
+          </div>
           <FeatureHeading className="mt-5">
             <span
               dangerouslySetInnerHTML={{ __html: WIND_GAMES.headline }}

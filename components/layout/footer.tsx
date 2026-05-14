@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Instagram, Youtube, Facebook } from "lucide-react";
+import { Instagram, Youtube } from "lucide-react";
 import { SOCIAL_LINKS, HELP_URL, WIND_GAMES_URL } from "@/lib/constants";
 import { Wordmark } from "@/components/ui/wordmark";
 
@@ -12,7 +12,6 @@ interface FooterLink {
 const footerLinks: Record<string, readonly FooterLink[]> = {
   product: [
     { label: "Features", href: "/features" },
-    { label: "Spots", href: "/spots" },
     { label: "Leaderboard", href: "/leaderboard" },
     { label: "Roadmap", href: "/roadmap" },
     { label: "Pricing", href: "/pro" },
@@ -27,7 +26,6 @@ const footerLinks: Record<string, readonly FooterLink[]> = {
     { label: "Wind Games", href: WIND_GAMES_URL, external: true },
     { label: "Instagram", href: SOCIAL_LINKS.instagram, external: true },
     { label: "YouTube", href: SOCIAL_LINKS.youtube, external: true },
-    { label: "Facebook", href: SOCIAL_LINKS.facebook, external: true },
   ],
 };
 
@@ -61,15 +59,6 @@ export function Footer() {
                 className="text-(--color-ink-50) transition-colors hover:text-(--color-cyan-ink)"
               >
                 <Youtube size={20} />
-              </a>
-              <a
-                href={SOCIAL_LINKS.facebook}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Facebook"
-                className="text-(--color-ink-50) transition-colors hover:text-(--color-cyan-ink)"
-              >
-                <Facebook size={20} />
               </a>
             </div>
           </div>

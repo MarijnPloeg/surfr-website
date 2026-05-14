@@ -53,7 +53,7 @@ export default function PrivacyPage() {
                 <strong>Optional:</strong> Profile banner image, username,
                 language, leaderboard preference, preferred spot, skill level,
                 minimum jump height, preferred units (metric/imperial), social
-                media handles (Instagram, Facebook), gear details (e.g., kites
+                media handles (Instagram), gear details (e.g., kites
                 size and brand used).
               </li>
             </ul>

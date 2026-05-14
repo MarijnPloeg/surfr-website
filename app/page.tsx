@@ -8,7 +8,6 @@ import { WhatsNew } from "@/components/home/whats-new";
 import { DeepDiveVideo } from "@/components/home/deep-dive-video";
 import { ProTeaser } from "@/components/home/pro-teaser";
 import { Testimonials } from "@/components/home/testimonials";
-import { Community } from "@/components/home/community";
 import { DownloadCTA } from "@/components/home/download-cta";
 
 export default function Home() {
@@ -24,7 +23,6 @@ export default function Home() {
       <DeepDiveVideo />
       <ProTeaser />
       <Testimonials />
-      <Community />
       <DownloadCTA />
     </>
   );
